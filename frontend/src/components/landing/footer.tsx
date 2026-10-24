@@ -82,6 +82,12 @@ export const Footer: React.FC = () => {
                 <ExternalLink className="h-3 w-3" aria-hidden="true" />
               </a>
               <Link
+                to="/coordinator/overview"
+                className="block text-slate-gray hover:text-charcoal transition-colors"
+              >
+                Coordinator Dashboard
+              </Link>
+              <Link
                 to="/showcase"
                 className="block text-slate-gray hover:text-charcoal transition-colors"
               >

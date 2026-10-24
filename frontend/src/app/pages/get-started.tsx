@@ -4,7 +4,7 @@ import { PageContainer } from "@/components/ui/page-container";
 import { PageTitle, SectionHeading, BodyText, SecondaryText, MonoBadge } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Calendar, Layers, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Calendar, Layers, ShieldCheck, CheckCircle2, LayoutDashboard, ArrowRight } from "lucide-react";
 
 export const GetStartedPage: React.FC = () => {
   return (
@@ -21,24 +21,33 @@ export const GetStartedPage: React.FC = () => {
         {/* Header Notice */}
         <div className="rounded-lg border border-soft-border bg-white p-6 sm:p-8 shadow-card space-y-4">
           <div className="flex items-center gap-2">
-            <span className="rounded bg-pale-blue px-2 py-0.5 font-mono text-xs text-muted-cobalt font-semibold border border-pale-blue-border">
-              Phase 2 Implementation Notice
+            <span className="rounded bg-success-green/10 text-success-green px-2 py-0.5 font-mono text-xs font-semibold border border-success-green/30">
+              Phase 3 Live: Coordinator Dashboard
             </span>
-            <MonoBadge>Entry Point</MonoBadge>
+            <MonoBadge>Active Workspace</MonoBadge>
           </div>
 
-          <PageTitle>Getting Started with Slotify</PageTitle>
+          <PageTitle>Enter the Placement Coordinator Workspace</PageTitle>
 
           <BodyText className="text-slate-gray">
-            Live coordinator authentication, student account registration, and active drive configuration
-            are scheduled for implementation in Phase 3 alongside the FastAPI backend and Google OR-Tools
-            constraint solver.
+            The Coordinator Dashboard is now live. Placement teams can configure recruitment drives, manage
+            candidate rosters, inspect panel workloads, and run the simulated constraint schedule generator.
           </BodyText>
+
+          <div className="pt-2">
+            <Link to="/coordinator/overview">
+              <Button variant="primary" size="lg" className="gap-2">
+                <LayoutDashboard className="h-4 w-4" />
+                <span>Launch Coordinator Dashboard</span>
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
         </div>
 
-        {/* Current Available Features */}
+        {/* Workspace Feature Cards */}
         <div className="space-y-4">
-          <SectionHeading className="text-lg">What You Can Explore Right Now</SectionHeading>
+          <SectionHeading className="text-lg">Dashboard Capabilities Available Now</SectionHeading>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Card className="hover:border-slate-gray/40 transition-colors">
@@ -47,20 +56,19 @@ export const GetStartedPage: React.FC = () => {
                   <div className="p-2 rounded bg-pale-blue text-muted-cobalt">
                     <Calendar className="h-4 w-4" aria-hidden="true" />
                   </div>
-                  <CardTitle className="text-base">Schedule Workspace</CardTitle>
+                  <CardTitle className="text-base">Schedule & Generator</CardTitle>
                 </div>
                 <CardDescription>
-                  Explore the multi-day interview calendar and slot inspector.
+                  Timetable matrix, conflict inspection, and generator routine.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <SecondaryText size="xs">
-                  Interact with real interview mockups across multiple tracks, examine room buffers,
-                  and review conflict notices.
+                  Run the demo constraint scheduler to allocate unassigned students and review room buffer warnings.
                 </SecondaryText>
-                <Link to="/#preview" className="block">
-                  <Button variant="primary" size="sm" className="w-full justify-center">
-                    View Schedule Preview
+                <Link to="/coordinator/schedule" className="block">
+                  <Button variant="outline" size="sm" className="w-full justify-center">
+                    Open Schedule Workspace
                   </Button>
                 </Link>
               </CardContent>
@@ -72,20 +80,19 @@ export const GetStartedPage: React.FC = () => {
                   <div className="p-2 rounded bg-pale-blue text-muted-cobalt">
                     <Layers className="h-4 w-4" aria-hidden="true" />
                   </div>
-                  <CardTitle className="text-base">Design System</CardTitle>
+                  <CardTitle className="text-base">Recruitment Drives</CardTitle>
                 </div>
                 <CardDescription>
-                  Inspect the accessible UI primitives and design tokens.
+                  Configure multi-round evaluation pipelines.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <SecondaryText size="xs">
-                  Browse button states, form controls, Radix UI selects, status indicator badges,
-                  and color contrast matrices.
+                  Create new company drives, add sequential rounds (Coding, Technical, HR), and track active status.
                 </SecondaryText>
-                <Link to="/showcase" className="block">
+                <Link to="/coordinator/drives" className="block">
                   <Button variant="outline" size="sm" className="w-full justify-center">
-                    Explore Component Showcase
+                    Manage Drives
                   </Button>
                 </Link>
               </CardContent>
@@ -98,25 +105,21 @@ export const GetStartedPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <ShieldCheck className="h-5 w-5 text-muted-cobalt" aria-hidden="true" />
             <h3 className="font-heading font-semibold text-sm text-charcoal">
-              Coming in Subsequent Phases
+              Phase 4 Architecture (Upcoming)
             </h3>
           </div>
           <div className="space-y-2 text-xs text-slate-gray font-body">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-3.5 w-3.5 text-slate-gray" aria-hidden="true" />
-              <span>Placement coordinator login & recruitment drive creator.</span>
+              <span>FastAPI backend integration with Google OR-Tools constraint satisfaction engine.</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-3.5 w-3.5 text-slate-gray" aria-hidden="true" />
-              <span>Interviewer availability intake and maximum daily load configuration.</span>
+              <span>Student self-booking portal and live real-time slot selection.</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-3.5 w-3.5 text-slate-gray" aria-hidden="true" />
-              <span>Student self-booking portal with live slot confirmations.</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-3.5 w-3.5 text-slate-gray" aria-hidden="true" />
-              <span>FastAPI backend powered by Google OR-Tools constraint satisfaction algorithms.</span>
+              <span>Production database persistence and multi-tenant university deployment.</span>
             </div>
           </div>
         </div>

@@ -81,6 +81,12 @@ export const Navbar: React.FC = () => {
             );
           })}
           <Link
+            to="/coordinator/overview"
+            className="rounded px-2.5 py-1.5 text-xs lg:text-sm font-medium font-body text-slate-gray hover:text-charcoal hover:bg-[#ECEAE4] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-muted-cobalt"
+          >
+            Dashboard
+          </Link>
+          <Link
             to="/showcase"
             className="rounded px-2.5 py-1.5 text-xs lg:text-sm font-medium font-body text-slate-gray hover:text-charcoal hover:bg-[#ECEAE4] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-muted-cobalt"
           >
@@ -137,6 +143,13 @@ export const Navbar: React.FC = () => {
                 </a>
               );
             })}
+            <Link
+              to="/coordinator/overview"
+              onClick={() => setMobileMenuOpen(false)}
+              className="rounded px-3 py-2 text-sm font-medium font-body text-charcoal hover:bg-warm-ivory"
+            >
+              Coordinator Dashboard
+            </Link>
             <Link
               to="/showcase"
               onClick={() => setMobileMenuOpen(false)}

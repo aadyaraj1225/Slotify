@@ -15,36 +15,31 @@ const statusStyles: Record<
   {
     badge: string;
     dot: string;
-    text: string;
     defaultLabel: string;
     icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean | "true" | "false" }>;
   }
 > = {
   confirmed: {
-    badge: "bg-success-green/10 text-success-green border-success-green/30",
-    dot: "bg-success-green",
-    text: "text-success-green",
+    badge: "bg-[#EAF4EE] text-[#26734D] border-[#B2DEC4]/60",
+    dot: "bg-[#26734D]",
     defaultLabel: "Confirmed",
     icon: CheckCircle2,
   },
   pending: {
-    badge: "bg-warning-amber/10 text-warning-amber border-warning-amber/30",
-    dot: "bg-warning-amber",
-    text: "text-warning-amber",
+    badge: "bg-[#FDF6E7] text-[#996515] border-[#F1DCAC]/70",
+    dot: "bg-[#996515]",
     defaultLabel: "Pending",
     icon: Clock,
   },
   conflict: {
-    badge: "bg-error-red/10 text-error-red border-error-red/30",
-    dot: "bg-error-red",
-    text: "text-error-red",
+    badge: "bg-[#FDF0F0] text-[#B93838] border-[#F5C2C2]/70",
+    dot: "bg-[#B93838]",
     defaultLabel: "Conflict",
     icon: AlertTriangle,
   },
   cancelled: {
-    badge: "bg-[#ECEAE4] text-slate-gray border-soft-border",
-    dot: "bg-slate-gray",
-    text: "text-slate-gray",
+    badge: "bg-[#EFEFEA] text-[#626A70] border-[#E4E3DD]",
+    dot: "bg-[#626A70]",
     defaultLabel: "Cancelled",
     icon: XCircle,
   },
@@ -65,8 +60,8 @@ export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
   return (
     <span
       className={cn(
-        "inline-flex items-center font-medium font-body rounded border",
-        size === "sm" ? "text-xs px-2 py-0.5 gap-1.5" : "text-xs px-2.5 py-1 gap-1.5",
+        "inline-flex items-center font-medium font-body rounded-full border transition-colors",
+        size === "sm" ? "text-[11px] px-2.5 py-0.5 gap-1.5" : "text-xs px-3 py-1 gap-1.5",
         config.badge,
         className
       )}

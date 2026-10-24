@@ -145,27 +145,30 @@ export const RoomsPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 text-left">
+    <div className="space-y-8 text-left">
       {/* Page Title & Navigation Tabs */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-soft-border pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-[#E4E3DD]/80 pb-6">
         <div>
-          <h1 className="font-heading text-2xl font-bold tracking-tight text-charcoal">
-            Rooms & Availability Workspace
+          <span className="font-mono text-xs uppercase tracking-wider text-slate-gray block mb-1">
+            Spatial &amp; Temporal Logistics
+          </span>
+          <h1 className="font-heading text-2xl sm:text-3xl font-medium tracking-tight text-charcoal">
+            Venues &amp; Availability Windows
           </h1>
-          <p className="font-body text-xs sm:text-sm text-slate-gray mt-1">
-            Manage physical interview rooms, venue capacities, and panelist time windows.
+          <p className="font-body text-sm text-slate-gray mt-1.5 max-w-xl">
+            Configure physical interview rooms, venue capacities, and panel operational time windows.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           {activeTab === "rooms" ? (
-            <Button variant="primary" size="sm" onClick={handleOpenAddRoom} className="gap-1.5">
-              <Plus className="h-4 w-4" aria-hidden="true" />
+            <Button variant="primary" size="sm" onClick={handleOpenAddRoom} className="gap-2 px-4 py-2 text-xs">
+              <Plus className="h-3.5 w-3.5" aria-hidden="true" />
               <span>Add Interview Room</span>
             </Button>
           ) : (
-            <Button variant="primary" size="sm" onClick={() => setIsAvailModalOpen(true)} className="gap-1.5">
-              <Plus className="h-4 w-4" aria-hidden="true" />
+            <Button variant="primary" size="sm" onClick={() => setIsAvailModalOpen(true)} className="gap-2 px-4 py-2 text-xs">
+              <Plus className="h-3.5 w-3.5" aria-hidden="true" />
               <span>Add Availability Window</span>
             </Button>
           )}
@@ -173,25 +176,25 @@ export const RoomsPage: React.FC = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-soft-border">
+      <div className="flex items-center gap-6 border-b border-[#E4E3DD]/80">
         <button
           type="button"
           onClick={() => setActiveTab("rooms")}
-          className={`px-4 py-2 text-xs font-heading font-semibold border-b-2 transition-colors ${
+          className={`pb-3 text-xs font-mono uppercase tracking-wider transition-colors ${
             activeTab === "rooms"
-              ? "border-muted-cobalt text-muted-cobalt"
-              : "border-transparent text-slate-gray hover:text-charcoal"
+              ? "border-b-2 border-muted-cobalt text-muted-cobalt font-medium"
+              : "text-slate-gray hover:text-charcoal"
           }`}
         >
-          Interview Venues & Rooms ({rooms.length})
+          Interview Venues ({rooms.length})
         </button>
         <button
           type="button"
           onClick={() => setActiveTab("availability")}
-          className={`px-4 py-2 text-xs font-heading font-semibold border-b-2 transition-colors ${
+          className={`pb-3 text-xs font-mono uppercase tracking-wider transition-colors ${
             activeTab === "availability"
-              ? "border-muted-cobalt text-muted-cobalt"
-              : "border-transparent text-slate-gray hover:text-charcoal"
+              ? "border-b-2 border-muted-cobalt text-muted-cobalt font-medium"
+              : "text-slate-gray hover:text-charcoal"
           }`}
         >
           Panel Availability Matrix
@@ -200,59 +203,59 @@ export const RoomsPage: React.FC = () => {
 
       {/* ROOMS TAB */}
       {activeTab === "rooms" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {rooms.map((room) => (
             <div
               key={room.id}
-              className={`rounded-lg border bg-white p-5 shadow-card transition-all flex flex-col justify-between ${
-                room.isAvailable ? "border-soft-border" : "border-error-red/30 bg-error-red/5"
+              className={`rounded-xl border bg-white p-6 sm:p-7 shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all flex flex-col justify-between ${
+                room.isAvailable ? "border-[#E4E3DD]/80" : "border-[#E4E3DD]/80 bg-[#FAF9F5]/40 opacity-80"
               }`}
             >
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <h3 className="font-heading text-base font-bold text-charcoal leading-snug">
+                    <h3 className="font-heading text-base font-medium text-charcoal leading-snug">
                       {room.name}
                     </h3>
                     <p className="font-body text-xs text-slate-gray mt-0.5">
-                      {room.building} ({room.floor})
+                      {room.building} &middot; {room.floor}
                     </p>
                   </div>
                   <button
                     type="button"
                     onClick={() => toggleRoomAvailability(room.id)}
                     className="shrink-0"
-                    title={room.isAvailable ? "Mark Unavailable" : "Mark Available"}
+                    title={room.isAvailable ? "Mark Offline" : "Mark Available"}
                   >
                     {room.isAvailable ? (
-                      <span className="flex items-center gap-1 rounded bg-success-green/10 text-success-green border border-success-green/30 px-2 py-0.5 text-xs font-medium">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EAF4EE] text-success-green border border-success-green/30 px-2.5 py-0.5 text-[11px] font-mono">
                         <CheckCircle2 className="h-3 w-3" /> Available
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1 rounded bg-error-red/10 text-error-red border border-error-red/30 px-2 py-0.5 text-xs font-medium">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FDF0F0] text-error-red border border-error-red/30 px-2.5 py-0.5 text-[11px] font-mono">
                         <XCircle className="h-3 w-3" /> Offline
                       </span>
                     )}
                   </button>
                 </div>
 
-                <div className="space-y-1.5 pt-2 border-t border-soft-border/60 text-xs font-body text-slate-gray">
+                <div className="space-y-1.5 pt-3 border-t border-[#E4E3DD]/60 text-xs font-body text-slate-gray">
                   <div className="flex items-center justify-between font-mono">
-                    <span>Spatial Capacity:</span>
-                    <span className="font-bold text-charcoal">{room.capacity} Persons</span>
+                    <span>Spatial Capacity</span>
+                    <span className="font-medium text-charcoal">{room.capacity} Persons</span>
                   </div>
                 </div>
 
                 {/* Equipment Tags */}
                 <div className="pt-1">
-                  <span className="font-mono text-[10px] uppercase text-slate-gray block mb-1">
-                    Configured Equipment
+                  <span className="font-mono text-[10px] uppercase text-slate-gray/80 block mb-1.5">
+                    Configured Resources
                   </span>
-                  <div className="flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-1.5">
                     {room.equipment.map((eq) => (
                       <span
                         key={eq}
-                        className="rounded bg-warm-ivory px-2 py-0.5 text-[10px] font-mono text-charcoal border border-soft-border"
+                        className="rounded-full bg-[#FAF9F5] px-2.5 py-0.5 text-[10px] font-mono text-slate-gray border border-[#E4E3DD]"
                       >
                         {eq}
                       </span>
@@ -262,20 +265,20 @@ export const RoomsPage: React.FC = () => {
               </div>
 
               {/* Actions */}
-              <div className="mt-5 pt-3 border-t border-soft-border/70 flex items-center justify-between">
+              <div className="mt-6 pt-4 border-t border-[#E4E3DD]/70 flex items-center justify-between">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => toggleRoomAvailability(room.id)}
-                  className="text-xs"
+                  className="text-xs px-3 py-1.5"
                 >
                   {room.isAvailable ? "Set Offline" : "Set Active"}
                 </Button>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5">
                   <button
                     type="button"
                     onClick={() => handleOpenEditRoom(room)}
-                    className="p-1.5 rounded text-slate-gray hover:text-charcoal hover:bg-warm-ivory transition-colors"
+                    className="p-1.5 rounded-md text-slate-gray/70 hover:text-charcoal hover:bg-warm-ivory transition-colors"
                     title="Edit room"
                   >
                     <Edit2 className="h-4 w-4" />
@@ -283,7 +286,7 @@ export const RoomsPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => deleteRoom(room.id)}
-                    className="p-1.5 rounded text-slate-gray hover:text-error-red hover:bg-warm-ivory transition-colors"
+                    className="p-1.5 rounded-md text-slate-gray/70 hover:text-error-red hover:bg-warm-ivory transition-colors"
                     title="Delete room"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -298,36 +301,38 @@ export const RoomsPage: React.FC = () => {
       {/* AVAILABILITY TAB */}
       {activeTab === "availability" && (
         <div className="space-y-4">
-          <div className="rounded-lg border border-soft-border bg-white shadow-card overflow-hidden">
+          <div className="rounded-xl border border-[#E4E3DD]/80 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.03)] overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs font-body">
-                <thead className="border-b border-soft-border bg-[#FDFCFB] font-heading font-semibold text-slate-gray uppercase text-[10px] tracking-wider">
+                <thead className="border-b border-[#E4E3DD]/80 bg-[#FAF9F5]/70 font-mono text-[11px] text-slate-gray font-normal tracking-wide">
                   <tr>
-                    <th className="px-4 py-3">Panelist / Interviewer</th>
-                    <th className="px-4 py-3">Department</th>
-                    <th className="px-4 py-3">Configured Available Windows</th>
-                    <th className="px-4 py-3 text-right">Actions</th>
+                    <th className="px-6 py-3.5">Panelist / Evaluator</th>
+                    <th className="px-6 py-3.5">Department</th>
+                    <th className="px-6 py-3.5">Configured Time Windows</th>
+                    <th className="px-6 py-3.5 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-soft-border">
+                <tbody className="divide-y divide-[#E4E3DD]/60">
                   {interviewers.map((int) => (
-                    <tr key={int.id} className="hover:bg-warm-ivory/50 transition-colors">
-                      <td className="px-4 py-3 font-semibold text-charcoal">
-                        {int.name}
-                        <span className="block text-[11px] font-mono font-normal text-slate-gray">
+                    <tr key={int.id} className="hover:bg-warm-ivory/40 transition-colors">
+                      <td className="px-6 py-4">
+                        <span className="font-heading font-medium text-sm text-charcoal block">
+                          {int.name}
+                        </span>
+                        <span className="block text-[11px] font-mono text-slate-gray mt-0.5">
                           {int.email}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-slate-gray">{int.department}</td>
-                      <td className="px-4 py-3">
+                      <td className="px-6 py-4 text-slate-gray">{int.department}</td>
+                      <td className="px-6 py-4">
                         <div className="flex flex-wrap gap-1.5">
                           {int.availability.map((av) => (
                             <span
                               key={av.id}
-                              className="inline-flex items-center gap-1.5 rounded bg-pale-blue px-2 py-1 text-xs font-mono text-muted-cobalt border border-pale-blue-border"
+                              className="inline-flex items-center gap-1.5 rounded-full bg-pale-blue/60 px-3 py-1 text-xs font-mono text-muted-cobalt border border-pale-blue-border/70"
                             >
                               <Clock className="h-3 w-3 shrink-0" />
-                              <span>Day {av.day} ({av.startTime} - {av.endTime})</span>
+                              <span>Day {av.day} ({av.startTime} &ndash; {av.endTime})</span>
                               <button
                                 type="button"
                                 onClick={() => removeAvailability(int.id, av.id)}
@@ -340,7 +345,7 @@ export const RoomsPage: React.FC = () => {
                           ))}
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-right">
+                      <td className="px-6 py-4 text-right">
                         <Button
                           variant="outline"
                           size="sm"
@@ -354,7 +359,7 @@ export const RoomsPage: React.FC = () => {
                             });
                             setIsAvailModalOpen(true);
                           }}
-                          className="text-xs"
+                          className="text-xs px-3 py-1.5"
                         >
                           + Add Window
                         </Button>
@@ -376,16 +381,16 @@ export const RoomsPage: React.FC = () => {
         }}
       >
         <DialogContent maxWidth="md" onClose={() => setIsRoomModalOpen(false)}>
-          <form onSubmit={handleSaveRoom} className="space-y-4 text-left">
+          <form onSubmit={handleSaveRoom} className="space-y-5 text-left">
             <DialogHeader>
-              <DialogTitle>{editingRoom ? "Edit Room Details" : "Register Interview Room"}</DialogTitle>
+              <DialogTitle>{editingRoom ? "Edit Venue Details" : "Register Interview Room"}</DialogTitle>
               <DialogDescription>
                 Define venue identification, building location, and seating capacities.
               </DialogDescription>
             </DialogHeader>
 
             {formError && (
-              <div className="rounded bg-error-red/10 border border-error-red/30 p-2 text-xs text-error-red">
+              <div className="rounded-lg bg-error-red/10 border border-error-red/30 p-3 text-xs text-error-red">
                 {formError}
               </div>
             )}
@@ -398,7 +403,7 @@ export const RoomsPage: React.FC = () => {
               required
             />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input
                 label="Building / Facility"
                 placeholder="e.g. Academic Complex B"
@@ -415,9 +420,9 @@ export const RoomsPage: React.FC = () => {
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-charcoal font-heading mb-1.5">
+                <label className="block text-xs font-mono uppercase tracking-wider text-slate-gray mb-1.5">
                   Seating Capacity
                 </label>
                 <input
@@ -426,19 +431,19 @@ export const RoomsPage: React.FC = () => {
                   max={50}
                   value={roomFormData.capacity}
                   onChange={(e) => setRoomFormData({ ...roomFormData, capacity: Number(e.target.value) })}
-                  className="w-full h-10 rounded border border-soft-border bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+                  className="w-full h-10 rounded-lg border border-[#E4E3DD] bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:border-muted-cobalt"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-charcoal font-heading mb-1.5">
+                <label className="block text-xs font-mono uppercase tracking-wider text-slate-gray mb-1.5">
                   Initial Status
                 </label>
                 <select
                   value={roomFormData.isAvailable ? "true" : "false"}
                   onChange={(e) => setRoomFormData({ ...roomFormData, isAvailable: e.target.value === "true" })}
-                  className="w-full h-10 rounded border border-soft-border bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+                  className="w-full h-10 rounded-lg border border-[#E4E3DD] bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:border-muted-cobalt"
                 >
                   <option value="true">Available for Allocation</option>
                   <option value="false">Unavailable / Offline</option>
@@ -474,7 +479,7 @@ export const RoomsPage: React.FC = () => {
         }}
       >
         <DialogContent maxWidth="md" onClose={() => setIsAvailModalOpen(false)}>
-          <form onSubmit={handleSaveAvailability} className="space-y-4 text-left">
+          <form onSubmit={handleSaveAvailability} className="space-y-5 text-left">
             <DialogHeader>
               <DialogTitle>Add Panel Availability Window</DialogTitle>
               <DialogDescription>
@@ -483,19 +488,19 @@ export const RoomsPage: React.FC = () => {
             </DialogHeader>
 
             {formError && (
-              <div className="rounded bg-error-red/10 border border-error-red/30 p-2 text-xs text-error-red">
+              <div className="rounded-lg bg-error-red/10 border border-error-red/30 p-3 text-xs text-error-red">
                 {formError}
               </div>
             )}
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-charcoal font-heading mb-1.5">
+              <label className="block text-xs font-mono uppercase tracking-wider text-slate-gray mb-1.5">
                 Panelist
               </label>
               <select
                 value={availFormData.interviewerId}
                 onChange={(e) => setAvailFormData({ ...availFormData, interviewerId: e.target.value })}
-                className="w-full h-10 rounded border border-soft-border bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+                className="w-full h-10 rounded-lg border border-[#E4E3DD] bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:border-muted-cobalt"
               >
                 {interviewers.map((i) => (
                   <option key={i.id} value={i.id}>{i.name} ({i.department})</option>
@@ -503,9 +508,9 @@ export const RoomsPage: React.FC = () => {
               </select>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-charcoal font-heading mb-1.5">
+                <label className="block text-xs font-mono uppercase tracking-wider text-slate-gray mb-1.5">
                   Drive Day Number
                 </label>
                 <input
@@ -514,7 +519,7 @@ export const RoomsPage: React.FC = () => {
                   max={7}
                   value={availFormData.day}
                   onChange={(e) => setAvailFormData({ ...availFormData, day: Number(e.target.value) })}
-                  className="w-full h-10 rounded border border-soft-border bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+                  className="w-full h-10 rounded-lg border border-[#E4E3DD] bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:border-muted-cobalt"
                   required
                 />
               </div>
@@ -528,7 +533,7 @@ export const RoomsPage: React.FC = () => {
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input
                 type="time"
                 label="Start Time"

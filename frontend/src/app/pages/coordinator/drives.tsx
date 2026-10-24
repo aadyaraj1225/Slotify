@@ -24,12 +24,10 @@ export const DrivesPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
 
-  // Modal states
   const [isCreateOpen, setIsCreateOpen] = React.useState(searchParams.get("action") === "new");
   const [editingDrive, setEditingDrive] = React.useState<RecruitmentDrive | null>(null);
   const [viewingDrive, setViewingDrive] = React.useState<RecruitmentDrive | null>(null);
 
-  // Create/Edit Form State
   const [formData, setFormData] = React.useState<{
     name: string;
     company: string;
@@ -93,7 +91,7 @@ export const DrivesPage: React.FC = () => {
   const handleSaveDrive = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.company.trim()) {
-      setFormError("Drive name and company name are required.");
+      setFormError("Drive title and recruiting company are required.");
       return;
     }
     if (new Date(formData.endDate) < new Date(formData.startDate)) {
@@ -152,54 +150,55 @@ export const DrivesPage: React.FC = () => {
   const getStatusBadge = (status: DriveStatus) => {
     switch (status) {
       case "active":
-        return <span className="rounded bg-success-green/10 text-success-green border border-success-green/30 px-2 py-0.5 text-xs font-medium">Active</span>;
+        return <span className="rounded-full bg-[#EAF4EE] text-[#26734D] border border-[#B2DEC4]/60 px-3 py-0.5 text-[11px] font-medium">Active</span>;
       case "planning":
-        return <span className="rounded bg-pale-blue text-muted-cobalt border border-pale-blue-border px-2 py-0.5 text-xs font-medium">Planning</span>;
+        return <span className="rounded-full bg-[#E9EEFC] text-[#3559C7] border border-[#C8D7F9]/60 px-3 py-0.5 text-[11px] font-medium">Planning</span>;
       case "completed":
-        return <span className="rounded bg-[#ECEAE4] text-slate-gray border border-soft-border px-2 py-0.5 text-xs font-medium">Completed</span>;
+        return <span className="rounded-full bg-[#EFEFEA] text-[#626A70] border border-[#E4E3DD] px-3 py-0.5 text-[11px] font-medium">Completed</span>;
       case "paused":
-        return <span className="rounded bg-warning-amber/10 text-warning-amber border border-warning-amber/30 px-2 py-0.5 text-xs font-medium">Paused</span>;
+        return <span className="rounded-full bg-[#FDF6E7] text-[#996515] border border-[#F1DCAC]/70 px-3 py-0.5 text-[11px] font-medium">Paused</span>;
     }
   };
 
   return (
-    <div className="space-y-6 text-left">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-soft-border pb-5">
-        <div>
-          <h1 className="font-heading text-2xl font-bold tracking-tight text-charcoal">
+    <div className="space-y-10 text-left">
+      {/* Editorial Header */}
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-6 border-b border-[#F0EFEB] pb-8">
+        <div className="space-y-1.5 max-w-xl">
+          <h1 className="font-heading text-3xl font-semibold tracking-tight text-charcoal">
             Recruitment Drives
           </h1>
-          <p className="font-body text-xs sm:text-sm text-slate-gray mt-1">
-            Configure company drives, sequential interview rounds, and evaluation gates.
+          <p className="font-body text-sm text-slate-gray leading-relaxed">
+            Configure campus placement drives, sequential interview stages, and evaluation scopes.
           </p>
         </div>
-        <Button variant="primary" size="sm" onClick={handleOpenCreate} className="gap-1.5 self-start sm:self-auto">
+        <Button variant="primary" size="md" onClick={handleOpenCreate} className="gap-2">
           <Plus className="h-4 w-4" aria-hidden="true" />
           <span>New Recruitment Drive</span>
         </Button>
       </div>
 
-      {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3 rounded-lg border border-soft-border shadow-subtle">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-gray" aria-hidden="true" />
+      {/* Filter and Search Bar: Airy and Minimal */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-gray/60" aria-hidden="true" />
           <input
             type="text"
-            placeholder="Search drives by name or recruiting company..."
+            placeholder="Search drives by title or organization..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded border border-soft-border bg-[#FDFCFB] pl-9 pr-3 py-1.5 text-xs font-body text-charcoal placeholder:text-slate-gray/70 focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+            className="w-full rounded-lg border border-soft-border/90 bg-white pl-10 pr-4 py-2.5 text-xs font-body text-charcoal placeholder:text-slate-gray/60 focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
           />
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-gray font-mono">Status:</span>
+
+        <div className="flex items-center gap-2.5">
+          <span className="text-xs text-slate-gray font-body">Status:</span>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="rounded border border-soft-border bg-[#FDFCFB] px-2.5 py-1.5 text-xs font-body text-charcoal focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+            className="rounded-lg border border-soft-border/90 bg-white px-3 py-2 text-xs font-body text-charcoal focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
           >
-            <option value="all">All Statuses</option>
+            <option value="all">All Drives</option>
             <option value="active">Active</option>
             <option value="planning">Planning</option>
             <option value="completed">Completed</option>
@@ -208,73 +207,76 @@ export const DrivesPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Drives Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {/* Drives: Clean, Spacious Rows / Cards */}
+      <div className="space-y-4">
         {filteredDrives.map((drive) => {
           const isSelected = selectedDriveId === drive.id;
           return (
             <div
               key={drive.id}
-              className={`rounded-lg border bg-white p-5 shadow-card transition-all flex flex-col justify-between ${
-                isSelected ? "border-muted-cobalt ring-1 ring-muted-cobalt" : "border-soft-border hover:border-slate-gray/40"
+              className={`rounded-xl border bg-white p-7 sm:p-8 transition-all ${
+                isSelected
+                  ? "border-muted-cobalt/60 ring-1 ring-muted-cobalt/20 bg-white"
+                  : "border-soft-border/90 hover:border-slate-gray/30"
               }`}
             >
-              <div className="space-y-3">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="space-y-1">
-                    <span className="font-mono text-[10px] text-slate-gray uppercase">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div className="space-y-2 max-w-2xl">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-slate-gray font-heading">
                       {drive.company}
                     </span>
-                    <h3 className="font-heading text-base font-bold text-charcoal leading-snug">
-                      {drive.name}
-                    </h3>
+                    {getStatusBadge(drive.status)}
+                    {isSelected && (
+                      <span className="text-[11px] font-mono text-muted-cobalt bg-pale-blue px-2 py-0.5 rounded-full">
+                        Active Scope
+                      </span>
+                    )}
                   </div>
-                  {getStatusBadge(drive.status)}
+                  <h3 className="font-heading text-xl font-semibold text-charcoal">
+                    {drive.name}
+                  </h3>
+                  <p className="font-body text-xs sm:text-sm text-slate-gray leading-relaxed">
+                    {drive.description || "No specific instructions provided."}
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-6 pt-3 text-xs text-slate-gray font-body">
+                    <span className="flex items-center gap-1.5 font-mono">
+                      <Calendar className="h-3.5 w-3.5 text-slate-gray/70" />
+                      {drive.startDate} to {drive.endDate}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Layers className="h-3.5 w-3.5 text-slate-gray/70" />
+                      {drive.rounds.length} sequential rounds
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Users className="h-3.5 w-3.5 text-slate-gray/70" />
+                      {drive.candidateIds.length} candidates enrolled
+                    </span>
+                  </div>
                 </div>
 
-                <p className="font-body text-xs text-slate-gray line-clamp-2">
-                  {drive.description || "No specific drive instructions provided."}
-                </p>
-
-                <div className="space-y-2 pt-2 border-t border-soft-border/60 text-xs font-body text-slate-gray">
-                  <div className="flex items-center gap-1.5">
-                    <Calendar className="h-3.5 w-3.5 text-slate-gray shrink-0" />
-                    <span className="font-mono">{drive.startDate} to {drive.endDate}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Layers className="h-3.5 w-3.5 text-slate-gray shrink-0" />
-                    <span>{drive.rounds.length} Interview Rounds Configured</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Users className="h-3.5 w-3.5 text-slate-gray shrink-0" />
-                    <span>{drive.candidateIds.length} Registered Candidates</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="mt-5 pt-3 border-t border-soft-border/70 flex items-center justify-between gap-2">
-                <Button
-                  variant={isSelected ? "primary" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedDriveId(drive.id)}
-                  className="text-xs"
-                >
-                  {isSelected ? "Active Scope" : "Set Active"}
-                </Button>
-                <div className="flex items-center gap-1">
-                  <button
-                    type="button"
-                    onClick={() => setViewingDrive(drive)}
-                    className="p-1.5 rounded text-slate-gray hover:text-charcoal hover:bg-warm-ivory transition-colors"
-                    title="View details"
+                {/* Right Actions */}
+                <div className="flex items-center gap-3 self-start lg:self-center shrink-0">
+                  <Button
+                    variant={isSelected ? "primary" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedDriveId(drive.id)}
                   >
-                    <Info className="h-4 w-4" />
-                  </button>
+                    {isSelected ? "Active Drive" : "Set Active"}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setViewingDrive(drive)}
+                  >
+                    <Info className="h-3.5 w-3.5 mr-1.5 text-slate-gray" />
+                    <span>Details</span>
+                  </Button>
                   <button
                     type="button"
                     onClick={() => handleOpenEdit(drive)}
-                    className="p-1.5 rounded text-slate-gray hover:text-charcoal hover:bg-warm-ivory transition-colors"
+                    className="p-2 rounded-lg text-slate-gray hover:text-charcoal hover:bg-warm-ivory transition-colors"
                     title="Edit drive"
                   >
                     <Edit2 className="h-4 w-4" />
@@ -282,7 +284,7 @@ export const DrivesPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => deleteDrive(drive.id)}
-                    className="p-1.5 rounded text-slate-gray hover:text-error-red hover:bg-warm-ivory transition-colors"
+                    className="p-2 rounded-lg text-slate-gray hover:text-error-red hover:bg-warm-ivory transition-colors"
                     title="Delete drive"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -305,23 +307,23 @@ export const DrivesPage: React.FC = () => {
         }}
       >
         <DialogContent maxWidth="xl" onClose={() => { setIsCreateOpen(false); setEditingDrive(null); }}>
-          <form onSubmit={handleSaveDrive} className="space-y-4 text-left">
+          <form onSubmit={handleSaveDrive} className="space-y-6 text-left">
             <DialogHeader>
               <DialogTitle>
-                {editingDrive ? "Edit Recruitment Drive" : "Create New Recruitment Drive"}
+                {editingDrive ? "Edit Recruitment Drive" : "Create Recruitment Drive"}
               </DialogTitle>
               <DialogDescription>
-                Define company metadata, scheduled dates, and sequential evaluation rounds.
+                Define recruitment metadata, dates, and interview stages.
               </DialogDescription>
             </DialogHeader>
 
             {formError && (
-              <div className="rounded bg-error-red/10 border border-error-red/30 p-2.5 text-xs text-error-red">
+              <div className="rounded-lg bg-error-red/10 border border-error-red/30 p-3 text-xs text-error-red">
                 {formError}
               </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input
                 label="Drive Title"
                 placeholder="e.g. Google Campus Drive 2026"
@@ -339,19 +341,19 @@ export const DrivesPage: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-charcoal font-heading mb-1.5">
+              <label className="block text-xs font-medium text-slate-gray font-body mb-1.5">
                 Description / Special Instructions
               </label>
               <textarea
                 rows={2}
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="w-full rounded border border-soft-border bg-white p-2.5 text-xs text-charcoal font-body focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
-                placeholder="Enter scope, eligibility criteria, and drive guidelines..."
+                className="w-full rounded-lg border border-soft-border/90 bg-white p-3 text-xs text-charcoal font-body focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+                placeholder="Enter scope, eligibility criteria, and guidelines..."
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <Input
                 type="date"
                 label="Start Date"
@@ -367,13 +369,13 @@ export const DrivesPage: React.FC = () => {
                 required
               />
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-charcoal font-heading mb-1.5">
+                <label className="block text-xs font-medium text-slate-gray font-body mb-1.5">
                   Drive Status
                 </label>
                 <select
                   value={formData.status}
                   onChange={(e) => setFormData({ ...formData, status: e.target.value as DriveStatus })}
-                  className="w-full h-10 rounded border border-soft-border bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+                  className="w-full h-10 rounded-lg border border-soft-border/90 bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
                 >
                   <option value="planning">Planning</option>
                   <option value="active">Active</option>
@@ -383,29 +385,29 @@ export const DrivesPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Configured Interview Rounds Section */}
-            <div className="pt-2 border-t border-soft-border space-y-3">
+            {/* Rounds Section */}
+            <div className="pt-4 border-t border-[#F0EFEB] space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="font-heading text-xs font-bold text-charcoal uppercase tracking-wider">
-                    Sequential Interview Rounds ({formData.rounds.length})
+                  <h4 className="font-heading text-sm font-semibold text-charcoal">
+                    Interview Rounds ({formData.rounds.length})
                   </h4>
-                  <p className="text-[11px] text-slate-gray font-body">
-                    Must be satisfied in numerical sequence.
+                  <p className="text-xs text-slate-gray font-body">
+                    Sequentially administered during candidate progression.
                   </p>
                 </div>
-                <Button type="button" variant="outline" size="sm" onClick={handleAddRound} className="text-xs h-7">
-                  <Plus className="h-3 w-3 mr-1" /> Add Round
+                <Button type="button" variant="outline" size="sm" onClick={handleAddRound}>
+                  <Plus className="h-3.5 w-3.5 mr-1" /> Add Round
                 </Button>
               </div>
 
-              <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+              <div className="space-y-2.5 max-h-52 overflow-y-auto pr-1">
                 {formData.rounds.map((round, idx) => (
                   <div
                     key={round.id}
-                    className="flex items-center gap-2 p-2.5 rounded border border-soft-border bg-[#FDFCFB]"
+                    className="flex items-center gap-3 p-3 rounded-lg border border-soft-border/80 bg-[#FAF9F5]"
                   >
-                    <span className="font-mono text-xs font-bold text-muted-cobalt w-6 text-center">
+                    <span className="font-mono text-xs font-semibold text-muted-cobalt w-6 text-center">
                       #{idx + 1}
                     </span>
                     <input
@@ -416,7 +418,7 @@ export const DrivesPage: React.FC = () => {
                         updated[idx].name = e.target.value;
                         setFormData({ ...formData, rounds: updated });
                       }}
-                      className="flex-1 rounded border border-soft-border px-2 py-1 text-xs text-charcoal"
+                      className="flex-1 rounded-md border border-soft-border bg-white px-3 py-1.5 text-xs text-charcoal font-body"
                       placeholder="Round title..."
                     />
                     <select
@@ -426,12 +428,12 @@ export const DrivesPage: React.FC = () => {
                         updated[idx].type = e.target.value as RoundType;
                         setFormData({ ...formData, rounds: updated });
                       }}
-                      className="rounded border border-soft-border px-2 py-1 text-xs text-charcoal bg-white"
+                      className="rounded-md border border-soft-border px-2.5 py-1.5 text-xs text-charcoal bg-white font-body"
                     >
                       <option value="coding">Coding</option>
                       <option value="technical">Technical</option>
                       <option value="system_design">System Design</option>
-                      <option value="hr">HR / Behavioral</option>
+                      <option value="hr">HR</option>
                     </select>
                     <span className="font-mono text-xs text-slate-gray">
                       {round.durationMinutes}m
@@ -442,7 +444,7 @@ export const DrivesPage: React.FC = () => {
                         onClick={() => handleRemoveRound(round.id)}
                         className="text-slate-gray hover:text-error-red p-1"
                       >
-                        <Trash2 className="h-3.5 w-3.5" />
+                        <Trash2 className="h-4 w-4" />
                       </button>
                     )}
                   </div>
@@ -481,28 +483,28 @@ export const DrivesPage: React.FC = () => {
                 {getStatusBadge(viewingDrive.status)}
               </div>
               <DialogDescription>
-                Company: {viewingDrive.company} | Duration: {viewingDrive.startDate} to {viewingDrive.endDate}
+                {viewingDrive.company} | Duration: {viewingDrive.startDate} to {viewingDrive.endDate}
               </DialogDescription>
             </DialogHeader>
 
-            <div className="space-y-4 pt-3 text-xs font-body text-charcoal">
+            <div className="space-y-5 pt-4 text-xs font-body text-charcoal">
               <div>
-                <span className="text-slate-gray uppercase font-mono text-[10px] block">
-                  Description
+                <span className="text-slate-gray font-body font-medium block mb-1">
+                  Scope Description
                 </span>
-                <p className="mt-1 leading-relaxed">
+                <p className="leading-relaxed text-charcoal">
                   {viewingDrive.description || "No description provided."}
                 </p>
               </div>
 
               <div>
-                <span className="text-slate-gray uppercase font-mono text-[10px] block mb-1.5">
-                  Interview Rounds Hierarchy
+                <span className="text-slate-gray font-body font-medium block mb-2">
+                  Configured Stages ({viewingDrive.rounds.length})
                 </span>
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   {viewingDrive.rounds.map((round, idx) => (
-                    <div key={round.id} className="p-2 rounded bg-warm-ivory border border-soft-border flex items-center justify-between">
-                      <span className="font-semibold">
+                    <div key={round.id} className="p-3 rounded-lg bg-warm-ivory border border-soft-border/70 flex items-center justify-between">
+                      <span className="font-medium text-charcoal">
                         {idx + 1}. {round.name}
                       </span>
                       <span className="font-mono text-slate-gray text-[11px]">

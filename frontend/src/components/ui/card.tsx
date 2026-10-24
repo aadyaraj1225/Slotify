@@ -6,7 +6,7 @@ const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
     <div
       ref={ref}
       className={cn(
-        "rounded-md border border-soft-border bg-white text-charcoal shadow-card transition-shadow",
+        "rounded-lg border border-soft-border/90 bg-white text-charcoal shadow-[0_1px_3px_rgba(32,35,33,0.02)] transition-all",
         className
       )}
       {...props}
@@ -19,7 +19,7 @@ const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("flex flex-col space-y-1.5 p-6 border-b border-soft-border/60", className)}
+      className={cn("flex flex-col space-y-1.5 p-6 sm:p-7 border-b border-[#F0EFEB]", className)}
       {...props}
     />
   )
@@ -30,7 +30,7 @@ const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HT
   ({ className, ...props }, ref) => (
     <h3
       ref={ref}
-      className={cn("font-heading text-lg font-semibold leading-none tracking-tight text-charcoal", className)}
+      className={cn("font-heading text-lg font-semibold leading-tight tracking-tight text-charcoal", className)}
       {...props}
     />
   )
@@ -41,7 +41,7 @@ const CardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttribu
   ({ className, ...props }, ref) => (
     <p
       ref={ref}
-      className={cn("text-xs text-slate-gray font-body", className)}
+      className={cn("text-xs text-slate-gray font-body leading-relaxed", className)}
       {...props}
     />
   )
@@ -50,7 +50,7 @@ CardDescription.displayName = "CardDescription";
 
 const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("p-6", className)} {...props} />
+    <div ref={ref} className={cn("p-6 sm:p-7", className)} {...props} />
   )
 );
 CardContent.displayName = "CardContent";
@@ -59,16 +59,13 @@ const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("flex items-center p-6 pt-0 border-t border-soft-border/60 mt-4", className)}
+      className={cn("flex items-center p-6 sm:p-7 pt-0 border-t border-[#F0EFEB] mt-4", className)}
       {...props}
     />
   )
 );
 CardFooter.displayName = "CardFooter";
 
-/**
- * Panel is an unbordered or lightly bordered container for grouping related tools or sub-sections.
- */
 export interface PanelProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "plain" | "bordered" | "highlighted";
 }
@@ -79,8 +76,8 @@ const Panel = React.forwardRef<HTMLDivElement, PanelProps>(
       <div
         ref={ref}
         className={cn(
-          "rounded-md p-5",
-          variant === "bordered" && "border border-soft-border bg-white shadow-subtle",
+          "rounded-lg p-6 sm:p-7",
+          variant === "bordered" && "border border-soft-border/90 bg-white shadow-[0_1px_2px_rgba(32,35,33,0.02)]",
           variant === "plain" && "bg-white",
           variant === "highlighted" && "border border-pale-blue-border bg-pale-blue/30",
           className

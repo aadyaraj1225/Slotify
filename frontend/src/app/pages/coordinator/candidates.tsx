@@ -104,33 +104,36 @@ export const CandidatesPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 text-left">
+    <div className="space-y-8 text-left">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-soft-border pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-[#E4E3DD]/80 pb-6">
         <div>
-          <h1 className="font-heading text-2xl font-bold tracking-tight text-charcoal">
-            Candidate Management
+          <span className="font-mono text-xs uppercase tracking-wider text-slate-gray block mb-1">
+            Recruitment Directory
+          </span>
+          <h1 className="font-heading text-2xl sm:text-3xl font-medium tracking-tight text-charcoal">
+            Candidate Roster
           </h1>
-          <p className="font-body text-xs sm:text-sm text-slate-gray mt-1">
-            Student roster, evaluation progress, and interview booking statuses across campus drives.
+          <p className="font-body text-sm text-slate-gray mt-1.5 max-w-xl">
+            Track student applications, interview stage progress, and slot allocation statuses across drives.
           </p>
         </div>
-        <Button variant="primary" size="sm" onClick={handleOpenAdd} className="gap-1.5 self-start sm:self-auto">
-          <Plus className="h-4 w-4" aria-hidden="true" />
-          <span>Add Candidate</span>
+        <Button variant="primary" size="sm" onClick={handleOpenAdd} className="gap-2 self-start sm:self-auto px-4 py-2 text-xs">
+          <Plus className="h-3.5 w-3.5" aria-hidden="true" />
+          <span>Register Candidate</span>
         </Button>
       </div>
 
       {/* Search and Filters */}
-      <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 bg-white p-3 rounded-lg border border-soft-border shadow-subtle">
+      <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 bg-white p-4 rounded-xl border border-[#E4E3DD]/80">
         <div className="sm:col-span-6 relative">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-gray" aria-hidden="true" />
+          <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-gray/60" aria-hidden="true" />
           <input
             type="text"
-            placeholder="Search by candidate name, roll number, or campus email..."
+            placeholder="Search candidates by name, roll number, or campus email..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded border border-soft-border bg-[#FDFCFB] pl-9 pr-3 py-1.5 text-xs font-body text-charcoal placeholder:text-slate-gray/70 focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+            className="w-full rounded-lg border border-[#E4E3DD] bg-[#FAF9F5] pl-10 pr-4 py-2 text-xs font-body text-charcoal placeholder:text-slate-gray/60 focus:outline-none focus:border-muted-cobalt focus:bg-white transition-colors"
           />
         </div>
 
@@ -138,7 +141,7 @@ export const CandidatesPage: React.FC = () => {
           <select
             value={driveFilter}
             onChange={(e) => setDriveFilter(e.target.value)}
-            className="w-full h-8 rounded border border-soft-border bg-[#FDFCFB] px-2.5 text-xs font-body text-charcoal focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+            className="w-full h-9 rounded-lg border border-[#E4E3DD] bg-[#FAF9F5] px-3 text-xs font-body text-charcoal focus:outline-none focus:border-muted-cobalt focus:bg-white transition-colors"
           >
             <option value="all">All Drives</option>
             {drives.map((d) => (
@@ -151,35 +154,35 @@ export const CandidatesPage: React.FC = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full h-8 rounded border border-soft-border bg-[#FDFCFB] px-2.5 text-xs font-body text-charcoal focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+            className="w-full h-9 rounded-lg border border-[#E4E3DD] bg-[#FAF9F5] px-3 text-xs font-body text-charcoal focus:outline-none focus:border-muted-cobalt focus:bg-white transition-colors"
           >
             <option value="all">All Booking Statuses</option>
             <option value="confirmed">Confirmed</option>
             <option value="pending">Pending</option>
             <option value="conflict">Conflict</option>
-            <option value="unassigned">Unassigned (Awaiting Slot)</option>
+            <option value="unassigned">Awaiting Slot</option>
           </select>
         </div>
       </div>
 
       {/* Candidates Table */}
-      <div className="rounded-lg border border-soft-border bg-white shadow-card overflow-hidden">
+      <div className="rounded-xl border border-[#E4E3DD]/80 bg-white overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-body">
-            <thead className="border-b border-soft-border bg-[#FDFCFB] font-heading font-semibold text-slate-gray uppercase text-[10px] tracking-wider">
+            <thead className="border-b border-[#E4E3DD]/80 bg-[#FAF9F5]/70 font-mono text-[11px] text-slate-gray font-normal tracking-wide">
               <tr>
-                <th className="px-4 py-3">Candidate</th>
-                <th className="px-4 py-3">Roll & Email</th>
-                <th className="px-4 py-3">Recruitment Drive & Role</th>
-                <th className="px-4 py-3">Interview Stage</th>
-                <th className="px-4 py-3">Status</th>
-                <th className="px-4 py-3 text-right">Actions</th>
+                <th className="px-6 py-3.5">Candidate</th>
+                <th className="px-6 py-3.5">Roll & Email</th>
+                <th className="px-6 py-3.5">Drive & Target Role</th>
+                <th className="px-6 py-3.5">Current Stage</th>
+                <th className="px-6 py-3.5">Booking Status</th>
+                <th className="px-6 py-3.5 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-soft-border">
+            <tbody className="divide-y divide-[#E4E3DD]/60">
               {filteredCandidates.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-slate-gray font-body text-sm">
+                  <td colSpan={6} className="px-6 py-12 text-center text-slate-gray font-body text-xs">
                     No candidates found matching the selected search and filter criteria.
                   </td>
                 </tr>
@@ -187,42 +190,42 @@ export const CandidatesPage: React.FC = () => {
                 filteredCandidates.map((candidate) => {
                   const drive = drives.find((d) => d.id === candidate.driveId);
                   return (
-                    <tr key={candidate.id} className="hover:bg-warm-ivory/50 transition-colors">
-                      <td className="px-4 py-3">
-                        <span className="font-heading font-semibold text-sm text-charcoal block">
+                    <tr key={candidate.id} className="hover:bg-warm-ivory/40 transition-colors">
+                      <td className="px-6 py-4">
+                        <span className="font-heading font-medium text-sm text-charcoal block">
                           {candidate.name}
                         </span>
                       </td>
-                      <td className="px-4 py-3 font-mono">
-                        <span className="text-charcoal block font-medium">{candidate.rollNo}</span>
+                      <td className="px-6 py-4">
+                        <span className="font-mono text-xs text-charcoal block font-medium">{candidate.rollNo}</span>
                         <span className="text-[11px] text-slate-gray">{candidate.email}</span>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-6 py-4">
                         <span className="font-medium text-charcoal block">
                           {candidate.appliedRole}
                         </span>
                         <span className="text-[11px] text-slate-gray font-body">
-                          {drive?.company || "Company"} ({drive?.name})
+                          {drive?.company || "Company"} &middot; {drive?.name}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-slate-gray">
+                      <td className="px-6 py-4 text-slate-gray">
                         {candidate.currentStage}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-6 py-4">
                         {candidate.bookingStatus === "unassigned" ? (
-                          <span className="rounded bg-[#ECEAE4] text-slate-gray px-2 py-0.5 text-xs font-mono font-medium border border-soft-border">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-mono font-normal bg-[#ECEAE4]/70 text-slate-gray border border-[#E4E3DD]">
                             Awaiting Slot
                           </span>
                         ) : (
                           <StatusIndicator status={candidate.bookingStatus} size="sm" />
                         )}
                       </td>
-                      <td className="px-4 py-3 text-right">
-                        <div className="flex items-center justify-end gap-1">
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex items-center justify-end gap-1.5">
                           <button
                             type="button"
                             onClick={() => setViewingCandidate(candidate)}
-                            className="p-1.5 rounded text-slate-gray hover:text-charcoal hover:bg-warm-ivory transition-colors"
+                            className="p-1.5 rounded-md text-slate-gray/70 hover:text-charcoal hover:bg-warm-ivory transition-colors"
                             title="Candidate detail"
                           >
                             <Info className="h-4 w-4" />
@@ -230,7 +233,7 @@ export const CandidatesPage: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => handleOpenEdit(candidate)}
-                            className="p-1.5 rounded text-slate-gray hover:text-charcoal hover:bg-warm-ivory transition-colors"
+                            className="p-1.5 rounded-md text-slate-gray/70 hover:text-charcoal hover:bg-warm-ivory transition-colors"
                             title="Edit candidate"
                           >
                             <Edit2 className="h-4 w-4" />
@@ -238,7 +241,7 @@ export const CandidatesPage: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => deleteCandidate(candidate.id)}
-                            className="p-1.5 rounded text-slate-gray hover:text-error-red hover:bg-warm-ivory transition-colors"
+                            className="p-1.5 rounded-md text-slate-gray/70 hover:text-error-red hover:bg-warm-ivory transition-colors"
                             title="Remove candidate"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -265,7 +268,7 @@ export const CandidatesPage: React.FC = () => {
         }}
       >
         <DialogContent maxWidth="md" onClose={() => { setIsAddOpen(false); setEditingCandidate(null); }}>
-          <form onSubmit={handleSaveCandidate} className="space-y-4 text-left">
+          <form onSubmit={handleSaveCandidate} className="space-y-5 text-left">
             <DialogHeader>
               <DialogTitle>
                 {editingCandidate ? "Edit Candidate Details" : "Register New Candidate"}
@@ -276,7 +279,7 @@ export const CandidatesPage: React.FC = () => {
             </DialogHeader>
 
             {formError && (
-              <div className="rounded bg-error-red/10 border border-error-red/30 p-2 text-xs text-error-red">
+              <div className="rounded-lg bg-error-red/10 border border-error-red/30 p-3 text-xs text-error-red">
                 {formError}
               </div>
             )}
@@ -289,7 +292,7 @@ export const CandidatesPage: React.FC = () => {
               required
             />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input
                 label="Roll Number"
                 placeholder="e.g. CS21B042"
@@ -307,15 +310,15 @@ export const CandidatesPage: React.FC = () => {
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-charcoal font-heading mb-1.5">
+                <label className="block text-xs font-mono uppercase tracking-wider text-slate-gray mb-1.5">
                   Recruitment Drive
                 </label>
                 <select
                   value={formData.driveId}
                   onChange={(e) => setFormData({ ...formData, driveId: e.target.value })}
-                  className="w-full h-10 rounded border border-soft-border bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+                  className="w-full h-10 rounded-lg border border-[#E4E3DD] bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:border-muted-cobalt"
                 >
                   {drives.map((d) => (
                     <option key={d.id} value={d.id}>{d.name}</option>
@@ -332,7 +335,7 @@ export const CandidatesPage: React.FC = () => {
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input
                 label="Current Stage"
                 value={formData.currentStage}
@@ -340,15 +343,15 @@ export const CandidatesPage: React.FC = () => {
               />
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-charcoal font-heading mb-1.5">
+                <label className="block text-xs font-mono uppercase tracking-wider text-slate-gray mb-1.5">
                   Booking Status
                 </label>
                 <select
                   value={formData.bookingStatus}
                   onChange={(e) => setFormData({ ...formData, bookingStatus: e.target.value as CandidateBookingStatus })}
-                  className="w-full h-10 rounded border border-soft-border bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+                  className="w-full h-10 rounded-lg border border-[#E4E3DD] bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:border-muted-cobalt"
                 >
-                  <option value="unassigned">Unassigned (Awaiting Slot)</option>
+                  <option value="unassigned">Awaiting Slot</option>
                   <option value="confirmed">Confirmed</option>
                   <option value="pending">Pending</option>
                   <option value="conflict">Conflict</option>
@@ -385,17 +388,17 @@ export const CandidatesPage: React.FC = () => {
             <DialogHeader>
               <div className="flex items-center justify-between">
                 <DialogTitle>{viewingCandidate.name}</DialogTitle>
-                <span className="font-mono text-xs px-2 py-0.5 rounded bg-warm-ivory border border-soft-border">
+                <span className="font-mono text-xs px-2.5 py-1 rounded bg-warm-ivory border border-[#E4E3DD]">
                   {viewingCandidate.rollNo}
                 </span>
               </div>
               <DialogDescription>{viewingCandidate.email}</DialogDescription>
             </DialogHeader>
 
-            <div className="space-y-3 pt-3 text-xs font-body text-charcoal">
+            <div className="space-y-3.5 pt-4 text-xs font-body text-charcoal border-t border-[#E4E3DD]/70">
               <div className="flex items-center gap-2">
                 <span className="text-slate-gray font-mono uppercase text-[10px] w-28">Applied Role:</span>
-                <span className="font-semibold">{viewingCandidate.appliedRole}</span>
+                <span className="font-medium">{viewingCandidate.appliedRole}</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-slate-gray font-mono uppercase text-[10px] w-28">Current Stage:</span>
@@ -403,7 +406,7 @@ export const CandidatesPage: React.FC = () => {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-slate-gray font-mono uppercase text-[10px] w-28">Booking State:</span>
-                <span>{viewingCandidate.bookingStatus}</span>
+                <span className="capitalize">{viewingCandidate.bookingStatus}</span>
               </div>
               {viewingCandidate.assignedSlotId && (
                 <div className="flex items-center gap-2">

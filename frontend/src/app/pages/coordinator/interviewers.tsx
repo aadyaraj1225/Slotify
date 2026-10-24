@@ -112,33 +112,36 @@ export const InterviewersPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 text-left">
+    <div className="space-y-8 text-left">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-soft-border pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-[#E4E3DD]/80 pb-6">
         <div>
-          <h1 className="font-heading text-2xl font-bold tracking-tight text-charcoal">
-            Interviewer Panel Management
+          <span className="font-mono text-xs uppercase tracking-wider text-slate-gray block mb-1">
+            Panel Roster
+          </span>
+          <h1 className="font-heading text-2xl sm:text-3xl font-medium tracking-tight text-charcoal">
+            Interviewers &amp; Evaluators
           </h1>
-          <p className="font-body text-xs sm:text-sm text-slate-gray mt-1">
-            Panelist evaluation expertise, maximum daily slot workloads, and active assignments.
+          <p className="font-body text-sm text-slate-gray mt-1.5 max-w-xl">
+            Manage technical panel expertise, daily maximum interview load quotas, and active assignment slots.
           </p>
         </div>
-        <Button variant="primary" size="sm" onClick={handleOpenAdd} className="gap-1.5 self-start sm:self-auto">
-          <Plus className="h-4 w-4" aria-hidden="true" />
-          <span>Add Panelist</span>
+        <Button variant="primary" size="sm" onClick={handleOpenAdd} className="gap-2 self-start sm:self-auto px-4 py-2 text-xs">
+          <Plus className="h-3.5 w-3.5" aria-hidden="true" />
+          <span>Register Panelist</span>
         </Button>
       </div>
 
       {/* Filter Toolbar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3 rounded-lg border border-soft-border shadow-subtle">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-4 rounded-xl border border-[#E4E3DD]/80">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-gray" aria-hidden="true" />
+          <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-gray/60" aria-hidden="true" />
           <input
             type="text"
-            placeholder="Search by panelist name, work email, or technical expertise..."
+            placeholder="Search panelists by name, work email, or technical expertise domain..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded border border-soft-border bg-[#FDFCFB] pl-9 pr-3 py-1.5 text-xs font-body text-charcoal placeholder:text-slate-gray/70 focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+            className="w-full rounded-lg border border-[#E4E3DD] bg-[#FAF9F5] pl-10 pr-4 py-2 text-xs font-body text-charcoal placeholder:text-slate-gray/60 focus:outline-none focus:border-muted-cobalt focus:bg-white transition-colors"
           />
         </div>
 
@@ -147,7 +150,7 @@ export const InterviewersPage: React.FC = () => {
           <select
             value={departmentFilter}
             onChange={(e) => setDepartmentFilter(e.target.value)}
-            className="rounded border border-soft-border bg-[#FDFCFB] px-2.5 py-1.5 text-xs font-body text-charcoal focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+            className="h-9 rounded-lg border border-[#E4E3DD] bg-[#FAF9F5] px-3 text-xs font-body text-charcoal focus:outline-none focus:border-muted-cobalt focus:bg-white transition-colors"
           >
             <option value="all">All Departments</option>
             {departments.map((dept) => (
@@ -158,7 +161,7 @@ export const InterviewersPage: React.FC = () => {
       </div>
 
       {/* Interviewers Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredInterviewers.map((int) => {
           const loadPercentage = Math.round((int.assignedCount / int.maxDailyLoad) * 100);
           const isAtCapacity = int.assignedCount >= int.maxDailyLoad;
@@ -166,19 +169,19 @@ export const InterviewersPage: React.FC = () => {
           return (
             <div
               key={int.id}
-              className="rounded-lg border border-soft-border bg-white p-5 shadow-card hover:border-slate-gray/40 transition-all flex flex-col justify-between"
+              className="rounded-xl border border-[#E4E3DD]/80 bg-white p-6 sm:p-7 shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:border-slate-gray/40 transition-all flex flex-col justify-between"
             >
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <h3 className="font-heading text-base font-bold text-charcoal leading-snug">
+                    <h3 className="font-heading text-base font-medium text-charcoal leading-snug">
                       {int.name}
                     </h3>
                     <p className="font-body text-xs text-slate-gray mt-0.5">
                       {int.department}
                     </p>
                   </div>
-                  <span className="font-mono text-[10px] text-slate-gray px-1.5 py-0.5 rounded bg-warm-ivory border border-soft-border">
+                  <span className="font-mono text-[11px] text-slate-gray">
                     {int.email}
                   </span>
                 </div>
@@ -188,7 +191,7 @@ export const InterviewersPage: React.FC = () => {
                   {int.expertise.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded bg-pale-blue px-2 py-0.5 text-[10px] font-mono text-muted-cobalt border border-pale-blue-border"
+                      className="rounded-full bg-pale-blue/60 px-2.5 py-0.5 text-[10px] font-mono text-muted-cobalt border border-pale-blue-border/70"
                     >
                       {tag}
                     </span>
@@ -196,16 +199,16 @@ export const InterviewersPage: React.FC = () => {
                 </div>
 
                 {/* Workload Indicator */}
-                <div className="pt-2 border-t border-soft-border/60 space-y-1.5">
+                <div className="pt-3 border-t border-[#E4E3DD]/60 space-y-2">
                   <div className="flex items-center justify-between text-xs font-mono">
-                    <span className="text-slate-gray">Assigned Workload:</span>
-                    <span className={isAtCapacity ? "text-error-red font-bold" : "text-charcoal font-semibold"}>
-                      {int.assignedCount} / {int.maxDailyLoad} slots ({loadPercentage}%)
+                    <span className="text-slate-gray">Daily Workload</span>
+                    <span className={isAtCapacity ? "text-error-red font-medium" : "text-charcoal font-medium"}>
+                      {int.assignedCount} of {int.maxDailyLoad} slots ({loadPercentage}%)
                     </span>
                   </div>
-                  <div className="w-full bg-[#ECEAE4] rounded-full h-1.5 overflow-hidden">
+                  <div className="w-full bg-[#ECEAE4] rounded-full h-1 overflow-hidden">
                     <div
-                      className={`h-1.5 rounded-full transition-all ${
+                      className={`h-1 rounded-full transition-all ${
                         isAtCapacity ? "bg-error-red" : "bg-muted-cobalt"
                       }`}
                       style={{ width: `${Math.min(loadPercentage, 100)}%` }}
@@ -214,26 +217,26 @@ export const InterviewersPage: React.FC = () => {
                 </div>
 
                 <div className="text-[11px] text-slate-gray font-body flex items-center gap-1.5">
-                  <Clock className="h-3 w-3 text-slate-gray shrink-0" />
+                  <Clock className="h-3.5 w-3.5 text-slate-gray/70 shrink-0" />
                   <span>{int.availability.length} availability blocks registered</span>
                 </div>
               </div>
 
               {/* Actions Footer */}
-              <div className="mt-4 pt-3 border-t border-soft-border/70 flex items-center justify-between">
+              <div className="mt-6 pt-4 border-t border-[#E4E3DD]/70 flex items-center justify-between">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => setViewingInterviewer(int)}
-                  className="text-xs"
+                  className="text-xs px-3 py-1.5"
                 >
-                  View Assignments
+                  View Schedule
                 </Button>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5">
                   <button
                     type="button"
                     onClick={() => handleOpenEdit(int)}
-                    className="p-1.5 rounded text-slate-gray hover:text-charcoal hover:bg-warm-ivory transition-colors"
+                    className="p-1.5 rounded-md text-slate-gray/70 hover:text-charcoal hover:bg-warm-ivory transition-colors"
                     title="Edit interviewer"
                   >
                     <Edit2 className="h-4 w-4" />
@@ -241,7 +244,7 @@ export const InterviewersPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => deleteInterviewer(int.id)}
-                    className="p-1.5 rounded text-slate-gray hover:text-error-red hover:bg-warm-ivory transition-colors"
+                    className="p-1.5 rounded-md text-slate-gray/70 hover:text-error-red hover:bg-warm-ivory transition-colors"
                     title="Remove interviewer"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -264,18 +267,18 @@ export const InterviewersPage: React.FC = () => {
         }}
       >
         <DialogContent maxWidth="md" onClose={() => { setIsAddOpen(false); setEditingInterviewer(null); }}>
-          <form onSubmit={handleSaveInterviewer} className="space-y-4 text-left">
+          <form onSubmit={handleSaveInterviewer} className="space-y-5 text-left">
             <DialogHeader>
               <DialogTitle>
-                {editingInterviewer ? "Edit Panelist Details" : "Add Interviewer"}
+                {editingInterviewer ? "Edit Panelist Details" : "Register Panelist"}
               </DialogTitle>
               <DialogDescription>
-                Define technical evaluation domains and daily interview capacity.
+                Define technical evaluation domains and daily interview capacity limits.
               </DialogDescription>
             </DialogHeader>
 
             {formError && (
-              <div className="rounded bg-error-red/10 border border-error-red/30 p-2 text-xs text-error-red">
+              <div className="rounded-lg bg-error-red/10 border border-error-red/30 p-3 text-xs text-error-red">
                 {formError}
               </div>
             )}
@@ -288,7 +291,7 @@ export const InterviewersPage: React.FC = () => {
               required
             />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input
                 type="email"
                 label="Partner Work Email"
@@ -316,7 +319,7 @@ export const InterviewersPage: React.FC = () => {
             />
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-charcoal font-heading mb-1.5">
+              <label className="block text-xs font-mono uppercase tracking-wider text-slate-gray mb-1.5">
                 Maximum Daily Interview Load (Slots)
               </label>
               <input
@@ -325,10 +328,10 @@ export const InterviewersPage: React.FC = () => {
                 max={8}
                 value={formData.maxDailyLoad}
                 onChange={(e) => setFormData({ ...formData, maxDailyLoad: Number(e.target.value) })}
-                className="w-full h-10 rounded border border-soft-border bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:ring-1 focus:ring-muted-cobalt"
+                className="w-full h-10 rounded-lg border border-[#E4E3DD] bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:border-muted-cobalt"
                 required
               />
-              <p className="text-[11px] text-slate-gray mt-1">
+              <p className="text-[11px] text-slate-gray mt-1 font-body">
                 Hard constraint: Scheduler will not allocate slots beyond this threshold.
               </p>
             </div>
@@ -368,38 +371,38 @@ export const InterviewersPage: React.FC = () => {
               <DialogDescription>{viewingInterviewer.department}</DialogDescription>
             </DialogHeader>
 
-            <div className="space-y-4 pt-3 text-xs font-body text-charcoal">
+            <div className="space-y-5 pt-4 text-xs font-body text-charcoal border-t border-[#E4E3DD]/70">
               <div>
-                <span className="text-slate-gray uppercase font-mono text-[10px] block mb-1">
+                <span className="text-slate-gray uppercase font-mono text-[10px] block mb-2">
                   Availability Windows
                 </span>
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   {viewingInterviewer.availability.map((av) => (
-                    <div key={av.id} className="p-2 rounded bg-warm-ivory border border-soft-border flex items-center justify-between">
+                    <div key={av.id} className="p-3 rounded-lg bg-[#FAF9F5] border border-[#E4E3DD] flex items-center justify-between">
                       <span className="font-mono font-medium">Day {av.day} ({av.date})</span>
-                      <span className="font-mono text-muted-cobalt">{av.startTime} - {av.endTime}</span>
+                      <span className="font-mono text-muted-cobalt">{av.startTime} &ndash; {av.endTime}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div>
-                <span className="text-slate-gray uppercase font-mono text-[10px] block mb-1">
+                <span className="text-slate-gray uppercase font-mono text-[10px] block mb-2">
                   Scheduled Assignments ({viewingInterviewer.assignedCount})
                 </span>
                 {interviews.filter((i) => i.interviewerId === viewingInterviewer.id).length === 0 ? (
-                  <p className="text-slate-gray italic py-2">No active interviews assigned yet.</p>
+                  <p className="text-slate-gray italic py-3">No active interviews assigned yet.</p>
                 ) : (
-                  <div className="space-y-1.5">
+                  <div className="space-y-2">
                     {interviews
                       .filter((i) => i.interviewerId === viewingInterviewer.id)
                       .map((slot) => (
-                        <div key={slot.id} className="p-2 rounded border border-soft-border bg-[#FDFCFB] flex items-center justify-between">
+                        <div key={slot.id} className="p-3 rounded-lg border border-[#E4E3DD] bg-white flex items-center justify-between">
                           <div>
-                            <span className="font-semibold block font-heading">{slot.id}</span>
-                            <span className="font-mono text-slate-gray text-[11px]">{slot.date} | {slot.startTime} - {slot.endTime}</span>
+                            <span className="font-medium block font-heading text-charcoal">{slot.id}</span>
+                            <span className="font-mono text-slate-gray text-[11px]">{slot.date} &middot; {slot.startTime} &ndash; {slot.endTime}</span>
                           </div>
-                          <span className="font-mono text-xs px-2 py-0.5 rounded bg-success-green/10 text-success-green border border-success-green/30">
+                          <span className="font-mono text-xs px-2.5 py-0.5 rounded-full bg-[#EAF4EE] text-success-green border border-success-green/30">
                             {slot.status}
                           </span>
                         </div>

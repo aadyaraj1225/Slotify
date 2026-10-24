@@ -35,14 +35,14 @@ export const Dialog: React.FC<DialogProps> = ({ open, onOpenChange, children }) 
       role="dialog"
       aria-modal="true"
     >
-      {/* Backdrop */}
+      {/* Soft translucent backdrop */}
       <div
-        className="fixed inset-0 bg-charcoal/40 backdrop-blur-[2px] transition-opacity animate-in fade-in-0 duration-150"
+        className="fixed inset-0 bg-[#202321]/30 backdrop-blur-[2px] transition-opacity"
         onClick={() => onOpenChange(false)}
         aria-hidden="true"
       />
-      {/* Content wrapper */}
-      <div className="relative z-10 w-full flex justify-center py-6">
+      {/* Content box */}
+      <div className="relative z-10 w-full flex justify-center py-8">
         {children}
       </div>
     </div>
@@ -68,7 +68,7 @@ export const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps
       <div
         ref={ref}
         className={cn(
-          "relative w-full rounded-lg border border-soft-border bg-white p-6 shadow-elevated text-left",
+          "relative w-full rounded-xl border border-soft-border/90 bg-white p-7 sm:p-9 shadow-[0_4px_20px_rgba(32,35,33,0.06)] text-left",
           maxWidthMap[maxWidth],
           className
         )}
@@ -78,7 +78,7 @@ export const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps
           <button
             type="button"
             onClick={onClose}
-            className="absolute right-4 top-4 rounded p-1 text-slate-gray hover:text-charcoal hover:bg-warm-ivory transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-muted-cobalt"
+            className="absolute right-5 top-5 rounded p-1.5 text-slate-gray hover:text-charcoal hover:bg-warm-ivory transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-muted-cobalt"
             aria-label="Close dialog"
           >
             <X className="h-4 w-4" aria-hidden="true" />
@@ -96,7 +96,7 @@ export const DialogHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   ...props
 }) => (
   <div
-    className={cn("flex flex-col space-y-1.5 pb-4 border-b border-soft-border/70", className)}
+    className={cn("flex flex-col space-y-2 pb-5 border-b border-[#F0EFEB]", className)}
     {...props}
   />
 );
@@ -106,7 +106,7 @@ export const DialogTitle: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = (
   ...props
 }) => (
   <h3
-    className={cn("font-heading text-lg font-bold text-charcoal leading-tight", className)}
+    className={cn("font-heading text-xl font-semibold text-charcoal tracking-tight", className)}
     {...props}
   />
 );
@@ -115,7 +115,7 @@ export const DialogDescription: React.FC<React.HTMLAttributes<HTMLParagraphEleme
   className,
   ...props
 }) => (
-  <p className={cn("text-xs text-slate-gray font-body", className)} {...props} />
+  <p className={cn("text-xs text-slate-gray font-body leading-relaxed", className)} {...props} />
 );
 
 export const DialogFooter: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
@@ -123,7 +123,7 @@ export const DialogFooter: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   ...props
 }) => (
   <div
-    className={cn("flex items-center justify-end gap-2.5 pt-4 mt-6 border-t border-soft-border/70", className)}
+    className={cn("flex items-center justify-end gap-3 pt-5 mt-7 border-t border-[#F0EFEB]", className)}
     {...props}
   />
 );

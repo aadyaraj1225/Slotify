@@ -69,15 +69,15 @@ export const SchedulePage: React.FC = () => {
   const dates = Array.from(new Set(filteredInterviews.map((i) => i.date))).sort();
 
   return (
-    <div className="space-y-8 text-left">
+    <div className="px-6 sm:px-10 lg:px-14 py-8 sm:py-12 max-w-7xl mx-auto space-y-10 text-left">
       {/* Top Header Strip */}
-      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-[#E4E3DD]/80 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-6 border-b border-[#E4E3DD]/80 pb-8">
         <div>
           <span className="font-mono text-xs uppercase tracking-wider text-slate-gray block mb-1">
             Operational Timetable
           </span>
           <div className="flex items-center gap-3">
-            <h1 className="font-heading text-2xl sm:text-3xl font-medium tracking-tight text-charcoal">
+            <h1 className="font-heading text-3xl sm:text-4xl font-normal tracking-tight text-charcoal">
               Schedule &amp; Solver Grid
             </h1>
             <span className="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-pale-blue text-muted-cobalt border border-pale-blue-border/70">

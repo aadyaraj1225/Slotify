@@ -24,12 +24,12 @@ export const SettingsPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 text-left max-w-4xl">
-      <div className="border-b border-[#E4E3DD]/80 pb-6">
+    <div className="px-6 sm:px-10 lg:px-14 py-8 sm:py-12 max-w-5xl mx-auto space-y-10 text-left">
+      <div className="border-b border-[#E4E3DD]/80 pb-8">
         <span className="font-mono text-xs uppercase tracking-wider text-slate-gray block mb-1">
           Preferences &amp; Defaults
         </span>
-        <h1 className="font-heading text-2xl sm:text-3xl font-medium tracking-tight text-charcoal">
+        <h1 className="font-heading text-3xl sm:text-4xl font-normal tracking-tight text-charcoal">
           Scheduler Configuration
         </h1>
         <p className="font-body text-sm text-slate-gray mt-1.5">

@@ -161,18 +161,18 @@ export const DrivesPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-10 text-left">
+    <div className="px-6 sm:px-10 lg:px-14 py-8 sm:py-12 max-w-7xl mx-auto space-y-10 text-left">
       {/* Editorial Header */}
-      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-6 border-b border-[#F0EFEB] pb-8">
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-6 border-b border-[#E4E3DD]/80 pb-8">
         <div className="space-y-1.5 max-w-xl">
-          <h1 className="font-heading text-3xl font-semibold tracking-tight text-charcoal">
+          <h1 className="font-heading text-3xl sm:text-4xl font-normal tracking-tight text-charcoal">
             Recruitment Drives
           </h1>
           <p className="font-body text-sm text-slate-gray leading-relaxed">
             Configure campus placement drives, sequential interview stages, and evaluation scopes.
           </p>
         </div>
-        <Button variant="primary" size="md" onClick={handleOpenCreate} className="gap-2">
+        <Button variant="primary" size="md" onClick={handleOpenCreate} className="gap-2 px-5 py-2.5 text-xs font-medium">
           <Plus className="h-4 w-4" aria-hidden="true" />
           <span>New Recruitment Drive</span>
         </Button>

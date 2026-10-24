@@ -104,22 +104,22 @@ export const CandidatesPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 text-left">
+    <div className="px-6 sm:px-10 lg:px-14 py-8 sm:py-12 max-w-7xl mx-auto space-y-10 text-left">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-[#E4E3DD]/80 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-6 border-b border-[#E4E3DD]/80 pb-8">
         <div>
           <span className="font-mono text-xs uppercase tracking-wider text-slate-gray block mb-1">
             Recruitment Directory
           </span>
-          <h1 className="font-heading text-2xl sm:text-3xl font-medium tracking-tight text-charcoal">
+          <h1 className="font-heading text-3xl sm:text-4xl font-normal tracking-tight text-charcoal">
             Candidate Roster
           </h1>
           <p className="font-body text-sm text-slate-gray mt-1.5 max-w-xl">
             Track student applications, interview stage progress, and slot allocation statuses across drives.
           </p>
         </div>
-        <Button variant="primary" size="sm" onClick={handleOpenAdd} className="gap-2 self-start sm:self-auto px-4 py-2 text-xs">
-          <Plus className="h-3.5 w-3.5" aria-hidden="true" />
+        <Button variant="primary" size="md" onClick={handleOpenAdd} className="gap-2 self-start sm:self-auto px-5 py-2.5 text-xs font-medium">
+          <Plus className="h-4 w-4" aria-hidden="true" />
           <span>Register Candidate</span>
         </Button>
       </div>

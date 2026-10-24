@@ -145,14 +145,14 @@ export const RoomsPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 text-left">
+    <div className="px-6 sm:px-10 lg:px-14 py-8 sm:py-12 max-w-7xl mx-auto space-y-10 text-left">
       {/* Page Title & Navigation Tabs */}
-      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-[#E4E3DD]/80 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-6 border-b border-[#E4E3DD]/80 pb-8">
         <div>
           <span className="font-mono text-xs uppercase tracking-wider text-slate-gray block mb-1">
             Spatial &amp; Temporal Logistics
           </span>
-          <h1 className="font-heading text-2xl sm:text-3xl font-medium tracking-tight text-charcoal">
+          <h1 className="font-heading text-3xl sm:text-4xl font-normal tracking-tight text-charcoal">
             Venues &amp; Availability Windows
           </h1>
           <p className="font-body text-sm text-slate-gray mt-1.5 max-w-xl">
@@ -162,13 +162,13 @@ export const RoomsPage: React.FC = () => {
 
         <div className="flex items-center gap-2">
           {activeTab === "rooms" ? (
-            <Button variant="primary" size="sm" onClick={handleOpenAddRoom} className="gap-2 px-4 py-2 text-xs">
-              <Plus className="h-3.5 w-3.5" aria-hidden="true" />
+            <Button variant="primary" size="md" onClick={handleOpenAddRoom} className="gap-2 px-5 py-2.5 text-xs font-medium">
+              <Plus className="h-4 w-4" aria-hidden="true" />
               <span>Add Interview Room</span>
             </Button>
           ) : (
-            <Button variant="primary" size="sm" onClick={() => setIsAvailModalOpen(true)} className="gap-2 px-4 py-2 text-xs">
-              <Plus className="h-3.5 w-3.5" aria-hidden="true" />
+            <Button variant="primary" size="md" onClick={() => setIsAvailModalOpen(true)} className="gap-2 px-5 py-2.5 text-xs font-medium">
+              <Plus className="h-4 w-4" aria-hidden="true" />
               <span>Add Availability Window</span>
             </Button>
           )}

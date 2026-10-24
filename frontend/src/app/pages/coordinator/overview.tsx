@@ -1,14 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import {
-  Plus,
-  Play,
-  ArrowRight,
-  AlertTriangle,
-  MapPin,
-  Clock,
-  CheckCircle2,
-} from "lucide-react";
+import { Plus, ArrowRight, MapPin, Clock } from "lucide-react";
 import { useCoordinator } from "@/context/coordinator-context";
 import { Button } from "@/components/ui/button";
 import { StatusIndicator } from "@/components/ui/status-indicator";
@@ -21,7 +13,6 @@ export const CoordinatorOverviewPage: React.FC = () => {
     interviews,
     conflicts,
     selectedDriveId,
-    activeDrive,
   } = useCoordinator();
 
   const activeDrivesCount = drives.filter((d) => d.status === "active").length;
@@ -36,233 +27,161 @@ export const CoordinatorOverviewPage: React.FC = () => {
   const confirmedInterviewsCount = filteredInterviews.filter((i) => i.status === "confirmed").length;
 
   return (
-    <div className="space-y-12 text-left">
-      {/* Spacious Editorial Page Heading */}
-      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-6 border-b border-[#F0EFEB] pb-8">
-        <div className="space-y-1.5 max-w-xl">
-          <h1 className="font-heading text-3xl font-semibold tracking-tight text-charcoal">
-            Overview
-          </h1>
-          <p className="font-body text-sm text-slate-gray leading-relaxed">
-            Monitor active recruitment drives, candidate progress, and interview panel assignments.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <Link to="/coordinator/drives?action=new">
-            <Button variant="primary" size="md" className="gap-2">
-              <Plus className="h-4 w-4" aria-hidden="true" />
-              <span>Create Drive</span>
-            </Button>
-          </Link>
-          <Link to="/coordinator/schedule">
-            <Button variant="outline" size="md" className="gap-2">
-              <Play className="h-4 w-4" aria-hidden="true" />
-              <span>Open Schedule</span>
-            </Button>
-          </Link>
-        </div>
-      </div>
-
-      {/* Restrained Metric Blocks: 4 Key Figures with Generous Whitespace */}
-      <div className="rounded-xl border border-soft-border/90 bg-white p-8 sm:p-10 shadow-[0_1px_3px_rgba(32,35,33,0.02)]">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:divide-x lg:divide-[#F0EFEB]">
-          <div className="space-y-1">
-            <span className="text-xs text-slate-gray font-body font-medium">
-              Active Drives
-            </span>
-            <p className="font-heading text-4xl font-normal text-charcoal tracking-tight">
-              {activeDrivesCount}
-            </p>
-            <p className="text-xs text-slate-gray/80 pt-1">
-              of {drives.length} drives registered
+    <div className="space-y-12 sm:space-y-16 text-left pb-16">
+      {/* 1. Page Greeting & Primary Action on Warm Ivory Surface */}
+      <section className="px-6 sm:px-10 lg:px-14 pt-8 sm:pt-12">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6">
+          <div className="space-y-2 max-w-xl">
+            <h1 className="font-heading text-4xl sm:text-5xl font-normal tracking-tight text-charcoal">
+              Overview
+            </h1>
+            <p className="font-body text-base text-slate-gray">
+              Campus recruitment coordination and interview schedule status.
             </p>
           </div>
 
-          <div className="space-y-1 lg:pl-8">
-            <span className="text-xs text-slate-gray font-body font-medium">
-              Candidates in Scope
-            </span>
-            <p className="font-heading text-4xl font-normal text-charcoal tracking-tight">
-              {filteredCandidates.length}
-            </p>
-            <p className="text-xs text-slate-gray/80 pt-1">
-              across current drive scope
-            </p>
-          </div>
-
-          <div className="space-y-1 lg:pl-8">
-            <span className="text-xs text-slate-gray font-body font-medium">
-              Confirmed Interviews
-            </span>
-            <p className="font-heading text-4xl font-normal text-charcoal tracking-tight">
-              {confirmedInterviewsCount}
-            </p>
-            <p className="text-xs text-slate-gray/80 pt-1">
-              scheduled and verified
-            </p>
-          </div>
-
-          <div className="space-y-1 lg:pl-8">
-            <span className="text-xs text-slate-gray font-body font-medium">
-              Conflicts Requiring Attention
-            </span>
-            <p className={`font-heading text-4xl font-normal tracking-tight ${
-              conflicts.length > 0 ? "text-error-red" : "text-charcoal"
-            }`}>
-              {conflicts.length}
-            </p>
-            <p className="text-xs text-slate-gray/80 pt-1">
-              {conflicts.length === 0 ? "invariants respected" : "room buffer warnings"}
-            </p>
+          <div>
+            <Link to="/coordinator/drives?action=new">
+              <Button variant="primary" size="lg" className="gap-2 px-5 py-2.5 text-xs font-medium">
+                <Plus className="h-4 w-4" aria-hidden="true" />
+                <span>Create Recruitment Drive</span>
+              </Button>
+            </Link>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Conflict Notice Banner if present */}
-      {conflicts.length > 0 && (
-        <div className="rounded-xl border border-error-red/20 bg-[#FDF0F0] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="h-5 w-5 text-error-red shrink-0 mt-0.5" />
-            <div className="space-y-0.5">
-              <h4 className="font-heading text-sm font-semibold text-charcoal">
-                {conflicts[0].title}
-              </h4>
-              <p className="text-xs text-slate-gray leading-relaxed max-w-2xl">
-                {conflicts[0].description}
+      {/* 2. Soft Lavender-Blue Section: 4 Compact Summary Metrics (Deliberately Placed, Not Boxed into Cards) */}
+      <section className="bg-[#E9EEFC] border-y border-[#C8D7F9]/60 px-6 sm:px-10 lg:px-14 py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+            <div className="space-y-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-slate-gray block">
+                Active Drives
+              </span>
+              <p className="font-heading text-4xl sm:text-5xl font-normal text-charcoal tracking-tight">
+                {activeDrivesCount}
+              </p>
+              <p className="text-xs text-slate-gray/80 pt-1">
+                of {drives.length} drives configured
+              </p>
+            </div>
+
+            <div className="space-y-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-slate-gray block">
+                Registered Candidates
+              </span>
+              <p className="font-heading text-4xl sm:text-5xl font-normal text-charcoal tracking-tight">
+                {filteredCandidates.length}
+              </p>
+              <p className="text-xs text-slate-gray/80 pt-1">
+                in active interview pipelines
+              </p>
+            </div>
+
+            <div className="space-y-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-slate-gray block">
+                Confirmed Interviews
+              </span>
+              <p className="font-heading text-4xl sm:text-5xl font-normal text-charcoal tracking-tight">
+                {confirmedInterviewsCount}
+              </p>
+              <p className="text-xs text-slate-gray/80 pt-1">
+                slots locked in timetable
+              </p>
+            </div>
+
+            <div className="space-y-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-slate-gray block">
+                System Invariants
+              </span>
+              <p className={`font-heading text-4xl sm:text-5xl font-normal tracking-tight ${
+                conflicts.length > 0 ? "text-error-red" : "text-charcoal"
+              }`}>
+                {conflicts.length === 0 ? "Clean" : `${conflicts.length} Notice`}
+              </p>
+              <p className="text-xs text-slate-gray/80 pt-1">
+                {conflicts.length === 0 ? "all constraints respected" : "room buffer collision detected"}
               </p>
             </div>
           </div>
-          <Link to="/coordinator/schedule">
-            <Button variant="outline" size="sm" className="border-error-red/30 text-error-red hover:bg-error-red/10 shrink-0">
-              Inspect Schedule
-            </Button>
-          </Link>
         </div>
-      )}
+      </section>
 
-      {/* Main Content Layout: Upcoming Sessions & Facility Summary */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-        {/* Left: Upcoming Sessions Table */}
-        <div className="lg:col-span-8 space-y-4">
-          <div className="flex items-center justify-between">
+      {/* 3. Clean White Section: Upcoming Interviews */}
+      <section className="px-6 sm:px-10 lg:px-14">
+        <div className="max-w-7xl mx-auto bg-white rounded-2xl border border-[#E4E3DD]/80 p-8 sm:p-10 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+          <div className="flex items-center justify-between pb-6 border-b border-[#E4E3DD]/60 mb-6">
             <div>
-              <h2 className="font-heading text-lg font-semibold text-charcoal">
-                Upcoming Interview Sessions
+              <h2 className="font-heading text-xl font-normal text-charcoal">
+                Upcoming Interviews
               </h2>
-              <p className="text-xs text-slate-gray mt-0.5">
-                {activeDrive ? activeDrive.name : "All Drives"}
+              <p className="text-xs text-slate-gray mt-1">
+                Next scheduled panel sessions for active drives.
               </p>
             </div>
+
             <Link
               to="/coordinator/schedule"
-              className="text-xs font-medium text-muted-cobalt hover:underline flex items-center gap-1"
+              className="text-xs font-mono text-[#3559C7] hover:underline flex items-center gap-1.5"
             >
-              <span>Full timetable</span>
+              <span>Open Full Schedule</span>
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
 
-          <div className="rounded-xl border border-soft-border/90 bg-white overflow-hidden shadow-[0_1px_3px_rgba(32,35,33,0.02)]">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs font-body">
-                <thead className="border-b border-[#F0EFEB] bg-[#FAF9F5] font-heading font-medium text-slate-gray text-[11px]">
-                  <tr>
-                    <th className="px-6 py-4">Time Window</th>
-                    <th className="px-6 py-4">Candidate</th>
-                    <th className="px-6 py-4">Assigned Panel</th>
-                    <th className="px-6 py-4">Venue</th>
-                    <th className="px-6 py-4">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#F0EFEB]">
-                  {filteredInterviews.slice(0, 5).map((interview) => {
-                    const candidate = candidates.find((c) => c.id === interview.candidateId);
-                    const interviewer = interviewers.find((i) => i.id === interview.interviewerId);
-                    return (
-                      <tr key={interview.id} className="hover:bg-[#FAF9F6] transition-colors">
-                        <td className="px-6 py-4 font-mono text-charcoal">
-                          <div>{interview.date}</div>
-                          <div className="text-[11px] text-slate-gray">
-                            {interview.startTime} - {interview.endTime}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div className="font-medium text-charcoal text-sm">
-                            {candidate?.name || "Student Candidate"}
-                          </div>
-                          <div className="font-mono text-[11px] text-slate-gray">
-                            {candidate?.rollNo}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 text-slate-gray">
-                          {interviewer?.name || "Panelist"}
-                        </td>
-                        <td className="px-6 py-4 text-slate-gray">
-                          <span className="flex items-center gap-1.5">
-                            <MapPin className="h-3.5 w-3.5 text-slate-gray/70" />
-                            {interview.roomId === "room-1" ? "Hall 3, Block B" : "Conf Room 4"}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <StatusIndicator status={interview.status} size="sm" />
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs font-body">
+              <thead className="font-mono text-[11px] text-slate-gray uppercase tracking-wider border-b border-[#E4E3DD]/60">
+                <tr>
+                  <th className="py-3 pr-6 font-normal">Date &amp; Time</th>
+                  <th className="py-3 px-6 font-normal">Candidate</th>
+                  <th className="py-3 px-6 font-normal">Evaluator Panel</th>
+                  <th className="py-3 px-6 font-normal">Venue</th>
+                  <th className="py-3 pl-6 text-right font-normal">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#E4E3DD]/40">
+                {filteredInterviews.slice(0, 4).map((interview) => {
+                  const candidate = candidates.find((c) => c.id === interview.candidateId);
+                  const interviewer = interviewers.find((i) => i.id === interview.interviewerId);
+                  return (
+                    <tr key={interview.id} className="hover:bg-[#FAF9F5] transition-colors">
+                      <td className="py-4 pr-6 font-mono text-charcoal">
+                        <div className="font-medium">{interview.date}</div>
+                        <div className="text-[11px] text-slate-gray flex items-center gap-1 mt-0.5">
+                          <Clock className="h-3 w-3 text-slate-gray/70" />
+                          <span>{interview.startTime} &ndash; {interview.endTime}</span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="font-medium text-charcoal text-sm">
+                          {candidate?.name || "Student Candidate"}
+                        </div>
+                        <div className="font-mono text-[11px] text-slate-gray mt-0.5">
+                          {candidate?.rollNo}
+                        </div>
+                      </td>
+                      <td className="py-4 px-6 text-slate-gray">
+                        {interviewer?.name || "Panelist"}
+                      </td>
+                      <td className="py-4 px-6 text-slate-gray">
+                        <span className="flex items-center gap-1.5">
+                          <MapPin className="h-3.5 w-3.5 text-slate-gray/70" />
+                          {interview.roomId === "room-1" ? "Hall 3, Block B" : "Conf Room 4"}
+                        </span>
+                      </td>
+                      <td className="py-4 pl-6 text-right">
+                        <StatusIndicator status={interview.status} size="sm" />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </div>
-
-        {/* Right: Operational Status Checklist */}
-        <div className="lg:col-span-4 space-y-8">
-          <div className="rounded-xl border border-soft-border/90 bg-white p-7 shadow-[0_1px_3px_rgba(32,35,33,0.02)] space-y-6">
-            <h3 className="font-heading text-sm font-semibold text-charcoal">
-              Coordination Checklist
-            </h3>
-
-            <div className="space-y-4 text-xs font-body">
-              <div className="flex items-start gap-3">
-                <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#EAF4EE] text-success-green mt-0.5">
-                  <CheckCircle2 className="h-3.5 w-3.5" />
-                </div>
-                <div>
-                  <p className="font-medium text-charcoal">Drive Scope Verification</p>
-                  <p className="text-slate-gray mt-0.5 leading-relaxed">
-                    Student rosters mapped to eligible technical tracks.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#FDF6E7] text-warning-amber mt-0.5">
-                  <Clock className="h-3.5 w-3.5" />
-                </div>
-                <div>
-                  <p className="font-medium text-charcoal">Mandatory 15-Minute Buffer</p>
-                  <p className="text-slate-gray mt-0.5 leading-relaxed">
-                    Solver room cleaning intervals configured in settings.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#EAF4EE] text-success-green mt-0.5">
-                  <CheckCircle2 className="h-3.5 w-3.5" />
-                </div>
-                <div>
-                  <p className="font-medium text-charcoal">Panel Workload Safeguard</p>
-                  <p className="text-slate-gray mt-0.5 leading-relaxed">
-                    Max daily evaluations limited to avoid interviewer fatigue.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   );
 };

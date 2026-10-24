@@ -8,22 +8,24 @@ A constraint-based recruitment interview scheduling platform built for campus pl
 
 Slotify coordinates complex multi-round interview pipelines across students, interviewers, evaluation panels, and interview venues. The platform automates scheduling while enforcing critical invariants such as panelist workload limits, room availability, interview track prerequisites, and mandatory buffer intervals between sessions.
 
-This repository currently houses **Frontend Phase 1: Project Setup, Design System, Reusable UI Components, and Development Foundation**.
+This repository currently houses:
+- **Phase 1: Project Setup, Design System, and Reusable UI Primitives**
+- **Phase 2: Complete Landing Page and Navigation Foundation**
 
-Backend algorithm implementations (FastAPI, Google OR-Tools constraint solver), database layers, authentication, and booking mutations will follow in subsequent phases.
+Backend algorithm implementations (FastAPI, Google OR-Tools constraint solver), database layers, authentication, and live candidate self-booking portals will follow in subsequent phases.
 
 ---
 
 ## 2. Technology Stack
 
-The Phase 1 frontend stack is configured as follows:
+The frontend stack is configured as follows:
 
 - **Framework**: React 19 with TypeScript
 - **Build Tool**: Vite 8
 - **Styling**: Tailwind CSS (v3.4) with custom semantic design tokens
 - **Component Primitives**: Accessible headless UI primitives built with Radix UI (`@radix-ui/react-select`, `@radix-ui/react-slot`) and customized to Slotify design tokens
 - **Routing**: React Router DOM (v7)
-- **Icons**: Lucide React (restricted strictly to functional indicators: calendar, clock, user, pin, alert, chevron)
+- **Icons**: Lucide React (restricted strictly to functional indicators: calendar, clock, user, pin, alert, chevron, menu, arrow)
 - **Linter**: Oxlint for high-performance static analysis
 
 ---
@@ -53,24 +55,36 @@ Slotify/
         ├── app/
         │   ├── App.tsx
         │   └── pages/
+        │       ├── get-started.tsx
+        │       ├── landing.tsx
         │       ├── overview.tsx
         │       └── showcase.tsx
         ├── components/
-        │   ├── ui/
-        │   │   ├── button.tsx
-        │   │   ├── card.tsx
-        │   │   ├── divider.tsx
-        │   │   ├── input.tsx
-        │   │   ├── page-container.tsx
-        │   │   ├── select.tsx
-        │   │   ├── status-indicator.tsx
-        │   │   └── typography.tsx
+        │   ├── landing/
+        │   │   ├── approach-section.tsx
+        │   │   ├── call-to-action.tsx
+        │   │   ├── capabilities-section.tsx
+        │   │   ├── footer.tsx
+        │   │   ├── hero-section.tsx
+        │   │   ├── navbar.tsx
+        │   │   ├── problem-section.tsx
+        │   │   ├── schedule-preview.tsx
+        │   │   └── workflow-section.tsx
         │   ├── layout/
         │   │   ├── app-header.tsx
         │   │   └── app-layout.tsx
-        │   └── common/
-        │       ├── constraint-alert.tsx
-        │       └── interview-slot-card.tsx
+        │   ├── common/
+        │   │   ├── constraint-alert.tsx
+        │   │   └── interview-slot-card.tsx
+        │   └── ui/
+        │       ├── button.tsx
+        │       ├── card.tsx
+        │       ├── divider.tsx
+        │       ├── input.tsx
+        │       ├── page-container.tsx
+        │       ├── select.tsx
+        │       ├── status-indicator.tsx
+        │       └── typography.tsx
         ├── config/
         │   └── tokens.ts
         ├── lib/
@@ -133,9 +147,37 @@ npm run lint
 
 ---
 
-## 5. Approved Design System
+## 5. Routes and Navigation
 
-### 5.1 Color Palette
+The Phase 2 application provides four primary routes:
+
+1. **`/` (Landing Page)**: Complete product website with in-page navigation anchors (`#overview`, `#problem`, `#approach`, `#how-it-works`, `#capabilities`, `#preview`, `#cta`).
+2. **`/showcase` (Design System Showcase)**: Interactive catalog of color tokens, typography hierarchy, button variants, form inputs, Radix selects, status badges, and composite scheduling cards.
+3. **`/overview` (Phase 1 Foundation Overview)**: Architectural pillars, status taxonomy summary, and foundational configuration details.
+4. **`/get-started` (Onboarding Entry Notice)**: Transparent onboarding page explaining the current prototype status, available exploratory tools, and upcoming Phase 3 drive creation flows.
+5. **`*` (Wildcard Fallback)**: Automatically redirects unknown routes back to `/`.
+
+---
+
+## 6. Landing Page Sections (Phase 2)
+
+The landing page (`/`) incorporates nine dedicated sections:
+
+- **Section A: Navigation Bar (`Navbar`)**: Wordmark, smooth-scrolling section links, link to the design showcase, functional primary action ("Get started"), and a responsive mobile drawer menu with keyboard Escape support.
+- **Section B: Hero Section (`HeroSection`)**: Clear headline ("Every interview, in the right place."), concise supporting copy, dual CTA buttons ("Explore Slotify", "See how it works"), and a realistic multi-track scheduling workspace preview.
+- **Section C: The Problem (`ProblemSection`)**: Contextual breakdown of placement drive scale, addressing double bookings, fragmented interviewer availability, uneven loads, cancellations, and manual spreadsheet failure.
+- **Section D: The Slotify Approach (`ApproachSection`)**: Clear distinction between mandatory requirements (zero overlap, round qualification, room capacity, sequence integrity) and optimization goals (load balancing, candidate preferences, minimal gap, low-disruption recovery).
+- **Section E: How It Works (`WorkflowSection`)**: Structured 5-stage lifecycle: Drive Setup, Availability Intake, Schedule Generation, Candidate Booking, and Cancellation Recovery.
+- **Section F: Product Capabilities (`CapabilitiesSection`)**: Asymmetric feature grid highlighting constraint solvers, real-time recovery, student self-booking, panel workload tracking, multi-round gates, and candidate evaluation progression.
+- **Section G: Interactive Product Preview (`SchedulePreview`)**: Multi-day scheduling calendar with track filters (Software, Systems, Data), interactive slot selection, conflict alerts, and a detailed slot inspector panel using labeled sample data.
+- **Section H: Closing Call to Action (`CallToAction`)**: Focused closing message ("Make interview scheduling easier to coordinate.") guiding users to explore the live components or review repository source.
+- **Section I: Footer (`Footer`)**: Wordmark, product summary, section navigation links, GitHub repository link, and copyright notice.
+
+---
+
+## 7. Approved Design System
+
+### 7.1 Color Palette
 
 The Slotify visual language follows a light-first aesthetic designed for readability and sustained focus during high-density scheduling operations:
 
@@ -154,7 +196,7 @@ The Slotify visual language follows a light-first aesthetic designed for readabi
 
 All color values are defined in `src/config/tokens.ts` and exposed as Tailwind CSS utility classes and CSS variables.
 
-### 5.2 Typography System
+### 7.2 Typography System
 
 The interface pairs two purposeful sans-serif typefaces:
 
@@ -167,68 +209,26 @@ Fonts are imported via optimized Google Fonts links in `index.html` with preconn
 
 ---
 
-## 6. Reusable UI Components
-
-The following components are implemented in `src/components/ui/` and styled with Slotify design tokens:
-
-1. **Button** (`src/components/ui/button.tsx`):
-   - Variants: `primary`, `secondary`, `outline`, `destructive`, `ghost`.
-   - Sizes: `sm` (h-8), `md` (h-10), `lg` (h-11).
-   - Features: Accessible keyboard focus ring, loading spinner state, disabled state, and high-contrast hover styles.
-
-2. **Input** (`src/components/ui/input.tsx`):
-   - Form field with explicit label association, optional helper text, validation error state (`role="alert"`), and disabled styling.
-
-3. **Select** (`src/components/ui/select.tsx`):
-   - Accessible dropdown built upon Radix UI primitives.
-   - Includes custom trigger, scroll buttons, portal dropdown, and high-level `SelectField` wrapper for rapid form composition.
-
-4. **Card and Panel** (`src/components/ui/card.tsx`):
-   - Neutral white surface, soft border (`#E4E3DD`), restrained shadow, and modular subcomponents (`CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`, `Panel`).
-
-5. **Status Indicator** (`src/components/ui/status-indicator.tsx`):
-   - Multi-channel status display supporting `confirmed`, `pending`, `conflict`, and `cancelled`.
-   - Never relies on color alone: integrates icon indicators, semantic color tints, and explicit text labels.
-
-6. **Page Container** (`src/components/ui/page-container.tsx`):
-   - Responsive layout container with configurable maximum width (`narrow`, `default`, `wide`, `full`) and standardized horizontal padding.
-
-7. **Typography Helpers** (`src/components/ui/typography.tsx`):
-   - Standardized typographic primitives (`PageTitle`, `SectionHeading`, `SubsectionHeading`, `BodyText`, `SecondaryText`, `FieldLabel`, `MonoBadge`).
-
-8. **Divider** (`src/components/ui/divider.tsx`):
-   - Clean horizontal or vertical divider with optional text label.
-
----
-
-## 7. Component Showcase
-
-A dedicated development showcase route is available to preview all design tokens and UI components:
-
-- **Showcase URL**: `http://localhost:5173/showcase`
-- **Route Definition**: Defined in `src/app/App.tsx` pointing to `src/app/pages/showcase.tsx`.
-- **Contents**:
-  - Full color palette matrix with hex codes, semantic roles, and contrast checks.
-  - Typographic scale demonstration.
-  - Button matrix across variants, sizes, and states (active, disabled, loading).
-  - Form controls with interactive validation states.
-  - Status indicators and constraint alert boxes.
-  - Realistic interview scheduling composite cards with interactive slot selection.
-
----
-
 ## 8. Development Roadmap
 
 ### Phase 1 (Completed)
 - Project directory organization and build tooling.
 - Approved color palette and typography token configuration.
-- Reusable UI component library.
+- Reusable UI component library (Button, Input, Select, Card, StatusIndicator, PageContainer, Typography).
 - Accessible layout shell and page routing.
 - Interactive design system showcase.
 
-### Phase 2 (Upcoming)
-- Interviewer availability intake forms.
-- Candidate slot selection and booking flows.
-- FastAPI backend integration.
-- Google OR-Tools constraint satisfaction engine.
-- Conflict resolution workspace and administrative overview.
+### Phase 2 (Completed)
+- Complete, responsive product landing page (Sections A through I).
+- Responsive navigation bar with mobile drawer menu and keyboard controls.
+- Editorial problem breakdown and constraint architecture comparison.
+- 5-stage product workflow visualization.
+- Interactive schedule workspace preview with day/track filters and slot inspector.
+- Transparent onboarding route (`/get-started`).
+
+### Phase 3 (Upcoming)
+- Placement coordinator drive setup and recruitment track editor.
+- Interviewer availability intake forms and capacity limits.
+- Student authentication and self-booking interface.
+- FastAPI backend integration with Google OR-Tools constraint satisfaction engine.
+- Cancellation recovery resolution workspace.

@@ -135,8 +135,8 @@ export const OverviewPage: React.FC = () => {
             </h4>
             <SecondaryText size="xs">
               Backend algorithms (FastAPI, Google OR-Tools constraint solver), database integrations,
-              and candidate booking mutations are reserved for Phase 2. This codebase establishes the
-              design system and component architecture.
+              and candidate booking mutations are reserved for Phase 3. This codebase establishes the
+              design system, component architecture, and landing page experience.
             </SecondaryText>
           </div>
         </div>

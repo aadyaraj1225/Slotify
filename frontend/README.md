@@ -20,6 +20,9 @@ npm run build
 npm run lint
 ```
 
-## Component Showcase
+## Available Routes
 
-Access the interactive design system showcase during local development at `/showcase`.
+- `/`: Product Landing Page
+- `/showcase`: Design System and UI Component Showcase
+- `/overview`: Phase 1 Architecture Overview
+- `/get-started`: Onboarding Status and Temporary Entry Notice

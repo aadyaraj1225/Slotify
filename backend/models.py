@@ -231,6 +231,65 @@ class Notification(Base):
     booking = relationship("Booking", backref="notifications")
 
 
+class EvaluationStatus(str, enum.Enum):
+    DRAFT = "draft"
+    SUBMITTED = "submitted"
+
+
+class CandidateProgressionStatus(str, enum.Enum):
+    PENDING = "pending"
+    QUALIFIED = "qualified"
+    REJECTED = "rejected"
+    ABSENT = "absent"
+
+
+class RoundConfig(Base):
+    """
+    Recruitment drive round configuration entity.
+    Defines round sequence, scoring criteria, weights, and minimum passing threshold.
+    """
+    __tablename__ = "round_configs"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    drive_id = Column(String(36), ForeignKey("recruitment_drives.id", ondelete="CASCADE"), nullable=False, index=True)
+    round_number = Column(Integer, nullable=False)
+    name = Column(String(100), nullable=False)
+    round_type = Column(String(50), default="technical", nullable=False)  # coding, technical, hr, system_design
+    duration_minutes = Column(Integer, default=60, nullable=False)
+    min_passing_score = Column(Integer, default=70, nullable=False)  # percentage out of 100
+    criteria_weights = Column(JSON, nullable=True)  # e.g., {"technical": 0.5, "problem_solving": 0.3, "communication": 0.2}
+    max_score = Column(Integer, default=10, nullable=False)  # e.g. 5 or 10 scale
+    created_at = Column(DateTime(timezone=True), default=utc_now, nullable=False)
+    updated_at = Column(DateTime(timezone=True), default=utc_now, onupdate=utc_now, nullable=False)
+
+    drive = relationship("RecruitmentDrive", backref="round_configs")
+
+
+class CandidateRoundProgress(Base):
+    """
+    Candidate progression tracking per drive and round.
+    Ensures multi-round advancement is clean, auditable, and prevents duplicate promotions.
+    """
+    __tablename__ = "candidate_round_progress"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    drive_id = Column(String(36), ForeignKey("recruitment_drives.id", ondelete="CASCADE"), nullable=False, index=True)
+    candidate_id = Column(String(36), ForeignKey("candidates.id", ondelete="CASCADE"), nullable=False, index=True)
+    round_number = Column(Integer, nullable=False)
+    status = Column(
+        Enum(CandidateProgressionStatus, name="candidate_progression_status", native_enum=False),
+        default=CandidateProgressionStatus.PENDING,
+        nullable=False,
+    )
+    aggregate_score = Column(Integer, nullable=True)  # Scaled percentage or weighted total
+    notes = Column(Text, nullable=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now, nullable=False)
+    updated_at = Column(DateTime(timezone=True), default=utc_now, onupdate=utc_now, nullable=False)
+
+    candidate = relationship("Candidate", backref="round_progressions")
+    drive = relationship("RecruitmentDrive", backref="candidate_progressions")
+
+
 class Evaluation(Base):
     """
     Rubric evaluation and feedback scorecard filled by an interviewer for a booking.
@@ -243,11 +302,64 @@ class Evaluation(Base):
     scores = Column(JSON, nullable=True)  # Dictionary of criteria scores, e.g. {"technical": 9, "communication": 8}
     feedback = Column(Text, nullable=True)
     recommendation = Column(String(50), nullable=True)  # e.g., "hire", "strong_hire", "reject", "hold"
+    status = Column(
+        Enum(EvaluationStatus, name="evaluation_status", native_enum=False),
+        default=EvaluationStatus.SUBMITTED,
+        nullable=False,
+    )
+    total_score = Column(Integer, nullable=True)
     created_at = Column(DateTime(timezone=True), default=utc_now, nullable=False)
     updated_at = Column(DateTime(timezone=True), default=utc_now, onupdate=utc_now, nullable=False)
 
     # Relationships
     booking = relationship("Booking", back_populates="evaluation")
     interviewer = relationship("Interviewer", back_populates="evaluations")
+
+
+class RecoveryStatus(str, enum.Enum):
+    PROPOSED = "proposed"
+    APPLIED = "applied"
+    REJECTED = "rejected"
+    FAILED = "failed"
+    INFEASIBLE = "infeasible"
+
+
+class DisruptionType(str, enum.Enum):
+    INTERVIEWER_UNAVAILABLE = "interviewer_unavailable"
+    ROOM_UNAVAILABLE = "room_unavailable"
+    CANDIDATE_UNAVAILABLE = "candidate_unavailable"
+    SCHEDULE_CONFLICT = "schedule_conflict"
+
+
+class ScheduleRecovery(Base):
+    """
+    Schedule recovery record storing disruption audit trail, proposed and applied reassignments.
+    """
+    __tablename__ = "schedule_recoveries"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    drive_id = Column(String(36), ForeignKey("recruitment_drives.id", ondelete="CASCADE"), nullable=False, index=True)
+    initiated_by_profile_id = Column(String(36), ForeignKey("profiles.id", ondelete="SET NULL"), nullable=True, index=True)
+    disruption_type = Column(
+        Enum(DisruptionType, name="disruption_type", native_enum=False),
+        nullable=False,
+    )
+    status = Column(
+        Enum(RecoveryStatus, name="recovery_status", native_enum=False),
+        default=RecoveryStatus.PROPOSED,
+        nullable=False,
+    )
+    affected_booking_ids = Column(JSON, nullable=False)  # List of booking IDs disrupted
+    original_assignments = Column(JSON, nullable=False)  # Snapshot of original booking data
+    proposed_assignments = Column(JSON, nullable=False)  # Proposed replacement details
+    diagnostics = Column(JSON, nullable=True)  # List of diagnostic strings or reasons
+    created_at = Column(DateTime(timezone=True), default=utc_now, nullable=False)
+    applied_at = Column(DateTime(timezone=True), nullable=True)
+
+    drive = relationship("RecruitmentDrive", backref="recoveries")
+    initiated_by = relationship("Profile", backref="initiated_recoveries")
+
+
+
 
 

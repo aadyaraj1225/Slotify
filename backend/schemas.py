@@ -1,7 +1,17 @@
 from datetime import datetime
 from typing import Optional, List, Dict, Any
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, model_validator
-from models import UserRole, DriveStatus, AvailabilityStatus, BookingStatus, NotificationType
+from models import (
+    UserRole,
+    DriveStatus,
+    AvailabilityStatus,
+    BookingStatus,
+    NotificationType,
+    EvaluationStatus,
+    CandidateProgressionStatus,
+    RecoveryStatus,
+    DisruptionType,
+)
 
 
 # ---------------------------------------------------------
@@ -283,21 +293,152 @@ class CandidateBookingRequest(BaseModel):
 # Evaluation Schemas
 # ---------------------------------------------------------
 class EvaluationBase(BaseModel):
+    scores: Optional[Dict[str, float]] = None  # e.g., {"technical": 9.0, "communication": 8.0}
+    feedback: Optional[str] = None
+    recommendation: Optional[str] = None
+    status: EvaluationStatus = EvaluationStatus.SUBMITTED
+
+
+class EvaluationSubmitRequest(BaseModel):
+    scores: Dict[str, float]  # Must provide non-empty scores
+    feedback: Optional[str] = None
+    recommendation: Optional[str] = None
+    status: EvaluationStatus = EvaluationStatus.SUBMITTED
+
+
+class EvaluationCreate(BaseModel):
+    booking_id: str
+    interviewer_id: str
     scores: Optional[Dict[str, Any]] = None
     feedback: Optional[str] = None
     recommendation: Optional[str] = None
+    status: EvaluationStatus = EvaluationStatus.SUBMITTED
 
-
-class EvaluationCreate(EvaluationBase):
-    booking_id: str
-    interviewer_id: str
 
 
 class EvaluationRead(EvaluationBase):
     id: str
     booking_id: str
     interviewer_id: str
+    interviewer_name: Optional[str] = None
+    candidate_id: Optional[str] = None
+    candidate_name: Optional[str] = None
+    round_number: Optional[int] = None
+    total_score: Optional[int] = None
     created_at: datetime
     updated_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+
+# ---------------------------------------------------------
+# Round Configuration & Progression Schemas
+# ---------------------------------------------------------
+class RoundConfigBase(BaseModel):
+    round_number: int = Field(..., ge=1)
+    name: str = Field(..., min_length=1, max_length=100)
+    round_type: str = Field(default="technical")
+    duration_minutes: int = Field(default=60, ge=15, le=480)
+    min_passing_score: int = Field(default=70, ge=0, le=100)
+    criteria_weights: Optional[Dict[str, float]] = None
+    max_score: int = Field(default=10, ge=1, le=100)
+
+
+class RoundConfigCreate(RoundConfigBase):
+    pass
+
+
+class RoundConfigRead(RoundConfigBase):
+    id: str
+    drive_id: str
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class CandidateProgressRead(BaseModel):
+    id: str
+    drive_id: str
+    candidate_id: str
+    candidate_name: str
+    candidate_roll_no: Optional[str] = None
+    round_number: int
+    round_name: Optional[str] = None
+    status: CandidateProgressionStatus
+    aggregate_score: Optional[int] = None
+    notes: Optional[str] = None
+    updated_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class DriveCandidateResult(BaseModel):
+    rank: int
+    candidate_id: str
+    candidate_name: str
+    candidate_email: Optional[str] = None
+    student_id: Optional[str] = None
+    current_round: int
+    status: CandidateProgressionStatus
+    overall_score: float
+    round_scores: Dict[int, float]
+    evaluations_completed: int
+    is_provisional: bool
+
+
+# ---------------------------------------------------------
+# Schedule Recovery Schemas (Phase 8)
+# ---------------------------------------------------------
+class DisruptionInput(BaseModel):
+    disruption_type: DisruptionType
+    unavailable_interviewer_id: Optional[str] = None
+    unavailable_room_id: Optional[str] = None
+    unavailable_candidate_id: Optional[str] = None
+    start_time: Optional[datetime] = None
+    end_time: Optional[datetime] = None
+    reason: Optional[str] = None
+
+
+class ProposedAssignmentChange(BaseModel):
+    booking_id: str
+    candidate_id: str
+    candidate_name: str
+    original_interviewer_id: str
+    original_interviewer_name: str
+    proposed_interviewer_id: str
+    proposed_interviewer_name: str
+    original_room_id: Optional[str] = None
+    original_room_name: Optional[str] = None
+    proposed_room_id: Optional[str] = None
+    proposed_room_name: Optional[str] = None
+    original_start_time: datetime
+    original_end_time: datetime
+    proposed_start_time: datetime
+    proposed_end_time: datetime
+    change_reason: str
+
+
+class RecoveryPreviewResponse(BaseModel):
+    recovery_id: str
+    drive_id: str
+    status: RecoveryStatus
+    disruption_type: DisruptionType
+    total_affected: int
+    recoverable_count: int
+    unrecoverable_count: int
+    proposed_changes: List[ProposedAssignmentChange]
+    diagnostics: List[str]
+    created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class RecoveryApplyResponse(BaseModel):
+    recovery_id: str
+    status: RecoveryStatus
+    applied_count: int
+    message: str
+    applied_at: datetime
+
+

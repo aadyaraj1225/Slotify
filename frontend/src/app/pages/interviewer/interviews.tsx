@@ -2,12 +2,13 @@ import * as React from "react";
 import { Clock, MapPin, FileText } from "lucide-react";
 import { useAuth } from "@/context/auth-context";
 import { useCoordinator } from "@/context/coordinator-context";
+import { apiClient } from "@/lib/api-client";
 import { Button } from "@/components/ui/button";
 import { StatusIndicator } from "@/components/ui/status-indicator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 
 export const InterviewerInterviewsPage: React.FC = () => {
-  const { user } = useAuth();
+  const { token, user } = useAuth();
   const { interviewers, interviews, candidates, rooms, drives } = useCoordinator();
 
   const currentInterviewer = interviewers.find(
@@ -20,16 +21,41 @@ export const InterviewerInterviewsPage: React.FC = () => {
   const [recommendation, setRecommendation] = React.useState("Advance to Next Round");
   const [feedback, setFeedback] = React.useState("");
   const [savedSuccess, setSavedSuccess] = React.useState(false);
+  const [, setErrorMessage] = React.useState<string | null>(null);
 
-  const handleSubmitScorecard = (e: React.FormEvent) => {
+
+  const handleSubmitScorecard = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(null);
+
+    if (token && evaluatingSession) {
+      try {
+        await apiClient<any>(`/bookings/${evaluatingSession.id}/evaluations`, {
+          method: "POST",
+          token,
+          body: JSON.stringify({
+            scores: {
+              technical: parseFloat(score) * 2, // scale to 10
+            },
+            feedback,
+            recommendation,
+            status: "submitted",
+          }),
+        });
+      } catch (err: any) {
+        setErrorMessage(err.message || "Failed to submit evaluation to backend.");
+      }
+    }
+
     setSavedSuccess(true);
     setTimeout(() => {
       setSavedSuccess(false);
       setEvaluatingSession(null);
       setFeedback("");
+      setErrorMessage(null);
     }, 2000);
   };
+
 
   return (
     <div className="space-y-10 sm:space-y-12 px-6 sm:px-10 lg:px-14 py-8 sm:py-12 max-w-6xl mx-auto text-left">

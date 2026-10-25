@@ -9,6 +9,10 @@ from routes_rooms import router as rooms_router
 from routes_availability import router as availability_router
 from routes_scheduling import router as scheduling_router
 from routes_candidate_booking import router as candidate_booking_router
+from routes_evaluations import router as evaluations_router
+from routes_recovery import router as recovery_router
+
+
 
 
 
@@ -38,6 +42,10 @@ def create_app() -> FastAPI:
     app.include_router(availability_router)
     app.include_router(scheduling_router)
     app.include_router(candidate_booking_router)
+    app.include_router(evaluations_router)
+    app.include_router(recovery_router)
+
+
 
 
 

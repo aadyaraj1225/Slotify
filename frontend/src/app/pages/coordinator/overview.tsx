@@ -32,9 +32,6 @@ export const CoordinatorOverviewPage: React.FC = () => {
       <section className="px-6 sm:px-10 lg:px-14 pt-8 sm:pt-12">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6">
           <div className="space-y-2 max-w-xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-deep-black/30 bg-white px-3 py-0.5 text-xs font-mono font-medium text-deep-black">
-              <span>COORDINATOR DASHBOARD</span>
-            </div>
             <h1 className="font-heading text-4xl sm:text-5xl font-extrabold tracking-tight text-deep-black">
               Overview
             </h1>

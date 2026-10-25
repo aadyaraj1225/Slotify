@@ -6,9 +6,6 @@ export const CapabilitiesSection: React.FC = () => {
     <section id="features" className="py-24 sm:py-32 bg-deep-black text-white border-b border-[#252525]">
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 text-left">
         <div className="max-w-2xl space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-electric-lime/60 bg-electric-lime/10 px-4 py-1 text-xs font-mono font-medium text-electric-lime">
-            <span>CORE INVARIANTS</span>
-          </div>
           <h2 className="font-heading text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
             Engineered for campus hiring constraints.
           </h2>
@@ -26,9 +23,6 @@ export const CapabilitiesSection: React.FC = () => {
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-hot-pink text-white font-mono font-black text-xl shadow-[2px_2px_0px_#FFFFFF]">
                   <Cpu className="h-6 w-6" aria-hidden="true" />
                 </div>
-                <span className="font-mono text-xs text-hot-pink uppercase tracking-widest px-3 py-1 rounded-full border border-hot-pink/40 bg-hot-pink/10">
-                  Deterministic Solver
-                </span>
               </div>
               <h3 className="font-heading text-2xl sm:text-3xl font-bold text-white">
                 Constraint-based schedule generation
@@ -50,9 +44,6 @@ export const CapabilitiesSection: React.FC = () => {
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-electric-lime text-deep-black font-mono font-black text-xl shadow-[2px_2px_0px_#101010]">
                   <ShieldCheck className="h-6 w-6" aria-hidden="true" />
                 </div>
-                <span className="font-mono text-xs text-electric-lime uppercase tracking-widest px-3 py-1 rounded-full border border-electric-lime/40 bg-electric-lime/10">
-                  Buffer Guard
-                </span>
               </div>
               <h3 className="font-heading text-2xl sm:text-3xl font-bold text-white">
                 Mandatory venue cleaning intervals
@@ -74,9 +65,6 @@ export const CapabilitiesSection: React.FC = () => {
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-blue text-deep-black font-mono font-black text-xl shadow-[2px_2px_0px_#FFFFFF]">
                   <Users className="h-6 w-6" aria-hidden="true" />
                 </div>
-                <span className="font-mono text-xs text-sky-blue uppercase tracking-widest px-3 py-1 rounded-full border border-sky-blue/40 bg-sky-blue/10">
-                  Panel Safeguard
-                </span>
               </div>
               <h3 className="font-heading text-xl sm:text-2xl font-bold text-white">
                 Equitable evaluator load balancing
@@ -98,9 +86,6 @@ export const CapabilitiesSection: React.FC = () => {
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-warning-amber text-deep-black font-mono font-black text-xl shadow-[2px_2px_0px_#101010]">
                   <AlertTriangle className="h-6 w-6" aria-hidden="true" />
                 </div>
-                <span className="font-mono text-xs text-warning-amber uppercase tracking-widest px-3 py-1 rounded-full border border-warning-amber/40 bg-warning-amber/10">
-                  Live Recovery
-                </span>
               </div>
               <h3 className="font-heading text-xl sm:text-2xl font-bold text-white">
                 Immediate invariant clash inspection

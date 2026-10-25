@@ -102,7 +102,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
               >
                 <span>{item.label}</span>
                 {item.label === "Schedule" && conflicts.length > 0 && (
-                  <span className="rounded-full bg-hot-pink px-2 py-0.5 font-mono text-[10px] text-white font-bold">
+                  <span className="rounded bg-hot-pink px-2 py-0.5 font-mono text-[10px] text-white font-bold">
                     {conflicts.length}
                   </span>
                 )}
@@ -201,7 +201,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
               {profileOpen && (
                 <div className="absolute right-0 mt-3 w-64 rounded-xl border-2 border-deep-black bg-white p-5 shadow-[4px_4px_0px_#101010] z-50 text-left space-y-3">
                   <div>
-                    <span className="inline-block rounded-full bg-electric-lime px-2.5 py-0.5 font-mono text-[10px] text-deep-black font-bold border border-deep-black/30">
+                    <span className="inline-block rounded bg-electric-lime px-2 py-0.5 font-mono text-[10px] text-deep-black font-bold border border-deep-black/30">
                       Placement Lead
                     </span>
                     <p className="font-heading font-bold text-sm text-deep-black mt-1.5">

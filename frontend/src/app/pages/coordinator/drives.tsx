@@ -150,13 +150,13 @@ export const DrivesPage: React.FC = () => {
   const getStatusBadge = (status: DriveStatus) => {
     switch (status) {
       case "active":
-        return <span className="rounded-full bg-electric-lime text-deep-black border border-deep-black/30 px-3 py-0.5 text-[11px] font-mono font-bold">Active</span>;
+        return <span className="rounded bg-electric-lime text-deep-black border border-deep-black/30 px-2 py-0.5 text-[11px] font-mono font-bold">Active</span>;
       case "planning":
-        return <span className="rounded-full bg-sky-blue text-deep-black border border-deep-black/30 px-3 py-0.5 text-[11px] font-mono font-bold">Planning</span>;
+        return <span className="rounded bg-sky-blue text-deep-black border border-deep-black/30 px-2 py-0.5 text-[11px] font-mono font-bold">Planning</span>;
       case "completed":
-        return <span className="rounded-full bg-[#EFEFEA] text-slate-gray border border-[#E4E3DD] px-3 py-0.5 text-[11px] font-mono font-medium">Completed</span>;
+        return <span className="rounded bg-[#EFEFEA] text-slate-gray border border-[#E4E3DD] px-2 py-0.5 text-[11px] font-mono font-medium">Completed</span>;
       case "paused":
-        return <span className="rounded-full bg-warning-amber text-deep-black border border-deep-black/30 px-3 py-0.5 text-[11px] font-mono font-bold">Paused</span>;
+        return <span className="rounded bg-warning-amber text-deep-black border border-deep-black/30 px-2 py-0.5 text-[11px] font-mono font-bold">Paused</span>;
     }
   };
 
@@ -228,7 +228,7 @@ export const DrivesPage: React.FC = () => {
                     </span>
                     {getStatusBadge(drive.status)}
                     {isSelected && (
-                      <span className="text-[11px] font-mono text-deep-black bg-electric-lime px-2 py-0.5 rounded-full font-bold border border-deep-black/30">
+                      <span className="text-[11px] font-mono text-deep-black bg-electric-lime px-2 py-0.5 rounded font-bold border border-deep-black/30">
                         Active Scope
                       </span>
                     )}

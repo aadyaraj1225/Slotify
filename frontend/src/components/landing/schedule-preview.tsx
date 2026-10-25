@@ -115,9 +115,6 @@ export const SchedulePreview: React.FC = () => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-2xl space-y-4">
-            <div className="inline-flex items-center gap-2 rounded-full border border-deep-black/30 bg-white px-3.5 py-1 text-xs font-mono font-medium text-deep-black">
-              <span>INTERACTIVE SCHEDULE PREVIEW</span>
-            </div>
             <h2 className="font-heading text-4xl sm:text-5xl font-extrabold tracking-tight text-deep-black leading-tight">
               A clear view of every room and panel.
             </h2>
@@ -219,7 +216,7 @@ export const SchedulePreview: React.FC = () => {
                               {slot.roll}
                             </span>
                             {isSelected && (
-                              <span className="text-[10px] font-mono uppercase bg-hot-pink text-white px-2 py-0.5 rounded-full font-bold">
+                              <span className="text-[10px] font-mono uppercase bg-hot-pink text-white px-2 py-0.5 rounded font-bold">
                                 Active
                               </span>
                             )}

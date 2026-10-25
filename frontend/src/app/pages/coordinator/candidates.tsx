@@ -213,7 +213,7 @@ export const CandidatesPage: React.FC = () => {
                       </td>
                       <td className="px-6 py-4">
                         {candidate.bookingStatus === "unassigned" ? (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-mono font-normal bg-[#ECEAE4]/70 text-slate-gray border border-[#E4E3DD]">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-white text-deep-black border border-deep-black/30">
                             Awaiting Slot
                           </span>
                         ) : (

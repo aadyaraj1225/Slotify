@@ -191,7 +191,7 @@ export const InterviewersPage: React.FC = () => {
                   {int.expertise.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-sky-blue/20 px-2.5 py-0.5 text-[10px] font-mono text-deep-black font-bold border border-sky-blue/50"
+                      className="rounded bg-sky-blue/20 px-2 py-0.5 text-[10px] font-mono text-deep-black font-bold border border-sky-blue/50"
                     >
                       {tag}
                     </span>
@@ -402,7 +402,7 @@ export const InterviewersPage: React.FC = () => {
                             <span className="font-medium block font-heading text-charcoal">{slot.id}</span>
                             <span className="font-mono text-slate-gray text-[11px]">{slot.date} &middot; {slot.startTime} &ndash; {slot.endTime}</span>
                           </div>
-                          <span className="font-mono text-xs px-2.5 py-0.5 rounded-full bg-[#EAF4EE] text-success-green border border-success-green/30">
+                          <span className="font-mono text-xs px-2.5 py-0.5 rounded bg-[#EAF4EE] text-success-green border border-success-green/30 font-bold">
                             {slot.status}
                           </span>
                         </div>

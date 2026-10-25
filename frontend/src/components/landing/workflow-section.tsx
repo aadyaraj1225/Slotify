@@ -29,9 +29,6 @@ export const WorkflowSection: React.FC = () => {
     <section id="how-it-works" className="py-24 sm:py-32 bg-warm-offwhite border-b border-[#E4E3DD] text-deep-black">
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 text-left">
         <div className="max-w-2xl space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-deep-black/30 bg-white px-3.5 py-1 text-xs font-mono font-medium text-deep-black">
-            <span>THREE-STAGE WORKFLOW</span>
-          </div>
           <h2 className="font-heading text-4xl sm:text-5xl font-extrabold tracking-tight text-deep-black leading-tight">
             How Slotify delivers zero clashes.
           </h2>
@@ -51,9 +48,6 @@ export const WorkflowSection: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-4xl font-extrabold text-deep-black">
                     {step.num}
-                  </span>
-                  <span className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-deep-black text-electric-lime font-bold">
-                    {step.badge}
                   </span>
                 </div>
                 <h3 className="font-heading text-xl font-bold text-deep-black pt-2">

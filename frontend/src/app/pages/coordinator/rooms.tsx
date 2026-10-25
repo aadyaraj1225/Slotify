@@ -228,11 +228,11 @@ export const RoomsPage: React.FC = () => {
                     title={room.isAvailable ? "Mark Offline" : "Mark Available"}
                   >
                     {room.isAvailable ? (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#70D6A0]/20 text-[#145a33] border border-[#70D6A0]/60 px-2.5 py-0.5 text-[11px] font-mono font-bold">
+                      <span className="inline-flex items-center gap-1.5 rounded bg-[#70D6A0]/20 text-[#145a33] border border-[#70D6A0]/60 px-2 py-0.5 text-[11px] font-mono font-bold">
                         <CheckCircle2 className="h-3 w-3" /> Available
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FF6262]/20 text-[#b51c1c] border border-[#FF6262]/60 px-2.5 py-0.5 text-[11px] font-mono font-bold">
+                      <span className="inline-flex items-center gap-1.5 rounded bg-[#FF6262]/20 text-[#b51c1c] border border-[#FF6262]/60 px-2 py-0.5 text-[11px] font-mono font-bold">
                         <XCircle className="h-3 w-3" /> Offline
                       </span>
                     )}
@@ -255,7 +255,7 @@ export const RoomsPage: React.FC = () => {
                     {room.equipment.map((eq) => (
                       <span
                         key={eq}
-                        className="rounded-full bg-[#FAF9F5] px-2.5 py-0.5 text-[10px] font-mono text-deep-black border border-deep-black/20 font-medium"
+                        className="rounded bg-warm-offwhite px-2 py-0.5 text-[10px] font-mono text-deep-black border border-deep-black/20 font-medium"
                       >
                         {eq}
                       </span>
@@ -329,7 +329,7 @@ export const RoomsPage: React.FC = () => {
                           {int.availability.map((av) => (
                             <span
                               key={av.id}
-                              className="inline-flex items-center gap-1.5 rounded-full bg-pale-blue/60 px-3 py-1 text-xs font-mono text-muted-cobalt border border-pale-blue-border/70"
+                              className="inline-flex items-center gap-1.5 rounded bg-warm-offwhite px-2.5 py-1 text-xs font-mono text-deep-black border border-deep-black/30 font-medium"
                             >
                               <Clock className="h-3 w-3 shrink-0" />
                               <span>Day {av.day} ({av.startTime} &ndash; {av.endTime})</span>

@@ -34,11 +34,18 @@ export const GetStartedPage: React.FC = () => {
             candidate rosters, inspect panel workloads, and run the simulated constraint schedule generator.
           </BodyText>
 
-          <div className="pt-2">
+          <div className="pt-2 flex flex-col sm:flex-row gap-4">
             <Link to="/coordinator/overview">
               <Button variant="primary" size="lg" className="gap-2">
                 <LayoutDashboard className="h-4 w-4" />
                 <span>Launch Coordinator Dashboard</span>
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+            <Link to="/candidate/overview">
+              <Button variant="outline" size="lg" className="gap-2 border-2 border-deep-black">
+                <Calendar className="h-4 w-4" />
+                <span>Launch Candidate Portal</span>
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>

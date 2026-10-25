@@ -74,7 +74,13 @@ export const Navbar: React.FC = () => {
             to="/coordinator/overview"
             className="text-xs uppercase tracking-wider font-mono text-muted-gray hover:text-white transition-colors"
           >
-            Dashboard
+            Coordinator
+          </Link>
+          <Link
+            to="/candidate/overview"
+            className="text-xs uppercase tracking-wider font-mono text-electric-lime hover:text-white transition-colors font-bold"
+          >
+            Candidate Portal
           </Link>
         </nav>
 
@@ -127,7 +133,14 @@ export const Navbar: React.FC = () => {
               onClick={() => setMobileMenuOpen(false)}
               className="text-sm font-mono uppercase tracking-wider text-muted-gray hover:text-white py-2"
             >
-              Dashboard
+              Coordinator
+            </Link>
+            <Link
+              to="/candidate/overview"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-sm font-mono uppercase tracking-wider text-electric-lime hover:text-white py-2 font-bold"
+            >
+              Candidate Portal
             </Link>
           </nav>
           <div className="pt-4 border-t border-[#252525]">

@@ -17,10 +17,6 @@ export const HeroSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-16 items-center">
           {/* Left Column: Headline and Actions */}
           <div className="lg:col-span-6 space-y-8 text-left">
-            <div className="inline-flex items-center gap-2 rounded-full border border-hot-pink/60 bg-hot-pink/10 px-4 py-1 text-xs font-mono font-medium text-hot-pink">
-              <span>CAMPUS RECRUITMENT ENGINE</span>
-            </div>
-
             <h1 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.05]">
               Interview scheduling.<br />
               <span className="text-electric-lime">Without the chaos.</span>

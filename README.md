@@ -36,9 +36,10 @@ Slotify coordinates interview scheduling through availability management, mathem
 
 #### 3. Interviewer Evaluations & Multi-Round Candidate Progression
 - **Role-Gated Evaluations**: Interviewers only access sessions assigned to their panel; candidates and unassigned interviewers are blocked (HTTP 403).
-- **Rubric Scoring & Weighting**: Supports customizable criterion weights (e.g. 60% coding, 40% problem-solving) with strict score bound validation $[0, \text{max\_score}]$.
-- **Automated Round Progression**: Computes aggregate scores across panelists; advances candidates to `QUALIFIED` if score $\ge \text{min\_passing\_score}$ and no hard reject is recorded, or sets status to `REJECTED`.
+- **Rubric Scoring & Weighting**: Supports customizable criterion weights (e.g. 60% coding, 40% problem-solving) with strict score bound validation against max score.
+- **Automated Round Progression**: Computes aggregate scores across panelists; advances candidates to `QUALIFIED` if score meets or exceeds the round's minimum passing score and no hard reject is recorded, or sets status to `REJECTED`.
 - **Coordinator Results & CSV Export**: Real-time ranked leaderboards with multi-criteria tie-breaking and downloadable CSV outcome reports.
+
 
 #### 4. Automatic Rescheduling & Cancellation Recovery
 - **Disruption Resilience**: Handles interviewer emergencies, room facility outages, and candidate conflicts.

@@ -118,28 +118,3 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
   npm run build
   ```
 
----
-
-### API Reference Overview
-
-| Module | Method | Endpoint | Access |
-| :--- | :--- | :--- | :--- |
-| **Auth** | `POST` | `/auth/register` | Public (default `candidate`) |
-| **Auth** | `GET` | `/auth/me` | Authenticated |
-| **Scheduling** | `POST` | `/drives/{id}/schedule/generate` | Coordinator only |
-| **Scheduling** | `GET` | `/drives/{id}/schedule` | Authenticated |
-| **Booking** | `GET` | `/candidate/available-slots` | Candidate only |
-| **Booking** | `POST` | `/bookings` | Candidate only |
-| **Booking** | `GET` | `/bookings/my` | Authenticated |
-| **Booking** | `POST` | `/bookings/{id}/cancel` | Owner / Coordinator |
-| **Booking** | `GET` | `/bookings/{id}/calendar` | Owner / Coordinator |
-| **Notifications** | `GET` | `/notifications` | Authenticated |
-| **Notifications** | `PATCH` | `/notifications/{id}/read` | Owner only |
-| **Evaluations** | `GET` | `/interviewer/my-interviews` | Interviewer only |
-| **Evaluations** | `POST` | `/bookings/{id}/evaluations` | Assigned Panelist / Coord |
-| **Rounds** | `POST` | `/drives/{id}/rounds` | Coordinator only |
-| **Results** | `GET` | `/drives/{id}/results` | Coordinator only |
-| **Results** | `GET` | `/drives/{id}/results/export` | Coordinator only |
-| **Recovery** | `POST` | `/drives/{id}/schedule/recovery/preview` | Coordinator only |
-| **Recovery** | `POST` | `/drives/{id}/schedule/recovery/{rec_id}/apply` | Coordinator only |
-| **Recovery** | `GET` | `/drives/{id}/schedule/recovery/history` | Coordinator only |

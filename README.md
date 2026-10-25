@@ -1,93 +1,144 @@
 # Slotify: The Ancient One’s Trials
 
+**Slotify** is an automated, constraint-driven recruitment timetable and interview coordination platform built with **React, TypeScript, FastAPI, Supabase PostgreSQL, and Google OR-Tools CP-SAT**.
+
+---
+
 ### Problem Statement
-Scheduling campus recruitment interviews across hundreds of candidates, diverse interviewer panels, limited interview rooms, and multiple sequential rounds is complex and error-prone. Manual spreadsheet management frequently leads to double bookings, uneven interviewer workloads, room buffer violations, and cascading disruptions caused by last-minute cancellations or rescheduling requests.
+Scheduling campus recruitment interviews across hundreds of candidates, diverse interviewer panels, limited interview cabins, and sequential evaluation rounds is complex and error-prone. Manual spreadsheet management frequently leads to double bookings, uneven interviewer workloads, room buffer violations, and cascading disruptions caused by last-minute cancellations or rescheduling requests.
 
 ### Solution
-Slotify coordinates interview scheduling through availability management, constraint-based matching, candidate self-booking, and schedule recovery. The platform provides role-segregated workflows for Candidates, Interviewers, and Coordinators to ensure interviews adhere to round dependencies, panel capacities, and room turnaround buffers without schedule conflicts.
+Slotify coordinates interview scheduling through availability management, mathematical constraint-based matching, candidate self-booking, multi-round progression, and automated schedule recovery. The platform provides role-segregated workflows for Candidates, Interviewers, and Coordinators to ensure interviews adhere to round dependencies, panel capacities, and turnaround buffers without schedule conflicts.
 
-### Features
+---
 
-#### Implemented Features (Frontend Demo)
-- **Role-Based Dashboards**: Tailored workspaces for Candidates (`/candidate`), Interviewers (`/interviewer`), and Coordinators (`/coordinator`).
-- **Candidate Self-Booking & Availability**: Browse open interview slots with real-time overlap validation, book slots, and review schedule confirmations.
-- **Calendar Invitations & In-App Notifications**: Download standard `.ics` calendar invitation files directly from interview cards and track in-app scheduling alerts.
-- **Multi-Round Recruitment Management**: Coordinator interface to configure recruitment drives, manage candidate rosters, track stage progression, and inspect timetable conflicts.
-- **Interviewer Schedule & Evaluations**: Daily interview matrices, assigned candidate queues, availability windows, and structured evaluation scorecards with hiring recommendations.
-- **Preview Schedule Changes**: Modal previews for viewing proposed booking adjustments before confirmation.
+### Implemented Architecture & Features
 
-#### Planned Features (Full-Stack Specification)
-- **Constraint-Based Scheduling Engine**: Automated multi-variable optimization utilizing Google OR-Tools CP-SAT to balance interviewer workloads and room turnaround buffers.
-- **Automated Rescheduling & Schedule Recovery**: Algorithmic recalculation to heal broken schedules following cancellations or interviewer unavailability.
-- **Centralized Candidate Ranking**: Automated cross-round scorecard aggregation and ranking pipelines.
-- **Server-Driven Email Invitations & Realtime Sync**: Automated calendar emails via Resend API and live multi-user schedule synchronization via database change streams.
+#### 1. Google OR-Tools CP-SAT Scheduling Engine
+- **Mathematical Optimization**: Formulated as integer programming with decision variables for candidate, time slot, interviewer, and room tuples.
+- **Hard Constraints Enforced**:
+  - No candidate double-booking or overlapping sessions.
+  - No interviewer double-booking or overlapping intervals.
+  - No room conflicts or simultaneous bookings.
+  - Strict compliance with candidate and interviewer availability windows.
+  - Interviewer technical skill requirements strictly enforced.
+  - Interviewer daily workload quota limits respected.
+  - Pre-existing confirmed bookings strictly preserved without collisions.
+- **Soft Objectives**: Workload balancing across qualified panelists and minimal idle gaps.
+- **Independent Invariant Gate**: Every solver schedule is mathematically verified by an independent validator before database persistence.
+
+#### 2. Candidate Self-Booking & Coordination
+- **Eligible Slot Discovery**: Candidates query available interview openings dynamically calculated from interviewer schedules and cabin availability.
+- **Concurrency & Race-Condition Defense**: Transactional re-checking prevents double-booking if two candidates attempt to reserve the same slot simultaneously.
+- **Idempotency**: Exact retries return the confirmed booking without generating duplicate rows.
+- **Calendar Invitations**: Downloadable standard RFC 5545 `.ics` iCalendar files with UTC timezone timestamps, venue data, and stable UIDs.
+- **In-App Notifications**: Real-time notifications for booking confirmations, cancellations, and reschedules with read/unread tracking.
+
+#### 3. Interviewer Evaluations & Multi-Round Candidate Progression
+- **Role-Gated Evaluations**: Interviewers only access sessions assigned to their panel; candidates and unassigned interviewers are blocked (HTTP 403).
+- **Rubric Scoring & Weighting**: Supports customizable criterion weights (e.g. 60% coding, 40% problem-solving) with strict score bound validation $[0, \text{max\_score}]$.
+- **Automated Round Progression**: Computes aggregate scores across panelists; advances candidates to `QUALIFIED` if score $\ge \text{min\_passing\_score}$ and no hard reject is recorded, or sets status to `REJECTED`.
+- **Coordinator Results & CSV Export**: Real-time ranked leaderboards with multi-criteria tie-breaking and downloadable CSV outcome reports.
+
+#### 4. Automatic Rescheduling & Cancellation Recovery
+- **Disruption Resilience**: Handles interviewer emergencies, room facility outages, and candidate conflicts.
+- **Preview Before Apply**: Generates proposed replacement assignments and diagnostics without altering live bookings.
+- **Atomic Application**: Approved recovery plans are validated against live state, applied in a single database transaction, and trigger automated notifications.
+- **Full Audit Trail**: Preserves disruption records, affected booking IDs, and timestamps.
+
+---
 
 ### Tech Stack
 
-#### Frontend
-- **Implemented**: React 19, TypeScript, Vite, Tailwind CSS, Radix UI primitives, Lucide React, React Router DOM
-- **Planned / Extended**: FullCalendar, React Hook Form, Zod, Motion, TanStack Query, Recharts
+- **Frontend**: React 19, TypeScript, Vite, Tailwind CSS, Radix UI, Lucide React, React Router DOM.
+- **Backend**: Python 3.13, FastAPI, Uvicorn, Pydantic v2, Pydantic Settings.
+- **Optimization**: Google OR-Tools CP-SAT (`ortools>=9.10.0`).
+- **Database & Auth**: Supabase PostgreSQL, SQLAlchemy 2.0, Alembic migrations, PyJWT/python-jose.
+- **Calendar & Formats**: Python `icalendar` (RFC 5545).
+- **Testing**: Pytest, HTTPX, StaticPool SQLite in-memory isolated test suites (60 tests passed).
 
-#### Backend & Scheduling
-- **Implemented**: Python 3.13, FastAPI, Pydantic, SQLAlchemy 2.0, Alembic, psycopg2-binary / psycopg 3
-- **Planned / Extended**: Google OR-Tools CP-SAT
-
-#### Database, Auth & Realtime
-- **Implemented**: Supabase PostgreSQL schema with Alembic migrations, connection pooler support, and Pydantic validation schemas
-- **Planned / Extended**: Supabase Auth, Supabase Realtime
-
-#### Calendar & Notifications
-- **Implemented**: Client-side `.ics` calendar generation and local state-backed in-app notifications
-- **Planned Architecture**: Python `icalendar`, Resend API (email notifications), PostgreSQL-persisted notification feeds
+---
 
 ### Setup and Run
 
-#### Frontend
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the local development server:
-   ```bash
-   npm run dev
-   ```
-   Open `http://localhost:5173` in your browser.
-4. Build for production:
-   ```bash
-   npm run build
-   ```
+#### Prerequisites
+- Node.js 18+ and npm
+- Python 3.10+ (tested on Python 3.13)
+- Git
 
-#### Backend & Database (Supabase)
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-2. Create and activate a virtual environment:
-   ```bash
-   python -m venv venv
-   .\venv\Scripts\Activate.ps1
-   ```
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Copy environment configuration and configure `DATABASE_URL`:
-   ```bash
-   cp .env.example .env
-   ```
-5. Apply database migrations:
-   ```bash
-   alembic upgrade head
-   ```
-6. Run the API server:
-   ```bash
-   uvicorn main:app --reload
-   ```
-7. Run backend tests:
-   ```bash
-   pytest
-   ```
+#### 1. Backend Setup
+```bash
+cd backend
+
+# Create and activate virtual environment
+python -m venv venv
+# Windows (PowerShell):
+.\venv\Scripts\Activate.ps1
+# Linux / macOS:
+# source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure environment variables
+cp .env.example .env
+
+# Apply database migrations
+alembic upgrade head
+
+# Start API server (port 8000)
+uvicorn main:app --reload --host 127.0.0.1 --port 8000
+```
+- API Root: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+- Swagger Docs: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+- ReDoc: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
+
+#### 2. Running Backend Tests
+```bash
+cd backend
+.\venv\Scripts\pytest -v
+```
+*Executes all 60 tests covering RBAC, CRUD, CP-SAT solver, candidate self-booking, evaluation scoring, cancellation recovery, and full E2E lifecycle.*
+
+#### 3. Frontend Setup
+```bash
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start development server (port 5173)
+npm run dev
+```
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+- Build for production:
+  ```bash
+  npm run build
+  ```
+
+---
+
+### API Reference Overview
+
+| Module | Method | Endpoint | Access |
+| :--- | :--- | :--- | :--- |
+| **Auth** | `POST` | `/auth/register` | Public (default `candidate`) |
+| **Auth** | `GET` | `/auth/me` | Authenticated |
+| **Scheduling** | `POST` | `/drives/{id}/schedule/generate` | Coordinator only |
+| **Scheduling** | `GET` | `/drives/{id}/schedule` | Authenticated |
+| **Booking** | `GET` | `/candidate/available-slots` | Candidate only |
+| **Booking** | `POST` | `/bookings` | Candidate only |
+| **Booking** | `GET` | `/bookings/my` | Authenticated |
+| **Booking** | `POST` | `/bookings/{id}/cancel` | Owner / Coordinator |
+| **Booking** | `GET` | `/bookings/{id}/calendar` | Owner / Coordinator |
+| **Notifications** | `GET` | `/notifications` | Authenticated |
+| **Notifications** | `PATCH` | `/notifications/{id}/read` | Owner only |
+| **Evaluations** | `GET` | `/interviewer/my-interviews` | Interviewer only |
+| **Evaluations** | `POST` | `/bookings/{id}/evaluations` | Assigned Panelist / Coord |
+| **Rounds** | `POST` | `/drives/{id}/rounds` | Coordinator only |
+| **Results** | `GET` | `/drives/{id}/results` | Coordinator only |
+| **Results** | `GET` | `/drives/{id}/results/export` | Coordinator only |
+| **Recovery** | `POST` | `/drives/{id}/schedule/recovery/preview` | Coordinator only |
+| **Recovery** | `POST` | `/drives/{id}/schedule/recovery/{rec_id}/apply` | Coordinator only |
+| **Recovery** | `GET` | `/drives/{id}/schedule/recovery/history` | Coordinator only |

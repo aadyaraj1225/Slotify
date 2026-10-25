@@ -1,12 +1,16 @@
 # Slotify Backend
 
-FastAPI backend service, Supabase PostgreSQL database, authentication, and REST CRUD API layer for Slotify.
+FastAPI backend service with Supabase PostgreSQL database, JWT authentication, Google OR-Tools CP-SAT constraint engine, candidate self-booking, calendar generation, evaluation scoring, and automated schedule recovery for Slotify.
+
+---
 
 ## Requirements
-- Python 3.10+ (tested on Python 3.13)
-- PostgreSQL / Supabase project instance
+- Python 3.10+ (tested and verified on Python 3.13)
+- PostgreSQL or Supabase project instance
 
-## Setup and Virtual Environment
+---
+
+## Setup & Virtual Environment
 
 1. Navigate to the backend directory:
    ```bash
@@ -37,21 +41,26 @@ FastAPI backend service, Supabase PostgreSQL database, authentication, and REST 
    pip install -r requirements.txt
    ```
 
-## Configuring Supabase Environment Variables
+---
+
+## Configuring Environment Variables
 
 1. Copy the example configuration:
    ```bash
    cp .env.example .env
    ```
-2. Configure environment variables in `.env`:
+2. Configure settings in `.env`:
    - `DATABASE_URL`: Connection string for PostgreSQL / Supabase
    - `SUPABASE_URL`: Supabase project URL (`https://<project-ref>.supabase.co`)
    - `SUPABASE_ANON_KEY`: Supabase anon public key
    - `SUPABASE_JWT_SECRET`: JWT secret for validating user tokens on the backend
    - `SUPABASE_SERVICE_ROLE_KEY`: Service role key (backend only, keep secret)
    - `ADMIN_PROVISION_SECRET`: Secret token for bootstrapping coordinators
+   - `CORS_ORIGINS`: Allowed local frontend origin (`http://localhost:5173`)
 
 > Note: `.env` is ignored by Git and must never contain committed passwords or production secrets.
+
+---
 
 ## Database Migrations (Alembic)
 
@@ -74,87 +83,32 @@ FastAPI backend service, Supabase PostgreSQL database, authentication, and REST 
    alembic revision --autogenerate -m "describe_change"
    ```
 
+---
+
 ## Starting the Backend Server
 
 Start the FastAPI application with Uvicorn:
 ```bash
-uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
-Interactive API documentation is available at:
-- Swagger UI: `http://127.0.0.1:8000/docs`
-- ReDoc: `http://127.0.0.1:8000/redoc`
+- Interactive API documentation (Swagger UI): [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+- Alternative API documentation (ReDoc): [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
+- Health Check: [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
 
 ---
 
-## API Endpoints and Permissions
+## Testing
 
-### 1. Authentication & Role Management (`/auth`)
-| Method | Endpoint | Allowed Roles | Description |
-|---|---|---|---|
-| `POST` | `/auth/sync-profile` | Public / All | Sync user profile after Supabase signup. Rejects public attempts to self-assign coordinator. |
-| `POST` | `/auth/admin/provision-coordinator` | Admin Secret | Elevate a user to coordinator using `ADMIN_PROVISION_SECRET`. |
-| `GET` | `/auth/me` | Authenticated | Return the current verified user profile and role from the database. |
-| `GET` | `/auth/candidate` | Candidate only | Candidate verification endpoint. Returns 403 for other roles. |
-| `GET` | `/auth/interviewer` | Interviewer only | Interviewer verification endpoint. Returns 403 for other roles. |
-| `GET` | `/auth/coordinator` | Coordinator only | Coordinator verification endpoint. Returns 403 for other roles. |
-
-### 2. Recruitment Drives (`/drives`)
-| Method | Endpoint | Allowed Roles | Description |
-|---|---|---|---|
-| `GET` | `/drives` | Authenticated | List all recruitment drives with optional `status` filter and pagination (`skip`, `limit`). |
-| `POST` | `/drives` | Coordinator only | Create a new recruitment drive. |
-| `GET` | `/drives/{drive_id}` | Authenticated | View details of a specific recruitment drive. |
-| `PATCH` | `/drives/{drive_id}` | Coordinator only | Update drive title, description, or status (`draft`, `active`, `paused`, `completed`, `archived`). |
-| `DELETE`| `/drives/{drive_id}` | Coordinator only | Delete a recruitment drive. |
-
-### 3. Candidates (`/candidates`)
-| Method | Endpoint | Allowed Roles | Description |
-|---|---|---|---|
-| `GET` | `/candidates` | Coordinator only | List all candidates with pagination (`skip`, `limit`) and department filter. |
-| `POST` | `/candidates` | Coordinator only | Create a candidate record linked to an existing profile. |
-| `GET` | `/candidates/me` | Authenticated | Return current authenticated user's candidate record. |
-| `GET` | `/candidates/{candidate_id}` | Owner or Coordinator | View candidate details. Non-coordinators can only view their own record. |
-| `PATCH` | `/candidates/{candidate_id}` | Owner or Coordinator | Update candidate details (student_id, department, graduation_year, resume_url, extra_details). |
-| `DELETE`| `/candidates/{candidate_id}` | Coordinator only | Delete candidate record. |
-
-### 4. Interviewers (`/interviewers`)
-| Method | Endpoint | Allowed Roles | Description |
-|---|---|---|---|
-| `GET` | `/interviewers` | Coordinator only | List all interviewers with pagination and department filtering. |
-| `POST` | `/interviewers` | Coordinator only | Create interviewer record linked to an existing profile. |
-| `GET` | `/interviewers/me` | Authenticated | Return current authenticated user's interviewer record. |
-| `GET` | `/interviewers/{interviewer_id}` | Owner or Coordinator | View interviewer details. |
-| `PATCH` | `/interviewers/{interviewer_id}` | Owner or Coordinator | Update interviewer details. **Workload limit modification is restricted to Coordinators.** |
-| `DELETE`| `/interviewers/{interviewer_id}` | Coordinator only | Delete interviewer record. |
-
-### 5. Rooms (`/rooms`)
-| Method | Endpoint | Allowed Roles | Description |
-|---|---|---|---|
-| `GET` | `/rooms` | Authenticated | List rooms with capacity filter (`min_capacity`) and pagination. |
-| `POST` | `/rooms` | Coordinator only | Create interview room. Enforces unique room names. |
-| `GET` | `/rooms/{room_id}` | Authenticated | View room details. |
-| `PATCH` | `/rooms/{room_id}` | Coordinator only | Update room name, location, and capacity. |
-| `DELETE`| `/rooms/{room_id}` | Coordinator only | Delete room. |
-
-### 6. Availability (`/availability`)
-| Method | Endpoint | Allowed Roles | Description |
-|---|---|---|---|
-| `GET` | `/availability` | Authenticated | List availability windows. Non-coordinators only view their own; coordinators can query any profile. |
-| `POST` | `/availability` | Authenticated | Create an availability window. Enforces `end_time > start_time`. |
-| `GET` | `/availability/{availability_id}` | Owner or Coordinator | View availability window details. |
-| `PATCH` | `/availability/{availability_id}` | Owner or Coordinator | Update start_time, end_time, or status. Enforces `end_time > start_time`. |
-| `DELETE`| `/availability/{availability_id}` | Owner or Coordinator | Delete availability window. |
-
----
-
-## Running Tests
-
-Run the complete test suite using pytest:
+Run the automated test suite with Pytest:
 ```bash
-pytest
+pytest -v
 ```
-Test suite coverage:
-- **`test_main.py`**: Root endpoint, health endpoint, CORS allowed/disallowed origins (4 tests).
-- **`test_database.py`**: Model definitions, foreign keys, relationships, check constraints, Pydantic schemas, and Alembic migrations upgrade/downgrade (6 tests).
-- **`test_auth.py`**: Token validation (missing, malformed, expired), public coordinator denial, role tampering prevention, coordinator provisioning, and endpoint authorization checks (8 tests).
-- **`test_crud.py`**: Full CRUD operations for drives, candidates, interviewers, rooms, availability; cross-user isolation; time constraint validation; and coordinator-only privilege restrictions (5 comprehensive suites).
+The suite executes **60 automated tests** covering:
+- Supabase JWT authentication & RBAC (`test_auth.py`)
+- Candidate self-booking, race-condition prevention, and calendar downloads (`test_candidate_booking.py`)
+- Core CRUD operations & cross-user isolation (`test_crud.py`)
+- Database models & Alembic migrations (`test_database.py`)
+- Interviewer evaluations & candidate multi-round progression (`test_evaluations.py`)
+- Google OR-Tools CP-SAT constraint engine (`test_scheduling.py`, `test_scheduling_extended.py`)
+- Automated schedule recovery and disruption resilience (`test_recovery.py`)
+- Full end-to-end recruitment lifecycle integration (`test_e2e_integration.py`)

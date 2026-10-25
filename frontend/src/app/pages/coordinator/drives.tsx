@@ -150,13 +150,13 @@ export const DrivesPage: React.FC = () => {
   const getStatusBadge = (status: DriveStatus) => {
     switch (status) {
       case "active":
-        return <span className="rounded-full bg-[#EAF4EE] text-[#26734D] border border-[#B2DEC4]/60 px-3 py-0.5 text-[11px] font-medium">Active</span>;
+        return <span className="rounded-full bg-electric-lime text-deep-black border border-deep-black/30 px-3 py-0.5 text-[11px] font-mono font-bold">Active</span>;
       case "planning":
-        return <span className="rounded-full bg-[#E9EEFC] text-[#3559C7] border border-[#C8D7F9]/60 px-3 py-0.5 text-[11px] font-medium">Planning</span>;
+        return <span className="rounded-full bg-sky-blue text-deep-black border border-deep-black/30 px-3 py-0.5 text-[11px] font-mono font-bold">Planning</span>;
       case "completed":
-        return <span className="rounded-full bg-[#EFEFEA] text-[#626A70] border border-[#E4E3DD] px-3 py-0.5 text-[11px] font-medium">Completed</span>;
+        return <span className="rounded-full bg-[#EFEFEA] text-slate-gray border border-[#E4E3DD] px-3 py-0.5 text-[11px] font-mono font-medium">Completed</span>;
       case "paused":
-        return <span className="rounded-full bg-[#FDF6E7] text-[#996515] border border-[#F1DCAC]/70 px-3 py-0.5 text-[11px] font-medium">Paused</span>;
+        return <span className="rounded-full bg-warning-amber text-deep-black border border-deep-black/30 px-3 py-0.5 text-[11px] font-mono font-bold">Paused</span>;
     }
   };
 
@@ -214,26 +214,26 @@ export const DrivesPage: React.FC = () => {
           return (
             <div
               key={drive.id}
-              className={`rounded-xl border bg-white p-7 sm:p-8 transition-all ${
+              className={`rounded-2xl border-2 bg-white p-7 sm:p-8 transition-all ${
                 isSelected
-                  ? "border-muted-cobalt/60 ring-1 ring-muted-cobalt/20 bg-white"
-                  : "border-soft-border/90 hover:border-slate-gray/30"
+                  ? "border-deep-black shadow-[4px_4px_0px_#D7FF35]"
+                  : "border-deep-black/20 hover:border-deep-black shadow-[2px_2px_0px_#101010]"
               }`}
             >
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div className="space-y-2 max-w-2xl">
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-slate-gray font-heading">
+                    <span className="text-xs font-mono uppercase tracking-wider text-slate-gray font-bold">
                       {drive.company}
                     </span>
                     {getStatusBadge(drive.status)}
                     {isSelected && (
-                      <span className="text-[11px] font-mono text-muted-cobalt bg-pale-blue px-2 py-0.5 rounded-full">
+                      <span className="text-[11px] font-mono text-deep-black bg-electric-lime px-2 py-0.5 rounded-full font-bold border border-deep-black/30">
                         Active Scope
                       </span>
                     )}
                   </div>
-                  <h3 className="font-heading text-xl font-semibold text-charcoal">
+                  <h3 className="font-heading text-xl font-bold text-deep-black">
                     {drive.name}
                   </h3>
                   <p className="font-body text-xs sm:text-sm text-slate-gray leading-relaxed">

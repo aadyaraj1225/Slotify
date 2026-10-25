@@ -125,7 +125,7 @@ export const CandidatesPage: React.FC = () => {
       </div>
 
       {/* Search and Filters */}
-      <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 bg-white p-4 rounded-xl border border-[#E4E3DD]/80">
+      <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 bg-white p-4 rounded-xl border-2 border-deep-black shadow-[2px_2px_0px_#101010]">
         <div className="sm:col-span-6 relative">
           <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-gray/60" aria-hidden="true" />
           <input
@@ -133,7 +133,7 @@ export const CandidatesPage: React.FC = () => {
             placeholder="Search candidates by name, roll number, or campus email..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-lg border border-[#E4E3DD] bg-[#FAF9F5] pl-10 pr-4 py-2 text-xs font-body text-charcoal placeholder:text-slate-gray/60 focus:outline-none focus:border-muted-cobalt focus:bg-white transition-colors"
+            className="w-full rounded-lg border-2 border-deep-black/20 bg-white pl-10 pr-4 py-2 text-xs font-mono text-deep-black placeholder:text-slate-gray/60 focus:outline-none focus:border-deep-black transition-colors"
           />
         </div>
 
@@ -141,7 +141,7 @@ export const CandidatesPage: React.FC = () => {
           <select
             value={driveFilter}
             onChange={(e) => setDriveFilter(e.target.value)}
-            className="w-full h-9 rounded-lg border border-[#E4E3DD] bg-[#FAF9F5] px-3 text-xs font-body text-charcoal focus:outline-none focus:border-muted-cobalt focus:bg-white transition-colors"
+            className="w-full h-10 rounded-lg border-2 border-deep-black/20 bg-white px-3 text-xs font-mono text-deep-black focus:outline-none focus:border-deep-black transition-colors"
           >
             <option value="all">All Drives</option>
             {drives.map((d) => (
@@ -154,7 +154,7 @@ export const CandidatesPage: React.FC = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full h-9 rounded-lg border border-[#E4E3DD] bg-[#FAF9F5] px-3 text-xs font-body text-charcoal focus:outline-none focus:border-muted-cobalt focus:bg-white transition-colors"
+            className="w-full h-10 rounded-lg border-2 border-deep-black/20 bg-white px-3 text-xs font-mono text-deep-black focus:outline-none focus:border-deep-black transition-colors"
           >
             <option value="all">All Booking Statuses</option>
             <option value="confirmed">Confirmed</option>
@@ -166,10 +166,10 @@ export const CandidatesPage: React.FC = () => {
       </div>
 
       {/* Candidates Table */}
-      <div className="rounded-xl border border-[#E4E3DD]/80 bg-white overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
+      <div className="rounded-2xl border-2 border-deep-black bg-white overflow-hidden shadow-[4px_4px_0px_#101010]">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-body">
-            <thead className="border-b border-[#E4E3DD]/80 bg-[#FAF9F5]/70 font-mono text-[11px] text-slate-gray font-normal tracking-wide">
+            <thead className="border-b-2 border-deep-black bg-[#FAF9F5] font-mono text-[11px] text-deep-black font-bold uppercase tracking-wider">
               <tr>
                 <th className="px-6 py-3.5">Candidate</th>
                 <th className="px-6 py-3.5">Roll & Email</th>

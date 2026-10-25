@@ -3,25 +3,27 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded font-body font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-muted-cobalt focus-visible:ring-offset-2 focus-visible:ring-offset-warm-ivory disabled:pointer-events-none disabled:opacity-50 select-none",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md font-body font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-black focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none",
   {
     variants: {
       variant: {
         primary:
-          "bg-muted-cobalt text-white hover:bg-muted-cobalt-hover active:bg-muted-cobalt-active shadow-subtle",
+          "bg-electric-lime text-deep-black hover:bg-[#c9f228] active:translate-x-[1px] active:translate-y-[1px] border border-deep-black/30 shadow-[2px_2px_0px_#101010]",
+        pink:
+          "bg-hot-pink text-white hover:bg-[#e43496] active:translate-x-[1px] active:translate-y-[1px] border border-deep-black/20 shadow-[2px_2px_0px_#101010]",
         secondary:
-          "bg-[#ECEAE4] text-charcoal hover:bg-[#E3E1DB] active:bg-[#DAD8D1]",
+          "bg-near-black text-white hover:bg-deep-black active:bg-black border border-deep-black shadow-[2px_2px_0px_#101010]",
         outline:
-          "border border-soft-border bg-white text-charcoal hover:bg-warm-ivory active:bg-[#ECEAE4]",
+          "border border-deep-black/80 bg-white text-deep-black hover:bg-[#F2EFE9] active:translate-x-[1px] active:translate-y-[1px] shadow-[2px_2px_0px_#101010]",
         destructive:
-          "bg-error-red text-white hover:bg-[#A32E2E] active:bg-[#8D2525] shadow-subtle",
+          "bg-error-red text-white hover:bg-[#e85353] active:translate-x-[1px] active:translate-y-[1px] border border-deep-black/20 shadow-[2px_2px_0px_#101010]",
         ghost:
-          "text-charcoal hover:bg-[#ECEAE4] active:bg-[#E3E1DB]",
+          "text-deep-black hover:bg-black/5 active:bg-black/10",
       },
       size: {
         sm: "h-8 px-3 text-xs gap-1.5",
-        md: "h-10 px-4 text-sm gap-2",
-        lg: "h-11 px-5 text-base gap-2.5",
+        md: "h-10 px-4 text-xs tracking-wide uppercase gap-2",
+        lg: "h-12 px-6 text-sm tracking-wide uppercase gap-2.5",
       },
     },
     defaultVariants: {

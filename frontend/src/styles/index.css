@@ -4,57 +4,47 @@
 
 @layer base {
   :root {
-    /* Slotify Foundation Color Palette */
-    --color-warm-ivory: #F7F6F2;
+    /* Slotify Retro-Digital Palette */
+    --color-deep-black: #101010;
+    --color-near-black: #191919;
+    --color-hot-pink: #F542A6;
+    --color-electric-lime: #D7FF35;
+    --color-sky-blue: #73D0F4;
+    --color-warm-offwhite: #F7F5EE;
     --color-white: #FFFFFF;
-    --color-charcoal: #202321;
-    --color-slate-gray: #626A70;
-    --color-muted-cobalt: #3559C7;
-    --color-muted-cobalt-hover: #2B49A8;
-    --color-muted-cobalt-active: #233D8D;
-    --color-pale-blue: #E9EEFC;
-    --color-pale-blue-border: #C8D7F9;
-    --color-soft-border: #E4E3DD;
-    --color-success-green: #26734D;
-    --color-success-subtle: #EAF4EE;
-    --color-warning-amber: #996515;
-    --color-warning-subtle: #FDF6E7;
-    --color-error-red: #B93838;
-    --color-error-subtle: #FDF0F0;
+    --color-muted-gray: #B8B8B8;
+    --color-success-green: #70D6A0;
+    --color-warning-amber: #FFC857;
+    --color-error-red: #FF6262;
 
     /* Semantic Tokens */
-    --background: var(--color-warm-ivory);
-    --foreground: var(--color-charcoal);
+    --background: #F7F5EE;
+    --foreground: #101010;
 
-    --surface: var(--color-white);
-    --surface-foreground: var(--color-charcoal);
+    --surface: #FFFFFF;
+    --surface-foreground: #101010;
 
     --muted: #EFEFEA;
-    --muted-foreground: var(--color-slate-gray);
+    --muted-foreground: #626A70;
 
-    --primary: var(--color-muted-cobalt);
-    --primary-foreground: #FFFFFF;
-    --primary-hover: var(--color-muted-cobalt-hover);
-    --primary-active: var(--color-muted-cobalt-active);
+    --primary: #D7FF35;
+    --primary-foreground: #101010;
+    --primary-hover: #C9F228;
+    --primary-active: #BCE41D;
 
-    --secondary: #ECEAE4;
-    --secondary-foreground: var(--color-charcoal);
+    --secondary: #191919;
+    --secondary-foreground: #FFFFFF;
 
-    --border: var(--color-soft-border);
-    --input: var(--color-soft-border);
-    --ring: var(--color-muted-cobalt);
+    --border: #E4E3DD;
+    --input: #E4E3DD;
+    --ring: #101010;
 
-    --accent: var(--color-pale-blue);
-    --accent-foreground: var(--color-muted-cobalt);
+    --accent: #F542A6;
+    --accent-foreground: #FFFFFF;
 
-    --success: var(--color-success-green);
-    --success-subtle: var(--color-success-subtle);
-
-    --warning: var(--color-warning-amber);
-    --warning-subtle: var(--color-warning-subtle);
-
-    --destructive: var(--color-error-red);
-    --destructive-subtle: var(--color-error-subtle);
+    --success: #70D6A0;
+    --warning: #FFC857;
+    --destructive: #FF6262;
 
     --radius: 0.375rem;
   }
@@ -66,17 +56,16 @@
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.02em;
   }
 
-  /* Accessible focus indicators */
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 2px;

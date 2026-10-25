@@ -20,26 +20,26 @@ const statusStyles: Record<
   }
 > = {
   confirmed: {
-    badge: "bg-[#EAF4EE] text-[#26734D] border-[#B2DEC4]/60",
-    dot: "bg-[#26734D]",
+    badge: "bg-[#70D6A0]/20 text-[#145a33] border-[#70D6A0]/60",
+    dot: "bg-[#70D6A0]",
     defaultLabel: "Confirmed",
     icon: CheckCircle2,
   },
   pending: {
-    badge: "bg-[#FDF6E7] text-[#996515] border-[#F1DCAC]/70",
-    dot: "bg-[#996515]",
+    badge: "bg-[#FFC857]/25 text-[#734b00] border-[#FFC857]/60",
+    dot: "bg-[#FFC857]",
     defaultLabel: "Pending",
     icon: Clock,
   },
   conflict: {
-    badge: "bg-[#FDF0F0] text-[#B93838] border-[#F5C2C2]/70",
-    dot: "bg-[#B93838]",
+    badge: "bg-[#FF6262]/20 text-[#b51c1c] border-[#FF6262]/60",
+    dot: "bg-[#FF6262]",
     defaultLabel: "Conflict",
     icon: AlertTriangle,
   },
   cancelled: {
-    badge: "bg-[#EFEFEA] text-[#626A70] border-[#E4E3DD]",
-    dot: "bg-[#626A70]",
+    badge: "bg-[#B8B8B8]/25 text-[#333333] border-[#B8B8B8]/60",
+    dot: "bg-[#B8B8B8]",
     defaultLabel: "Cancelled",
     icon: XCircle,
   },
@@ -60,7 +60,7 @@ export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
   return (
     <span
       className={cn(
-        "inline-flex items-center font-medium font-body rounded-full border transition-colors",
+        "inline-flex items-center font-mono rounded-full border transition-colors",
         size === "sm" ? "text-[11px] px-2.5 py-0.5 gap-1.5" : "text-xs px-3 py-1 gap-1.5",
         config.badge,
         className

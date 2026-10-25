@@ -39,12 +39,12 @@ export const EvaluationsPage: React.FC = () => {
 
   return (
     <div className="px-6 sm:px-10 lg:px-14 py-8 sm:py-12 max-w-7xl mx-auto space-y-10 text-left">
-      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-6 border-b border-[#E4E3DD]/80 pb-8">
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-6 border-b-2 border-deep-black pb-8">
         <div>
           <span className="font-mono text-xs uppercase tracking-wider text-slate-gray block mb-1">
             Deliberation &amp; Outcomes
           </span>
-          <h1 className="font-heading text-3xl sm:text-4xl font-normal tracking-tight text-charcoal">
+          <h1 className="font-heading text-3xl sm:text-4xl font-black tracking-tight text-deep-black">
             Evaluations &amp; Progression
           </h1>
           <p className="font-body text-sm text-slate-gray mt-1.5 max-w-xl">
@@ -54,21 +54,21 @@ export const EvaluationsPage: React.FC = () => {
       </div>
 
       {/* Evaluations Summary Strip */}
-      <div className="rounded-xl border border-[#E4E3DD]/80 bg-white p-6 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:divide-x divide-[#E4E3DD]/70">
+      <div className="rounded-xl border-2 border-deep-black bg-white p-6 sm:p-8 shadow-[4px_4px_0px_#101010]">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:divide-x-2 divide-deep-black/10">
           <div className="space-y-1">
-            <span className="font-mono text-[11px] text-slate-gray uppercase tracking-wider block">Evaluations Logged</span>
-            <p className="font-heading text-3xl sm:text-4xl font-normal text-charcoal pt-1">12</p>
+            <span className="font-mono text-[11px] text-slate-gray uppercase tracking-wider font-bold block">Evaluations Logged</span>
+            <p className="font-heading text-3xl sm:text-4xl font-black text-deep-black pt-1">12</p>
             <span className="text-xs text-slate-gray font-body block pt-0.5">Across 3 active drives</span>
           </div>
           <div className="space-y-1 sm:pl-8">
-            <span className="font-mono text-[11px] text-slate-gray uppercase tracking-wider block">Passed to Next Round</span>
-            <p className="font-heading text-3xl sm:text-4xl font-normal text-success-green pt-1">9</p>
+            <span className="font-mono text-[11px] text-slate-gray uppercase tracking-wider font-bold block">Passed to Next Round</span>
+            <p className="font-heading text-3xl sm:text-4xl font-black text-success-green pt-1">9</p>
             <span className="text-xs text-slate-gray font-body block pt-0.5">Eligible for self-booking</span>
           </div>
           <div className="space-y-1 sm:pl-8">
-            <span className="font-mono text-[11px] text-slate-gray uppercase tracking-wider block">Deliberation Holds</span>
-            <p className="font-heading text-3xl sm:text-4xl font-normal text-warning-amber pt-1">3</p>
+            <span className="font-mono text-[11px] text-slate-gray uppercase tracking-wider font-bold block">Deliberation Holds</span>
+            <p className="font-heading text-3xl sm:text-4xl font-black text-warning-amber pt-1">3</p>
             <span className="text-xs text-slate-gray font-body block pt-0.5">Pending panel consensus</span>
           </div>
         </div>
@@ -80,7 +80,7 @@ export const EvaluationsPage: React.FC = () => {
           <span className="font-mono text-xs uppercase tracking-wider text-slate-gray block mb-1">
             Feedback Archive
           </span>
-          <h2 className="font-heading text-lg font-medium text-charcoal">
+          <h2 className="font-heading text-lg font-bold text-deep-black">
             Recent Panel Scorecards
           </h2>
         </div>
@@ -89,15 +89,15 @@ export const EvaluationsPage: React.FC = () => {
           {sampleEvaluations.map((item) => (
             <div
               key={item.id}
-              className="rounded-xl border border-[#E4E3DD]/80 bg-white p-6 sm:p-7 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-4"
+              className="rounded-xl border-2 border-deep-black bg-white p-6 sm:p-7 shadow-[4px_4px_0px_#101010] space-y-4"
             >
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2.5">
-                    <span className="font-heading text-base font-medium text-charcoal">
+                    <span className="font-heading text-base font-bold text-deep-black">
                       {item.candidateName}
                     </span>
-                    <span className="font-mono text-xs text-slate-gray px-2 py-0.5 rounded bg-warm-ivory border border-[#E4E3DD]">
+                    <span className="font-mono text-xs font-bold text-deep-black px-2 py-0.5 rounded bg-warm-offwhite border border-deep-black">
                       {item.rollNo}
                     </span>
                   </div>
@@ -107,14 +107,14 @@ export const EvaluationsPage: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-2 self-start sm:self-auto">
-                  <span className="font-mono text-xs px-3 py-1 rounded-full bg-pale-blue/60 text-muted-cobalt font-medium border border-pale-blue-border/70">
+                  <span className="font-mono text-xs px-3 py-1 rounded bg-electric-lime text-deep-black font-bold border border-deep-black shadow-[2px_2px_0px_#101010]">
                     {item.score}
                   </span>
                   <span
-                    className={`font-mono text-[11px] px-3 py-1 rounded-full border ${
+                    className={`font-mono text-[11px] font-bold px-3 py-1 rounded border-2 border-deep-black ${
                       item.status === "passed"
-                        ? "bg-[#EAF4EE] text-success-green border-success-green/30"
-                        : "bg-[#FDF6E7] text-warning-amber border-warning-amber/30"
+                        ? "bg-[#70D6A0]/30 text-deep-black"
+                        : "bg-[#FFC857]/30 text-deep-black"
                     }`}
                   >
                     {item.recommendation}
@@ -122,8 +122,8 @@ export const EvaluationsPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="rounded-xl bg-[#FAF9F5] p-4 text-xs text-charcoal font-body leading-relaxed border border-[#E4E3DD]">
-                <span className="font-mono text-[10px] uppercase text-slate-gray block mb-1">
+              <div className="rounded-xl bg-warm-offwhite p-4 text-xs text-deep-black font-body leading-relaxed border-2 border-deep-black">
+                <span className="font-mono text-[10px] font-bold uppercase text-slate-gray block mb-1">
                   Evaluator Observations:
                 </span>
                 {item.feedback}

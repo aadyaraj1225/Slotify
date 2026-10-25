@@ -1,25 +1,34 @@
 /**
  * Slotify Design Tokens and Theme Configuration
- * Foundation Phase 1
+ * Retro-Digital Visual Identity
  */
 
 export const PALETTE = {
-  warmIvory: "#F7F6F2",
+  deepBlack: "#101010",
+  nearBlack: "#191919",
+  hotPink: "#F542A6",
+  electricLime: "#D7FF35",
+  skyBlue: "#73D0F4",
+  warmOffwhite: "#F7F5EE",
   white: "#FFFFFF",
-  charcoal: "#202321",
+  mutedGray: "#B8B8B8",
+  successGreen: "#70D6A0",
+  warningAmber: "#FFC857",
+  errorRed: "#FF6262",
+
+  // Legacy mappings for backward compatibility
+  warmIvory: "#F7F5EE",
+  charcoal: "#101010",
   slateGray: "#626A70",
-  mutedCobalt: "#3559C7",
-  mutedCobaltHover: "#2B49A8",
-  mutedCobaltActive: "#233D8D",
-  paleBlue: "#E9EEFC",
-  paleBlueBorder: "#C8D7F9",
+  mutedCobalt: "#101010",
+  mutedCobaltHover: "#191919",
+  mutedCobaltActive: "#000000",
+  paleBlue: "#EBF8FD",
+  paleBlueBorder: "#73D0F4",
   softBorder: "#E4E3DD",
-  successGreen: "#26734D",
-  successGreenSubtle: "#EAF4EE",
-  warningAmber: "#996515",
-  warningAmberSubtle: "#FDF6E7",
-  errorRed: "#B93838",
-  errorRedSubtle: "#FDF0F0",
+  successGreenSubtle: "#EBF9F1",
+  warningAmberSubtle: "#FFF9EB",
+  errorRedSubtle: "#FFF0F0",
 } as const;
 
 export interface ColorToken {
@@ -32,52 +41,59 @@ export interface ColorToken {
 
 export const COLOR_TOKENS: ColorToken[] = [
   {
-    name: "Warm Ivory",
-    hex: PALETTE.warmIvory,
-    purpose: "Main background surface across the application",
+    name: "Deep Black",
+    hex: PALETTE.deepBlack,
+    purpose: "Primary contrast anchor, major hero surfaces, and dark navigation",
+    semanticRole: "dark-background",
+    category: "core",
+  },
+  {
+    name: "Near-Black Panel",
+    hex: PALETTE.nearBlack,
+    purpose: "Sidebar surfaces, secondary dark panels, and cards",
+    semanticRole: "dark-surface",
+    category: "core",
+  },
+  {
+    name: "Electric Lime",
+    hex: PALETTE.electricLime,
+    purpose: "Primary interactive buttons, key actions, and active highlights",
+    semanticRole: "primary",
+    category: "accent",
+  },
+  {
+    name: "Hot Pink",
+    hex: PALETTE.hotPink,
+    purpose: "Signature visual accents, badge highlights, and secondary emphasis",
+    semanticRole: "signature",
+    category: "accent",
+  },
+  {
+    name: "Sky Blue",
+    hex: PALETTE.skyBlue,
+    purpose: "Secondary links, technical markers, and subtle highlights",
+    semanticRole: "accent",
+    category: "accent",
+  },
+  {
+    name: "Warm Off-White",
+    hex: PALETTE.warmOffwhite,
+    purpose: "Readable workspace background and main application container",
     semanticRole: "background",
     category: "core",
   },
   {
     name: "White",
     hex: PALETTE.white,
-    purpose: "Panels, cards, modal dialogs, and content surfaces",
+    purpose: "Readable content cards, tables, and dialog surfaces",
     semanticRole: "surface",
     category: "core",
   },
   {
-    name: "Charcoal",
-    hex: PALETTE.charcoal,
-    purpose: "Main text, high-priority headings, and primary data",
-    semanticRole: "foreground",
-    category: "core",
-  },
-  {
-    name: "Slate Gray",
-    hex: PALETTE.slateGray,
-    purpose: "Secondary text, metadata, field labels, and timestamps",
-    semanticRole: "muted-foreground",
-    category: "core",
-  },
-  {
-    name: "Muted Cobalt",
-    hex: PALETTE.mutedCobalt,
-    purpose: "Primary buttons, active interactive states, and focus rings",
-    semanticRole: "primary",
-    category: "accent",
-  },
-  {
-    name: "Pale Blue",
-    hex: PALETTE.paleBlue,
-    purpose: "Selected interview slots, subtle row highlights, and active tabs",
-    semanticRole: "accent",
-    category: "accent",
-  },
-  {
-    name: "Soft Border",
-    hex: PALETTE.softBorder,
-    purpose: "Restrained dividers, panel borders, and input outlines",
-    semanticRole: "border",
+    name: "Muted Gray",
+    hex: PALETTE.mutedGray,
+    purpose: "Secondary borders, inactive tracks, and subtle text",
+    semanticRole: "muted",
     category: "core",
   },
   {
@@ -98,66 +114,9 @@ export const COLOR_TOKENS: ColorToken[] = [
     name: "Error Red",
     hex: PALETTE.errorRed,
     purpose: "Schedule conflicts, room overbooking, and validation errors",
-    semanticRole: "destructive",
+    semanticRole: "error",
     category: "state",
   },
 ];
 
-export const TYPOGRAPHY = {
-  headings: {
-    fontFamily: "'Plus Jakarta Sans', system-ui, -apple-system, sans-serif",
-    weights: {
-      bold: 700,
-      semibold: 600,
-      medium: 500,
-    },
-  },
-  body: {
-    fontFamily: "'DM Sans', system-ui, -apple-system, sans-serif",
-    weights: {
-      regular: 400,
-      medium: 500,
-      semibold: 600,
-    },
-  },
-  mono: {
-    fontFamily: "'JetBrains Mono', ui-monospace, monospace",
-    weights: {
-      regular: 400,
-      medium: 500,
-    },
-  },
-} as const;
-
-export const STATUS_CONFIG = {
-  confirmed: {
-    label: "Confirmed",
-    color: PALETTE.successGreen,
-    bg: PALETTE.successGreenSubtle,
-    border: "#B2DEC4",
-    description: "Slot finalized with confirmed interviewer and candidate attendance",
-  },
-  pending: {
-    label: "Pending",
-    color: PALETTE.warningAmber,
-    bg: PALETTE.warningAmberSubtle,
-    border: "#F1DCAC",
-    description: "Awaiting interviewer acceptance or candidate response",
-  },
-  conflict: {
-    label: "Conflict",
-    color: PALETTE.errorRed,
-    bg: PALETTE.errorRedSubtle,
-    border: "#F5C2C2",
-    description: "Constraint violation: overlapping times or room contention",
-  },
-  cancelled: {
-    label: "Cancelled",
-    color: PALETTE.slateGray,
-    bg: "#EFEFEA",
-    border: PALETTE.softBorder,
-    description: "Slot was released or session was cancelled",
-  },
-} as const;
-
-export type SlotStatus = keyof typeof STATUS_CONFIG;
+export type SlotStatus = "confirmed" | "pending" | "conflict" | "cancelled";

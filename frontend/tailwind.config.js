@@ -7,36 +7,54 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Slotify Approved Foundation Palette
-        "warm-ivory": "#F7F6F2",
-        "charcoal": "#202321",
-        "slate-gray": "#626A70",
-        "muted-cobalt": {
-          DEFAULT: "#3559C7",
-          hover: "#2B49A8",
-          active: "#233D8D",
-          light: "#E9EEFC",
+        // Slotify Retro-Digital Palette
+        "deep-black": "#101010",
+        "near-black": "#191919",
+        "hot-pink": {
+          DEFAULT: "#F542A6",
+          hover: "#E43496",
+          light: "#FDF0F7",
         },
-        "pale-blue": {
-          DEFAULT: "#E9EEFC",
-          border: "#C8D7F9",
+        "electric-lime": {
+          DEFAULT: "#D7FF35",
+          hover: "#C9F228",
+          light: "#FAFEE6",
         },
-        "soft-border": "#E4E3DD",
+        "sky-blue": {
+          DEFAULT: "#73D0F4",
+          hover: "#5BC4EE",
+          light: "#EBF8FD",
+        },
+        "warm-offwhite": "#F7F5EE",
+        "muted-gray": "#B8B8B8",
         "success-green": {
-          DEFAULT: "#26734D",
-          subtle: "#EAF4EE",
-          border: "#B2DEC4",
+          DEFAULT: "#70D6A0",
+          subtle: "#EBF9F1",
         },
         "warning-amber": {
-          DEFAULT: "#996515",
-          subtle: "#FDF6E7",
-          border: "#F1DCAC",
+          DEFAULT: "#FFC857",
+          subtle: "#FFF9EB",
         },
         "error-red": {
-          DEFAULT: "#B93838",
-          subtle: "#FDF0F0",
-          border: "#F5C2C2",
+          DEFAULT: "#FF6262",
+          subtle: "#FFF0F0",
         },
+
+        // Legacy Aliases for seamless component integration
+        "warm-ivory": "#F7F5EE",
+        "charcoal": "#101010",
+        "slate-gray": "#626A70",
+        "muted-cobalt": {
+          DEFAULT: "#101010",
+          hover: "#191919",
+          active: "#000000",
+          light: "#EBF8FD",
+        },
+        "pale-blue": {
+          DEFAULT: "#EBF8FD",
+          border: "#73D0F4",
+        },
+        "soft-border": "#E4E3DD",
 
         // Semantic tokens mapped to CSS variables
         background: "var(--background)",
@@ -66,16 +84,6 @@ export default {
           DEFAULT: "var(--accent)",
           foreground: "var(--accent-foreground)",
         },
-        status: {
-          confirmed: "var(--success)",
-          "confirmed-bg": "var(--success-subtle)",
-          pending: "var(--warning)",
-          "pending-bg": "var(--warning-subtle)",
-          conflict: "var(--destructive)",
-          "conflict-bg": "var(--destructive-subtle)",
-          cancelled: "var(--muted-foreground)",
-          "cancelled-bg": "var(--muted)",
-        },
       },
       fontFamily: {
         heading: [
@@ -85,8 +93,6 @@ export default {
           "BlinkMacSystemFont",
           "'Segoe UI'",
           "Roboto",
-          "'Helvetica Neue'",
-          "Arial",
           "sans-serif",
         ],
         body: [
@@ -96,8 +102,6 @@ export default {
           "BlinkMacSystemFont",
           "'Segoe UI'",
           "Roboto",
-          "'Helvetica Neue'",
-          "Arial",
           "sans-serif",
         ],
         mono: [
@@ -105,8 +109,6 @@ export default {
           "ui-monospace",
           "SFMono-Regular",
           "Menlo",
-          "Monaco",
-          "Consolas",
           "monospace",
         ],
       },
@@ -116,11 +118,15 @@ export default {
         md: "0.5rem",
         lg: "0.625rem",
         xl: "0.75rem",
+        "2xl": "1rem",
       },
       boxShadow: {
-        subtle: "0 1px 2px 0 rgba(32, 35, 33, 0.04)",
-        card: "0 1px 3px 0 rgba(32, 35, 33, 0.06), 0 1px 2px -1px rgba(32, 35, 33, 0.04)",
-        elevated: "0 4px 6px -1px rgba(32, 35, 33, 0.06), 0 2px 4px -2px rgba(32, 35, 33, 0.04)",
+        subtle: "0 1px 2px 0 rgba(16, 16, 16, 0.04)",
+        card: "0 1px 3px 0 rgba(16, 16, 16, 0.06)",
+        retro: "2px 2px 0px #101010",
+        "retro-lg": "4px 4px 0px #101010",
+        "retro-pink": "3px 3px 0px #F542A6",
+        "retro-lime": "3px 3px 0px #D7FF35",
       },
     },
   },

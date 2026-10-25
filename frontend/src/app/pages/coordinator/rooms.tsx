@@ -176,14 +176,14 @@ export const RoomsPage: React.FC = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-6 border-b border-[#E4E3DD]/80">
+      <div className="flex items-center gap-6 border-b-2 border-deep-black/10">
         <button
           type="button"
           onClick={() => setActiveTab("rooms")}
           className={`pb-3 text-xs font-mono uppercase tracking-wider transition-colors ${
             activeTab === "rooms"
-              ? "border-b-2 border-muted-cobalt text-muted-cobalt font-medium"
-              : "text-slate-gray hover:text-charcoal"
+              ? "border-b-2 border-deep-black text-deep-black font-bold"
+              : "text-slate-gray hover:text-deep-black"
           }`}
         >
           Interview Venues ({rooms.length})
@@ -193,8 +193,8 @@ export const RoomsPage: React.FC = () => {
           onClick={() => setActiveTab("availability")}
           className={`pb-3 text-xs font-mono uppercase tracking-wider transition-colors ${
             activeTab === "availability"
-              ? "border-b-2 border-muted-cobalt text-muted-cobalt font-medium"
-              : "text-slate-gray hover:text-charcoal"
+              ? "border-b-2 border-deep-black text-deep-black font-bold"
+              : "text-slate-gray hover:text-deep-black"
           }`}
         >
           Panel Availability Matrix
@@ -207,14 +207,14 @@ export const RoomsPage: React.FC = () => {
           {rooms.map((room) => (
             <div
               key={room.id}
-              className={`rounded-xl border bg-white p-6 sm:p-7 shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all flex flex-col justify-between ${
-                room.isAvailable ? "border-[#E4E3DD]/80" : "border-[#E4E3DD]/80 bg-[#FAF9F5]/40 opacity-80"
+              className={`rounded-2xl border-2 border-deep-black bg-white p-6 sm:p-7 shadow-[4px_4px_0px_#101010] transition-all flex flex-col justify-between ${
+                room.isAvailable ? "" : "bg-[#FAF9F5] opacity-80"
               }`}
             >
               <div className="space-y-4">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <h3 className="font-heading text-base font-medium text-charcoal leading-snug">
+                    <h3 className="font-heading text-lg font-bold text-deep-black leading-snug">
                       {room.name}
                     </h3>
                     <p className="font-body text-xs text-slate-gray mt-0.5">
@@ -228,21 +228,21 @@ export const RoomsPage: React.FC = () => {
                     title={room.isAvailable ? "Mark Offline" : "Mark Available"}
                   >
                     {room.isAvailable ? (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EAF4EE] text-success-green border border-success-green/30 px-2.5 py-0.5 text-[11px] font-mono">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#70D6A0]/20 text-[#145a33] border border-[#70D6A0]/60 px-2.5 py-0.5 text-[11px] font-mono font-bold">
                         <CheckCircle2 className="h-3 w-3" /> Available
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FDF0F0] text-error-red border border-error-red/30 px-2.5 py-0.5 text-[11px] font-mono">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FF6262]/20 text-[#b51c1c] border border-[#FF6262]/60 px-2.5 py-0.5 text-[11px] font-mono font-bold">
                         <XCircle className="h-3 w-3" /> Offline
                       </span>
                     )}
                   </button>
                 </div>
 
-                <div className="space-y-1.5 pt-3 border-t border-[#E4E3DD]/60 text-xs font-body text-slate-gray">
+                <div className="space-y-1.5 pt-3 border-t border-deep-black/10 text-xs font-body text-slate-gray">
                   <div className="flex items-center justify-between font-mono">
-                    <span>Spatial Capacity</span>
-                    <span className="font-medium text-charcoal">{room.capacity} Persons</span>
+                    <span className="uppercase text-[11px]">Spatial Capacity</span>
+                    <span className="font-bold text-deep-black">{room.capacity} Persons</span>
                   </div>
                 </div>
 
@@ -255,7 +255,7 @@ export const RoomsPage: React.FC = () => {
                     {room.equipment.map((eq) => (
                       <span
                         key={eq}
-                        className="rounded-full bg-[#FAF9F5] px-2.5 py-0.5 text-[10px] font-mono text-slate-gray border border-[#E4E3DD]"
+                        className="rounded-full bg-[#FAF9F5] px-2.5 py-0.5 text-[10px] font-mono text-deep-black border border-deep-black/20 font-medium"
                       >
                         {eq}
                       </span>
@@ -265,7 +265,7 @@ export const RoomsPage: React.FC = () => {
               </div>
 
               {/* Actions */}
-              <div className="mt-6 pt-4 border-t border-[#E4E3DD]/70 flex items-center justify-between">
+              <div className="mt-6 pt-4 border-t border-deep-black/10 flex items-center justify-between">
                 <Button
                   variant="outline"
                   size="sm"
@@ -278,7 +278,7 @@ export const RoomsPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleOpenEditRoom(room)}
-                    className="p-1.5 rounded-md text-slate-gray/70 hover:text-charcoal hover:bg-warm-ivory transition-colors"
+                    className="p-1.5 rounded-md text-slate-gray hover:text-deep-black hover:bg-black/5 transition-colors"
                     title="Edit room"
                   >
                     <Edit2 className="h-4 w-4" />
@@ -286,7 +286,7 @@ export const RoomsPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => deleteRoom(room.id)}
-                    className="p-1.5 rounded-md text-slate-gray/70 hover:text-error-red hover:bg-warm-ivory transition-colors"
+                    className="p-1.5 rounded-md text-slate-gray hover:text-error-red hover:bg-black/5 transition-colors"
                     title="Delete room"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -301,10 +301,10 @@ export const RoomsPage: React.FC = () => {
       {/* AVAILABILITY TAB */}
       {activeTab === "availability" && (
         <div className="space-y-4">
-          <div className="rounded-xl border border-[#E4E3DD]/80 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.03)] overflow-hidden">
+          <div className="rounded-2xl border-2 border-deep-black bg-white shadow-[4px_4px_0px_#101010] overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs font-body">
-                <thead className="border-b border-[#E4E3DD]/80 bg-[#FAF9F5]/70 font-mono text-[11px] text-slate-gray font-normal tracking-wide">
+                <thead className="border-b-2 border-deep-black bg-[#FAF9F5] font-mono text-[11px] text-deep-black font-bold uppercase tracking-wider">
                   <tr>
                     <th className="px-6 py-3.5">Panelist / Evaluator</th>
                     <th className="px-6 py-3.5">Department</th>

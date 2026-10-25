@@ -25,11 +25,11 @@ export const SettingsPage: React.FC = () => {
 
   return (
     <div className="px-6 sm:px-10 lg:px-14 py-8 sm:py-12 max-w-5xl mx-auto space-y-10 text-left">
-      <div className="border-b border-[#E4E3DD]/80 pb-8">
+      <div className="border-b-2 border-deep-black pb-8">
         <span className="font-mono text-xs uppercase tracking-wider text-slate-gray block mb-1">
           Preferences &amp; Defaults
         </span>
-        <h1 className="font-heading text-3xl sm:text-4xl font-normal tracking-tight text-charcoal">
+        <h1 className="font-heading text-3xl sm:text-4xl font-black tracking-tight text-deep-black">
           Scheduler Configuration
         </h1>
         <p className="font-body text-sm text-slate-gray mt-1.5">
@@ -39,17 +39,17 @@ export const SettingsPage: React.FC = () => {
 
       <form onSubmit={handleSaveSettings} className="space-y-8">
         {/* Scheduling Invariants */}
-        <div className="rounded-xl border border-[#E4E3DD]/80 bg-white p-6 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-6">
-          <div className="flex items-center gap-2.5 border-b border-[#E4E3DD]/70 pb-4">
-            <ShieldCheck className="h-5 w-5 text-muted-cobalt" />
-            <h2 className="font-heading text-base font-medium text-charcoal">
+        <div className="rounded-xl border-2 border-deep-black bg-white p-6 sm:p-8 shadow-[4px_4px_0px_#101010] space-y-6">
+          <div className="flex items-center gap-2.5 border-b-2 border-deep-black pb-4">
+            <ShieldCheck className="h-5 w-5 text-hot-pink" />
+            <h2 className="font-heading text-base font-bold text-deep-black">
               Global Constraint Parameters
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
-              <label className="block text-xs font-mono uppercase tracking-wider text-slate-gray mb-1.5">
+              <label className="block text-xs font-mono uppercase tracking-wider text-deep-black font-bold mb-1.5">
                 Mandatory Room Buffer (Minutes)
               </label>
               <input
@@ -58,7 +58,7 @@ export const SettingsPage: React.FC = () => {
                 max={60}
                 value={bufferTime}
                 onChange={(e) => setBufferTime(e.target.value)}
-                className="w-full h-10 rounded-lg border border-[#E4E3DD] bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:border-muted-cobalt"
+                className="w-full h-10 rounded-lg border-2 border-deep-black bg-warm-offwhite px-3 text-xs text-deep-black font-body font-medium focus:outline-none focus:ring-2 focus:ring-electric-lime"
               />
               <p className="text-[11px] text-slate-gray mt-1.5 font-body">
                 Enforced by solver between consecutive sessions in the same venue.
@@ -66,7 +66,7 @@ export const SettingsPage: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-mono uppercase tracking-wider text-slate-gray mb-1.5">
+              <label className="block text-xs font-mono uppercase tracking-wider text-deep-black font-bold mb-1.5">
                 Default Round Duration (Minutes)
               </label>
               <input
@@ -75,7 +75,7 @@ export const SettingsPage: React.FC = () => {
                 max={180}
                 value={defaultDuration}
                 onChange={(e) => setDefaultDuration(e.target.value)}
-                className="w-full h-10 rounded-lg border border-[#E4E3DD] bg-white px-3 text-xs text-charcoal font-body focus:outline-none focus:border-muted-cobalt"
+                className="w-full h-10 rounded-lg border-2 border-deep-black bg-warm-offwhite px-3 text-xs text-deep-black font-body font-medium focus:outline-none focus:ring-2 focus:ring-electric-lime"
               />
               <p className="text-[11px] text-slate-gray mt-1.5 font-body">
                 Applied when new interview rounds are initialized.
@@ -84,32 +84,32 @@ export const SettingsPage: React.FC = () => {
           </div>
 
           <div className="pt-2">
-            <label className="block text-xs font-mono uppercase tracking-wider text-slate-gray mb-2">
+            <label className="block text-xs font-mono uppercase tracking-wider text-deep-black font-bold mb-2">
               Solver Invariant Policy
             </label>
-            <div className="space-y-2.5 text-xs font-body text-slate-gray">
+            <div className="space-y-2.5 text-xs font-body text-deep-black font-medium">
               <label className="flex items-center gap-2.5 cursor-pointer">
-                <input type="checkbox" defaultChecked disabled className="rounded text-muted-cobalt" />
+                <input type="checkbox" defaultChecked disabled className="rounded accent-electric-lime" />
                 <span>Strictly forbid concurrent candidate evaluations (Mandatory)</span>
               </label>
               <label className="flex items-center gap-2.5 cursor-pointer">
-                <input type="checkbox" defaultChecked disabled className="rounded text-muted-cobalt" />
+                <input type="checkbox" defaultChecked disabled className="rounded accent-electric-lime" />
                 <span>Strictly enforce interviewer daily evaluation load limits (Mandatory)</span>
               </label>
               <label className="flex items-center gap-2.5 cursor-pointer">
-                <input type="checkbox" defaultChecked className="rounded text-muted-cobalt" />
+                <input type="checkbox" defaultChecked className="rounded accent-electric-lime" />
                 <span>Prioritize contiguous interview blocks over dispersed slots (Optimization)</span>
               </label>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-[#E4E3DD]/70 flex items-center gap-4">
-            <Button type="submit" variant="primary" size="sm" className="gap-2 px-4 py-2 text-xs">
+          <div className="pt-4 border-t-2 border-deep-black/10 flex items-center gap-4">
+            <Button type="submit" variant="primary" size="sm" className="gap-2 px-4 py-2 text-xs font-bold">
               <Save className="h-3.5 w-3.5" />
               <span>Save Configuration</span>
             </Button>
             {saveConfirmed && (
-              <span className="text-xs text-success-green font-medium flex items-center gap-1 font-mono">
+              <span className="text-xs text-success-green font-bold flex items-center gap-1 font-mono">
                 <Check className="h-3.5 w-3.5" /> Settings saved successfully
               </span>
             )}
@@ -118,10 +118,10 @@ export const SettingsPage: React.FC = () => {
       </form>
 
       {/* Demo State & Local Storage Management */}
-      <div className="rounded-xl border border-[#E4E3DD]/80 bg-white p-6 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-4">
-        <div className="flex items-center gap-2.5 border-b border-[#E4E3DD]/70 pb-4">
-          <Database className="h-5 w-5 text-slate-gray" />
-          <h2 className="font-heading text-base font-medium text-charcoal">
+      <div className="rounded-xl border-2 border-deep-black bg-white p-6 sm:p-8 shadow-[4px_4px_0px_#101010] space-y-4">
+        <div className="flex items-center gap-2.5 border-b-2 border-deep-black pb-4">
+          <Database className="h-5 w-5 text-electric-lime" />
+          <h2 className="font-heading text-base font-bold text-deep-black">
             Demo State &amp; Data Persistence
           </h2>
         </div>
@@ -136,14 +136,14 @@ export const SettingsPage: React.FC = () => {
             variant="outline"
             size="sm"
             onClick={handleReset}
-            className="text-error-red border-error-red/30 hover:bg-[#FDF0F0] gap-2 px-4 py-2 text-xs"
+            className="text-error-red border-2 border-error-red hover:bg-[#FF6262]/10 gap-2 px-4 py-2 text-xs font-bold"
           >
             <RefreshCw className="h-3.5 w-3.5" />
             <span>Reset Demo Data to Initial Baseline</span>
           </Button>
 
           {resetConfirmed && (
-            <span className="text-xs text-success-green font-medium flex items-center gap-1 font-mono">
+            <span className="text-xs text-success-green font-bold flex items-center gap-1 font-mono">
               <Check className="h-3.5 w-3.5" /> Data restored to initial clean state
             </span>
           )}

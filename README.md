@@ -1,50 +1,62 @@
 # Slotify: The Ancient One’s Trials
 
 ### Problem Statement
-Coordinating campus recruitment drives is chaotic. Placement teams must balance hundreds of students across sequential evaluation rounds, faculty panelists with strict daily quotas, and limited physical interview rooms with mandatory turnaround buffers. Traditional spreadsheets quickly result in double bookings, prerequisite violations, and evaluator burnout.
+Scheduling campus recruitment interviews across hundreds of candidates, diverse interviewer panels, limited interview rooms, and multiple sequential rounds is complex and error-prone. Manual spreadsheet management frequently leads to double bookings, uneven interviewer workloads, room buffer violations, and cascading disruptions caused by last-minute cancellations or rescheduling requests.
 
 ### Solution
-Slotify organizes and automates campus interview scheduling with deterministic constraint rules. It provides role-specific dashboards for coordinators, faculty interviewers, and student candidates, ensuring valid prerequisite sequences, room cleaning intervals, and load-balanced evaluations with zero clashes.
+Slotify coordinates interview scheduling through availability management, constraint-based matching, candidate self-booking, and schedule recovery. The platform provides role-segregated workflows for Candidates, Interviewers, and Coordinators to ensure interviews adhere to round dependencies, panel capacities, and room turnaround buffers without schedule conflicts.
 
 ### Features
-- **Candidate Portal**: View scheduled sessions, download calendar invitations (`.ics`), browse available openings, self-book with instant overlap validation, and review notifications.
-- **Interviewer Hub**: Daily schedule matrix, assigned student rosters, rubric evaluation forms with scorecard recommendations, and availability time window management.
-- **Coordinator Console**: Recruitment drive setup, multi-round stage sequencing, candidate roster management, panelist workload tracking, room inventory, and timetable conflict inspection.
-- **Role-Based Routing & Session State**: Dedicated protected dashboard experiences for Candidates (`/candidate`), Interviewers (`/interviewer`), and Coordinators (`/coordinator`).
+
+#### Implemented Features (Frontend Demo)
+- **Role-Based Dashboards**: Tailored workspaces for Candidates (`/candidate`), Interviewers (`/interviewer`), and Coordinators (`/coordinator`).
+- **Candidate Self-Booking & Availability**: Browse open interview slots with real-time overlap validation, book slots, and review schedule confirmations.
+- **Calendar Invitations & In-App Notifications**: Download standard `.ics` calendar invitation files directly from interview cards and track in-app scheduling alerts.
+- **Multi-Round Recruitment Management**: Coordinator interface to configure recruitment drives, manage candidate rosters, track stage progression, and inspect timetable conflicts.
+- **Interviewer Schedule & Evaluations**: Daily interview matrices, assigned candidate queues, availability windows, and structured evaluation scorecards with hiring recommendations.
+- **Preview Schedule Changes**: Modal previews for viewing proposed booking adjustments before confirmation.
+
+#### Planned Features (Full-Stack Specification)
+- **Constraint-Based Scheduling Engine**: Automated multi-variable optimization utilizing Google OR-Tools CP-SAT to balance interviewer workloads and room turnaround buffers.
+- **Automated Rescheduling & Schedule Recovery**: Algorithmic recalculation to heal broken schedules following cancellations or interviewer unavailability.
+- **Centralized Candidate Ranking**: Automated cross-round scorecard aggregation and ranking pipelines.
+- **Server-Driven Email Invitations & Realtime Sync**: Automated calendar emails via Resend API and live multi-user schedule synchronization via database change streams.
 
 ### Tech Stack
-- **Frontend**: React 19, TypeScript, Vite 8, React Router DOM v7
-- **Styling**: Tailwind CSS v3.4 with custom retro-digital tokens
-- **UI Components**: Radix UI primitives (`@radix-ui/react-dialog`, `@radix-ui/react-select`, `@radix-ui/react-slot`), Lucide React
-- **Static Analysis**: Oxlint (0 errors)
+
+#### Frontend
+- **Implemented**: React 19, TypeScript, Vite, Tailwind CSS, Radix UI primitives, Lucide React, React Router DOM
+- **Planned / Extended**: FullCalendar, React Hook Form, Zod, Motion, TanStack Query, Recharts
+
+#### Backend & Scheduling (Planned Architecture)
+- Python, FastAPI, Pydantic, Google OR-Tools CP-SAT, SQLAlchemy
+
+#### Database, Auth & Realtime (Planned Architecture)
+- Supabase PostgreSQL, Supabase Auth, Supabase Realtime
+
+#### Calendar & Notifications
+- **Implemented**: Client-side `.ics` calendar generation and local state-backed in-app notifications
+- **Planned Architecture**: Python `icalendar`, Resend API (email notifications), PostgreSQL-persisted notification feeds
 
 ### Setup and Run
-1. Navigate into the frontend workspace:
+
+1. Navigate to the frontend directory:
    ```bash
    cd frontend
    ```
+
 2. Install dependencies:
    ```bash
    npm install
    ```
-3. Run the development server:
+
+3. Start the local development server:
    ```bash
    npm run dev
    ```
    Open `http://localhost:5173` in your browser.
-4. Run the production build and type-checker:
+
+4. Build for production:
    ```bash
    npm run build
    ```
-5. Run the linter:
-   ```bash
-   npm run lint
-   ```
-
-### Demo or Test Login
-The Sign In page (`/login`) includes an **Explore Demo** section for project evaluators. Select one of the three roles to launch its corresponding dashboard without entering credentials:
-- **Candidate**: Pre-configured as *Aarav Patel* (navigates to `/candidate/overview`)
-- **Interviewer**: Pre-configured as *Dr. Vikram Sethi* (navigates to `/interviewer/overview`)
-- **Coordinator**: Pre-configured as *Head Placement Lead* (navigates to `/coordinator/overview`)
-
-*Note: Demo access simulates authentication in client-side storage for local demonstration.*

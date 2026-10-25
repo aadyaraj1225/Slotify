@@ -4,13 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Clock, User, MapPin, ArrowRight, Check } from "lucide-react";
 
 export const HeroSection: React.FC = () => {
-  const scrollToHowItWorks = () => {
-    const el = document.getElementById("how-it-works");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
     <section id="overview" className="relative bg-deep-black text-white pt-20 pb-28 sm:pt-28 sm:pb-36 border-b border-[#252525] overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
@@ -28,20 +21,21 @@ export const HeroSection: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
-              <Link to="/coordinator/overview">
+              <Link to="/signup">
                 <Button variant="primary" size="lg" className="w-full sm:w-auto justify-center">
                   <span>Get Started</span>
                   <ArrowRight className="h-4 w-4 ml-2" aria-hidden="true" />
                 </Button>
               </Link>
-              <Button
-                variant="secondary"
-                size="lg"
-                onClick={scrollToHowItWorks}
-                className="justify-center border border-[#333333] hover:border-sky-blue text-white"
-              >
-                How It Works
-              </Button>
+              <Link to="/login">
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  className="w-full sm:w-auto justify-center border border-[#333333] hover:border-white text-white"
+                >
+                  <span>Sign In</span>
+                </Button>
+              </Link>
             </div>
 
             {/* Quick Metrics */}

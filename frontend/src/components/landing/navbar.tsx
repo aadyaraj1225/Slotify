@@ -71,22 +71,21 @@ export const Navbar: React.FC = () => {
             );
           })}
           <Link
-            to="/coordinator/overview"
+            to="/login"
             className="text-xs uppercase tracking-wider font-mono text-muted-gray hover:text-white transition-colors"
           >
-            Coordinator
-          </Link>
-          <Link
-            to="/candidate/overview"
-            className="text-xs uppercase tracking-wider font-mono text-electric-lime hover:text-white transition-colors font-bold"
-          >
-            Candidate Portal
+            Sign In
           </Link>
         </nav>
 
         {/* Desktop Primary Action */}
-        <div className="hidden sm:flex items-center gap-4">
-          <Link to="/coordinator/overview">
+        <div className="hidden sm:flex items-center gap-3">
+          <Link to="/login">
+            <Button variant="outline" size="sm" className="px-4 py-2 text-xs border border-[#333333] text-white hover:border-white">
+              Sign In
+            </Button>
+          </Link>
+          <Link to="/signup">
             <Button variant="primary" size="sm" className="px-5 py-2 text-xs">
               Get Started
             </Button>
@@ -129,22 +128,15 @@ export const Navbar: React.FC = () => {
               );
             })}
             <Link
-              to="/coordinator/overview"
+              to="/login"
               onClick={() => setMobileMenuOpen(false)}
               className="text-sm font-mono uppercase tracking-wider text-muted-gray hover:text-white py-2"
             >
-              Coordinator
-            </Link>
-            <Link
-              to="/candidate/overview"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-mono uppercase tracking-wider text-electric-lime hover:text-white py-2 font-bold"
-            >
-              Candidate Portal
+              Sign In
             </Link>
           </nav>
-          <div className="pt-4 border-t border-[#252525]">
-            <Link to="/coordinator/overview" onClick={() => setMobileMenuOpen(false)}>
+          <div className="pt-4 border-t border-[#252525] flex flex-col gap-2">
+            <Link to="/signup" onClick={() => setMobileMenuOpen(false)}>
               <Button variant="primary" size="md" className="w-full justify-center">
                 Get Started
               </Button>

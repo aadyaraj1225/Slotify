@@ -27,8 +27,8 @@ export const Footer: React.FC = () => {
           <a href="#features" className="hover:text-hot-pink transition-colors">
             Features
           </a>
-          <Link to="/coordinator/overview" className="hover:text-sky-blue transition-colors">
-            Dashboard
+          <Link to="/login" className="hover:text-sky-blue transition-colors">
+            Portal Sign In
           </Link>
           <a
             href="https://github.com/aadyaraj1225/Slotify"

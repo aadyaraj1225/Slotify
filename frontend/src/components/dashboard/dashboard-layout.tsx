@@ -5,8 +5,10 @@ import {
   X,
   ChevronDown,
   ArrowLeft,
+  LogOut,
 } from "lucide-react";
 import { useCoordinator } from "@/context/coordinator-context";
+import { useAuth } from "@/context/auth-context";
 import { cn } from "@/lib/utils";
 
 export interface DashboardLayoutProps {
@@ -19,6 +21,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
   const location = useLocation();
 
   const { drives, selectedDriveId, setSelectedDriveId, conflicts } = useCoordinator();
+  const { user, logout } = useAuth();
 
   const navigationItems = [
     { label: "Overview", path: "/coordinator/overview" },
@@ -133,8 +136,16 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
           })}
         </nav>
 
-        {/* Return to Public Website */}
-        <div className="border-t border-[#252525] p-6">
+        {/* Return to Public Website & Logout */}
+        <div className="border-t border-[#252525] p-6 space-y-2">
+          <button
+            type="button"
+            onClick={logout}
+            className="w-full flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-mono uppercase tracking-wider text-error-red hover:bg-[#FF6262]/10 transition-colors text-left"
+          >
+            <LogOut className="h-3.5 w-3.5" />
+            <span>Sign Out</span>
+          </button>
           <Link
             to="/"
             className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-mono uppercase tracking-wider text-muted-gray hover:text-white hover:bg-[#252525] transition-colors"
@@ -193,7 +204,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                 aria-expanded={profileOpen}
               >
                 <span className="text-xs font-mono font-bold text-deep-black">
-                  Dr. Vikram Sethi
+                  {user?.name || "Placement Coordinator"}
                 </span>
                 <ChevronDown className="h-3.5 w-3.5 text-deep-black" aria-hidden="true" />
               </button>
@@ -202,27 +213,37 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                 <div className="absolute right-0 mt-3 w-64 rounded-xl border-2 border-deep-black bg-white p-5 shadow-[4px_4px_0px_#101010] z-50 text-left space-y-3">
                   <div>
                     <span className="inline-block rounded bg-electric-lime px-2 py-0.5 font-mono text-[10px] text-deep-black font-bold border border-deep-black/30">
-                      Placement Lead
+                      Coordinator Console
                     </span>
                     <p className="font-heading font-bold text-sm text-deep-black mt-1.5">
-                      Dr. Vikram Sethi
+                      {user?.name || "Placement Coordinator"}
                     </p>
                     <p className="font-mono text-xs text-slate-gray">
-                      v.sethi@campus.edu
+                      {user?.email || "coord@campus.edu"}
                     </p>
                   </div>
                   <div className="border-t border-[#E4E3DD] pt-2 text-xs text-slate-gray space-y-1">
-                    <p>Department: Computer Science</p>
-                    <p>Role: Head Coordinator</p>
+                    <p>Department: Career Services</p>
+                    <p>Role: Coordinator</p>
                   </div>
-                  <div className="border-t border-[#E4E3DD] pt-2">
+                  <div className="border-t border-[#E4E3DD] pt-2 flex items-center justify-between">
                     <Link
                       to="/coordinator/settings"
                       onClick={() => setProfileOpen(false)}
                       className="block text-xs font-mono text-hot-pink font-bold hover:underline"
                     >
-                      Workspace Settings
+                      Settings
                     </Link>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setProfileOpen(false);
+                        logout();
+                      }}
+                      className="text-xs font-mono text-error-red font-bold hover:underline"
+                    >
+                      Sign Out
+                    </button>
                   </div>
                 </div>
               )}

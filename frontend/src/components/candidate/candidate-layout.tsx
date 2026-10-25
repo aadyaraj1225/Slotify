@@ -8,9 +8,10 @@ import {
   Clock,
   Compass,
   ArrowLeft,
-  ExternalLink,
+  LogOut,
 } from "lucide-react";
 import { useCandidate } from "@/context/candidate-context";
+import { useAuth } from "@/context/auth-context";
 import { cn } from "@/lib/utils";
 
 export interface CandidateLayoutProps {
@@ -27,6 +28,8 @@ export const CandidateLayout: React.FC<CandidateLayoutProps> = ({ children }) =>
     setActiveCandidateId,
     unreadNotificationCount,
   } = useCandidate();
+
+  const { logout } = useAuth();
 
   const navigationItems = [
     { label: "Overview", path: "/candidate/overview", icon: Compass },
@@ -152,15 +155,16 @@ export const CandidateLayout: React.FC<CandidateLayoutProps> = ({ children }) =>
           })}
         </nav>
 
-        {/* Return to Public Website & Coordinator Switch */}
+        {/* Sign Out & Return */}
         <div className="border-t-2 border-deep-black p-6 space-y-2">
-          <Link
-            to="/coordinator/overview"
-            className="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-mono uppercase tracking-wider text-muted-gray hover:text-white hover:bg-[#252525] transition-colors"
+          <button
+            type="button"
+            onClick={logout}
+            className="w-full flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-mono uppercase tracking-wider text-error-red hover:bg-[#FF6262]/10 transition-colors text-left"
           >
-            <span>Coordinator Mode</span>
-            <ExternalLink className="h-3.5 w-3.5" />
-          </Link>
+            <LogOut className="h-3.5 w-3.5" />
+            <span>Sign Out</span>
+          </button>
           <Link
             to="/"
             className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-mono uppercase tracking-wider text-muted-gray hover:text-white hover:bg-[#252525] transition-colors"

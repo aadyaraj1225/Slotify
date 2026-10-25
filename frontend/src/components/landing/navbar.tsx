@@ -80,15 +80,17 @@ export const Navbar: React.FC = () => {
 
         {/* Desktop Primary Action */}
         <div className="hidden sm:flex items-center gap-3">
-          <Link to="/login">
-            <Button variant="outline" size="sm" className="px-4 py-2 text-xs border border-[#333333] text-white hover:border-white">
-              Sign In
-            </Button>
+          <Link
+            to="/login"
+            className="text-xs font-mono font-bold uppercase tracking-wider text-white border-2 border-white/80 hover:bg-white hover:text-deep-black px-4 py-2 rounded transition-colors"
+          >
+            Sign In
           </Link>
-          <Link to="/signup">
-            <Button variant="primary" size="sm" className="px-5 py-2 text-xs">
-              Get Started
-            </Button>
+          <Link
+            to="/signup"
+            className="text-xs font-mono font-bold uppercase tracking-wider bg-electric-lime text-deep-black border-2 border-deep-black hover:bg-[#c9f228] px-5 py-2 rounded shadow-[2px_2px_0px_#101010] transition-colors"
+          >
+            Get Started
           </Link>
         </div>
 

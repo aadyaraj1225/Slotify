@@ -1,18 +1,12 @@
 import * as React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const location = useLocation();
 
   const isLandingPage = location.pathname === "/";
-
-  const navLinks = [
-    { label: "How it Works", href: "#how-it-works" },
-    { label: "Features", href: "#features" },
-  ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (isLandingPage && href.startsWith("#")) {
@@ -37,58 +31,52 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#252525] bg-deep-black/95 backdrop-blur-md text-white">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
-        {/* Slotify Logo & Name */}
-        <Link
-          to="/"
-          className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-lime rounded-md"
-          aria-label="Slotify Home"
-        >
-          <div className="flex h-9 w-9 items-center justify-center rounded bg-electric-lime text-deep-black font-mono font-black text-base shadow-[2px_2px_0px_#F542A6]">
-            S
-          </div>
-          <span className="font-heading text-xl font-bold tracking-tight text-white">
-            Slotify
-          </span>
-        </Link>
-
-        {/* Desktop Navigation Links */}
-        <nav
-          className="hidden md:flex items-center gap-8"
-          aria-label="Main Navigation"
-        >
-          {navLinks.map((link) => {
-            const destination = isLandingPage ? link.href : `/${link.href}`;
-            return (
-              <a
-                key={link.label}
-                href={destination}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="text-xs uppercase tracking-wider font-mono text-muted-gray hover:text-white transition-colors"
-              >
-                {link.label}
-              </a>
-            );
-          })}
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
+        {/* Left: Slotify Brand Mark */}
+        <div className="flex items-center gap-8">
           <Link
-            to="/login"
-            className="text-xs uppercase tracking-wider font-mono text-muted-gray hover:text-white transition-colors"
+            to="/"
+            className="flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-lime rounded-md"
+            aria-label="Slotify Home"
           >
-            Sign In
+            <div className="flex h-8 w-8 items-center justify-center rounded bg-electric-lime text-deep-black font-mono font-black text-sm border border-deep-black shadow-[2px_2px_0px_#F542A6]">
+              S
+            </div>
+            <span className="font-heading text-xl font-black tracking-tight text-white">
+              Slotify
+            </span>
           </Link>
-        </nav>
 
-        {/* Desktop Primary Action */}
-        <div className="hidden sm:flex items-center gap-3">
+          {/* Center-Left: Main Navigation Links */}
+          <nav className="hidden md:flex items-center gap-6" aria-label="Main Navigation">
+            <a
+              href="#how-it-works"
+              onClick={(e) => handleNavClick(e, "#how-it-works")}
+              className="text-xs font-mono uppercase tracking-wider text-muted-gray hover:text-white transition-colors"
+            >
+              How it Works
+            </a>
+            <a
+              href="#features"
+              onClick={(e) => handleNavClick(e, "#features")}
+              className="text-xs font-mono uppercase tracking-wider text-muted-gray hover:text-white transition-colors"
+            >
+              Features
+            </a>
+          </nav>
+        </div>
+
+        {/* Right: Actions */}
+        <div className="hidden sm:flex items-center gap-5">
           <Link
             to="/login"
-            className="text-xs font-mono font-bold uppercase tracking-wider text-white border-2 border-white/80 hover:bg-white hover:text-deep-black px-4 py-2 rounded transition-colors"
+            className="text-xs font-mono font-semibold uppercase tracking-wider text-muted-gray hover:text-white transition-colors"
           >
             Sign In
           </Link>
           <Link
             to="/signup"
-            className="text-xs font-mono font-bold uppercase tracking-wider bg-electric-lime text-deep-black border-2 border-deep-black hover:bg-[#c9f228] px-5 py-2 rounded shadow-[2px_2px_0px_#101010] transition-colors"
+            className="inline-flex items-center justify-center text-xs font-mono font-bold uppercase tracking-wider bg-electric-lime text-deep-black border-2 border-deep-black hover:bg-[#c9f228] px-4 py-2 rounded shadow-[2px_2px_0px_#101010] active:translate-x-[1px] active:translate-y-[1px] transition-all"
           >
             Get Started
           </Link>
@@ -104,44 +92,47 @@ export const Navbar: React.FC = () => {
             aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? (
-              <X className="h-6 w-6" aria-hidden="true" />
+              <X className="h-5 w-5" aria-hidden="true" />
             ) : (
-              <Menu className="h-6 w-6" aria-hidden="true" />
+              <Menu className="h-5 w-5" aria-hidden="true" />
             )}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-[#252525] bg-near-black px-6 py-6 text-left space-y-4">
-          <nav className="flex flex-col space-y-3" aria-label="Mobile Navigation">
-            {navLinks.map((link) => {
-              const destination = isLandingPage ? link.href : `/${link.href}`;
-              return (
-                <a
-                  key={link.label}
-                  href={destination}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className="text-sm font-mono uppercase tracking-wider text-muted-gray hover:text-white py-2"
-                >
-                  {link.label}
-                </a>
-              );
-            })}
+        <div className="md:hidden border-b border-[#252525] bg-near-black px-6 py-6 text-left space-y-4">
+          <nav className="flex flex-col space-y-3">
+            <a
+              href="#how-it-works"
+              onClick={(e) => handleNavClick(e, "#how-it-works")}
+              className="text-sm font-mono uppercase tracking-wider text-muted-gray hover:text-white py-1"
+            >
+              How it Works
+            </a>
+            <a
+              href="#features"
+              onClick={(e) => handleNavClick(e, "#features")}
+              className="text-sm font-mono uppercase tracking-wider text-muted-gray hover:text-white py-1"
+            >
+              Features
+            </a>
             <Link
               to="/login"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-mono uppercase tracking-wider text-muted-gray hover:text-white py-2"
+              className="text-sm font-mono uppercase tracking-wider text-muted-gray hover:text-white py-1"
             >
               Sign In
             </Link>
           </nav>
-          <div className="pt-4 border-t border-[#252525] flex flex-col gap-2">
-            <Link to="/signup" onClick={() => setMobileMenuOpen(false)}>
-              <Button variant="primary" size="md" className="w-full justify-center">
-                Get Started
-              </Button>
+          <div className="pt-3 border-t border-[#252525]">
+            <Link
+              to="/signup"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full inline-flex items-center justify-center text-xs font-mono font-bold uppercase tracking-wider bg-electric-lime text-deep-black border-2 border-deep-black px-4 py-2.5 rounded shadow-[2px_2px_0px_#101010]"
+            >
+              Get Started
             </Link>
           </div>
         </div>

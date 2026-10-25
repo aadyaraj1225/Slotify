@@ -68,27 +68,27 @@ export const SignUpPage: React.FC = () => {
           </span>
         </Link>
         <Link
-          to="/login"
+          to="/"
           className="text-xs font-mono font-bold uppercase tracking-wider text-muted-gray hover:text-electric-lime transition-colors"
         >
-          &larr; Already Registered?
+          &larr; Public Site
         </Link>
       </header>
 
       {/* Main SignUp Card */}
       <main className="w-full max-w-md mx-auto my-auto">
         <div className="rounded-2xl border-2 border-deep-black bg-white p-6 sm:p-8 md:p-10 text-deep-black shadow-[6px_6px_0px_#D7FF35]">
-          <div className="space-y-2 mb-6 text-left">
-            <h1 className="font-heading text-3xl sm:text-4xl font-black tracking-tight text-deep-black">
+          <div className="space-y-1.5 mb-6 text-left">
+            <h1 className="font-heading text-3xl font-black tracking-tight text-deep-black">
               Create Account
             </h1>
             <p className="font-body text-xs text-slate-gray">
-              Join the recruitment network to schedule campus interviews or evaluate candidate panels.
+              Register to access your recruitment interview portal.
             </p>
           </div>
 
           {error && (
-            <div className="rounded-lg bg-[#FF6262]/10 border-2 border-error-red p-3 mb-6 text-xs text-error-red font-medium text-left">
+            <div className="rounded-lg bg-[#FF6262]/10 border-2 border-error-red p-3 mb-5 text-xs text-error-red font-medium text-left">
               {error}
             </div>
           )}
@@ -96,7 +96,7 @@ export const SignUpPage: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-4 text-left">
             <div>
               <label className="block text-xs font-mono font-bold uppercase tracking-wider text-deep-black mb-1.5">
-                Full Legal Name
+                Full Name
               </label>
               <input
                 type="text"
@@ -124,7 +124,7 @@ export const SignUpPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-mono font-bold uppercase tracking-wider text-deep-black mb-1.5">
-                Primary Role in Recruitment
+                Primary Role
               </label>
               <div className="grid grid-cols-3 gap-2">
                 <button
@@ -133,7 +133,7 @@ export const SignUpPage: React.FC = () => {
                   className={`rounded-lg border-2 border-deep-black p-2.5 text-center text-xs font-mono font-bold transition-all ${
                     role === "candidate"
                       ? "bg-electric-lime text-deep-black shadow-[2px_2px_0px_#101010]"
-                      : "bg-warm-offwhite text-slate-gray hover:bg-white hover:text-deep-black"
+                      : "bg-warm-offwhite text-slate-gray hover:text-deep-black"
                   }`}
                 >
                   Candidate
@@ -144,7 +144,7 @@ export const SignUpPage: React.FC = () => {
                   className={`rounded-lg border-2 border-deep-black p-2.5 text-center text-xs font-mono font-bold transition-all ${
                     role === "interviewer"
                       ? "bg-sky-blue text-deep-black shadow-[2px_2px_0px_#101010]"
-                      : "bg-warm-offwhite text-slate-gray hover:bg-white hover:text-deep-black"
+                      : "bg-warm-offwhite text-slate-gray hover:text-deep-black"
                   }`}
                 >
                   Interviewer
@@ -155,7 +155,7 @@ export const SignUpPage: React.FC = () => {
                   className={`rounded-lg border-2 border-deep-black p-2.5 text-center text-xs font-mono font-bold transition-all ${
                     role === "coordinator"
                       ? "bg-hot-pink text-white shadow-[2px_2px_0px_#101010]"
-                      : "bg-warm-offwhite text-slate-gray hover:bg-white hover:text-deep-black"
+                      : "bg-warm-offwhite text-slate-gray hover:text-deep-black"
                   }`}
                 >
                   Coordinator
@@ -206,17 +206,18 @@ export const SignUpPage: React.FC = () => {
               variant="primary"
               size="lg"
               disabled={isLoading}
-              className="w-full justify-center text-xs font-bold gap-2 mt-3 bg-electric-lime text-deep-black border-2 border-deep-black shadow-[3px_3px_0px_#101010] hover:bg-[#c9f228]"
+              className="w-full justify-center text-xs font-bold gap-2 mt-2 bg-electric-lime text-deep-black border-2 border-deep-black shadow-[3px_3px_0px_#101010] hover:bg-[#c9f228]"
             >
               <span>{isLoading ? "Creating Account..." : "Create Account"}</span>
               <ArrowRight className="h-4 w-4" />
             </Button>
           </form>
 
-          <div className="mt-6 pt-5 border-t-2 border-deep-black/10 text-center text-xs text-slate-gray">
+          {/* Simple Link to Sign In */}
+          <div className="mt-5 text-center text-xs text-slate-gray">
             Already have an account?{" "}
             <Link to="/login" className="font-bold text-deep-black hover:text-hot-pink underline">
-              Sign In instead
+              Sign in
             </Link>
           </div>
         </div>

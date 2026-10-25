@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Eye, EyeOff, ArrowRight, UserCheck } from "lucide-react";
+import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useAuth, DEMO_USERS } from "@/context/auth-context";
 import { Button } from "@/components/ui/button";
 import type { UserRole } from "@/types/auth";
@@ -15,6 +15,7 @@ export const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [error, setError] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
+  const [demoRole, setDemoRole] = React.useState<UserRole>("candidate");
 
   // If already authenticated, redirect to user's dashboard
   React.useEffect(() => {
@@ -40,9 +41,7 @@ export const LoginPage: React.FC = () => {
     setIsLoading(true);
     try {
       const res = await login(email, password);
-      if (res.success) {
-        // Will be redirected by useEffect
-      } else {
+      if (!res.success) {
         setError(res.error || "Authentication failed.");
       }
     } catch {
@@ -52,9 +51,9 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  const handleDemoLogin = (role: UserRole) => {
-    loginAsDemo(role);
-    const target = getDefaultDashboardRoute(role);
+  const handleExploreDemo = () => {
+    loginAsDemo(demoRole);
+    const target = getDefaultDashboardRoute(demoRole);
     navigate(target, { replace: true });
   };
 
@@ -81,22 +80,22 @@ export const LoginPage: React.FC = () => {
       {/* Center Auth Card */}
       <main className="w-full max-w-md mx-auto my-auto">
         <div className="rounded-2xl border-2 border-deep-black bg-white p-6 sm:p-8 md:p-10 text-deep-black shadow-[6px_6px_0px_#D7FF35]">
-          <div className="space-y-2 mb-6 text-left">
-            <h1 className="font-heading text-3xl sm:text-4xl font-black tracking-tight text-deep-black">
+          <div className="space-y-1.5 mb-6 text-left">
+            <h1 className="font-heading text-3xl font-black tracking-tight text-deep-black">
               Sign In
             </h1>
             <p className="font-body text-xs text-slate-gray">
-              Enter your institutional credentials to access your recruitment portal.
+              Enter your credentials to access your recruitment portal.
             </p>
           </div>
 
           {error && (
-            <div className="rounded-lg bg-[#FF6262]/10 border-2 border-error-red p-3 mb-6 text-xs text-error-red font-medium text-left">
+            <div className="rounded-lg bg-[#FF6262]/10 border-2 border-error-red p-3 mb-5 text-xs text-error-red font-medium text-left">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5 text-left">
+          <form onSubmit={handleSubmit} className="space-y-4 text-left">
             <div>
               <label className="block text-xs font-mono font-bold uppercase tracking-wider text-deep-black mb-1.5">
                 Email Address
@@ -112,11 +111,9 @@ export const LoginPage: React.FC = () => {
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-mono font-bold uppercase tracking-wider text-deep-black">
-                  Password
-                </label>
-              </div>
+              <label className="block text-xs font-mono font-bold uppercase tracking-wider text-deep-black mb-1.5">
+                Password
+              </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -142,64 +139,82 @@ export const LoginPage: React.FC = () => {
               variant="primary"
               size="lg"
               disabled={isLoading}
-              className="w-full justify-center text-xs font-bold gap-2 mt-3 bg-electric-lime text-deep-black border-2 border-deep-black shadow-[3px_3px_0px_#101010] hover:bg-[#c9f228]"
+              className="w-full justify-center text-xs font-bold gap-2 mt-2 bg-electric-lime text-deep-black border-2 border-deep-black shadow-[3px_3px_0px_#101010] hover:bg-[#c9f228]"
             >
-              <span>{isLoading ? "Authenticating..." : "Sign In to Portal"}</span>
+              <span>{isLoading ? "Signing In..." : "Sign In"}</span>
               <ArrowRight className="h-4 w-4" />
             </Button>
           </form>
 
-          <div className="mt-6 pt-5 border-t-2 border-deep-black/10 text-center text-xs text-slate-gray">
-            Don't have an account yet?{" "}
+          {/* Simple Link to Sign Up */}
+          <div className="mt-5 text-center text-xs text-slate-gray">
+            New to Slotify?{" "}
             <Link to="/signup" className="font-bold text-deep-black hover:text-hot-pink underline">
-              Create Account
+              Create an account
             </Link>
           </div>
 
-          {/* Explicitly Labeled Demo Access Strip */}
-          <div className="mt-8 pt-6 border-t-2 border-deep-black text-left">
-            <div className="flex items-center gap-1.5 mb-2">
-              <UserCheck className="h-4 w-4 text-hot-pink" />
-              <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-deep-black">
-                Evaluator Demo Access
+          {/* Integrated Explore Demo Access */}
+          <div className="mt-6 pt-5 border-t-2 border-deep-black/10 text-left space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-xs font-bold uppercase tracking-wider text-deep-black">
+                Explore Demo
+              </span>
+              <span className="font-mono text-[10px] text-slate-gray">
+                No credentials needed
               </span>
             </div>
-            <p className="font-body text-[11px] text-slate-gray mb-3 leading-relaxed">
-              Fast-track demo bypass to evaluate each role's dashboard:
-            </p>
 
             <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
-                onClick={() => handleDemoLogin("candidate")}
-                className="rounded-lg border-2 border-deep-black bg-warm-offwhite p-2.5 text-center hover:bg-electric-lime transition-colors shadow-[2px_2px_0px_#101010]"
+                onClick={() => setDemoRole("candidate")}
+                className={`rounded-lg border-2 border-deep-black p-2 text-center text-xs font-mono font-bold transition-all ${
+                  demoRole === "candidate"
+                    ? "bg-electric-lime text-deep-black shadow-[2px_2px_0px_#101010]"
+                    : "bg-warm-offwhite text-slate-gray hover:text-deep-black"
+                }`}
               >
-                <span className="font-mono text-[10px] uppercase font-bold text-deep-black block">Candidate</span>
-                <span className="text-[10px] text-slate-gray block truncate font-mono">{DEMO_USERS.candidate.name.split(" ")[0]}</span>
+                Candidate
               </button>
-
               <button
                 type="button"
-                onClick={() => handleDemoLogin("interviewer")}
-                className="rounded-lg border-2 border-deep-black bg-warm-offwhite p-2.5 text-center hover:bg-sky-blue transition-colors shadow-[2px_2px_0px_#101010]"
+                onClick={() => setDemoRole("interviewer")}
+                className={`rounded-lg border-2 border-deep-black p-2 text-center text-xs font-mono font-bold transition-all ${
+                  demoRole === "interviewer"
+                    ? "bg-sky-blue text-deep-black shadow-[2px_2px_0px_#101010]"
+                    : "bg-warm-offwhite text-slate-gray hover:text-deep-black"
+                }`}
               >
-                <span className="font-mono text-[10px] uppercase font-bold text-deep-black block">Interviewer</span>
-                <span className="text-[10px] text-slate-gray block truncate font-mono">Dr. Sethi</span>
+                Interviewer
               </button>
-
               <button
                 type="button"
-                onClick={() => handleDemoLogin("coordinator")}
-                className="rounded-lg border-2 border-deep-black bg-warm-offwhite p-2.5 text-center hover:bg-hot-pink hover:text-white transition-colors shadow-[2px_2px_0px_#101010]"
+                onClick={() => setDemoRole("coordinator")}
+                className={`rounded-lg border-2 border-deep-black p-2 text-center text-xs font-mono font-bold transition-all ${
+                  demoRole === "coordinator"
+                    ? "bg-hot-pink text-white shadow-[2px_2px_0px_#101010]"
+                    : "bg-warm-offwhite text-slate-gray hover:text-deep-black"
+                }`}
               >
-                <span className="font-mono text-[10px] uppercase font-bold block">Coordinator</span>
-                <span className="text-[10px] text-slate-gray block truncate font-mono">Admin Lead</span>
+                Coordinator
               </button>
             </div>
 
-            <span className="block text-[10px] font-mono text-slate-gray/70 mt-3 text-center">
-              Notice: Demo mode runs in browser storage. Connects to OAuth/FastAPI in Phase 5.
-            </span>
+            <Button
+              type="button"
+              variant="outline"
+              size="md"
+              onClick={handleExploreDemo}
+              className="w-full justify-center text-xs font-bold border-2 border-deep-black bg-white hover:bg-warm-offwhite"
+            >
+              <span>Launch Demo Dashboard as {DEMO_USERS[demoRole].name.split(" ")[0]}</span>
+              <ArrowRight className="h-3.5 w-3.5 ml-1.5" />
+            </Button>
+
+            <p className="text-[10px] font-mono text-slate-gray text-center pt-1">
+              Demo mode stores session data in local browser storage.
+            </p>
           </div>
         </div>
       </main>

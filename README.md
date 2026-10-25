@@ -28,11 +28,13 @@ Slotify coordinates interview scheduling through availability management, constr
 - **Implemented**: React 19, TypeScript, Vite, Tailwind CSS, Radix UI primitives, Lucide React, React Router DOM
 - **Planned / Extended**: FullCalendar, React Hook Form, Zod, Motion, TanStack Query, Recharts
 
-#### Backend & Scheduling (Planned Architecture)
-- Python, FastAPI, Pydantic, Google OR-Tools CP-SAT, SQLAlchemy
+#### Backend & Scheduling
+- **Implemented**: Python 3.13, FastAPI, Pydantic, SQLAlchemy 2.0, Alembic, psycopg2-binary / psycopg 3
+- **Planned / Extended**: Google OR-Tools CP-SAT
 
-#### Database, Auth & Realtime (Planned Architecture)
-- Supabase PostgreSQL, Supabase Auth, Supabase Realtime
+#### Database, Auth & Realtime
+- **Implemented**: Supabase PostgreSQL schema with Alembic migrations, connection pooler support, and Pydantic validation schemas
+- **Planned / Extended**: Supabase Auth, Supabase Realtime
 
 #### Calendar & Notifications
 - **Implemented**: Client-side `.ics` calendar generation and local state-backed in-app notifications
@@ -40,23 +42,52 @@ Slotify coordinates interview scheduling through availability management, constr
 
 ### Setup and Run
 
+#### Frontend
 1. Navigate to the frontend directory:
    ```bash
    cd frontend
    ```
-
 2. Install dependencies:
    ```bash
    npm install
    ```
-
 3. Start the local development server:
    ```bash
    npm run dev
    ```
    Open `http://localhost:5173` in your browser.
-
 4. Build for production:
    ```bash
    npm run build
+   ```
+
+#### Backend & Database (Supabase)
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   .\venv\Scripts\Activate.ps1
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Copy environment configuration and configure `DATABASE_URL`:
+   ```bash
+   cp .env.example .env
+   ```
+5. Apply database migrations:
+   ```bash
+   alembic upgrade head
+   ```
+6. Run the API server:
+   ```bash
+   uvicorn main:app --reload
+   ```
+7. Run backend tests:
+   ```bash
+   pytest
    ```

@@ -126,7 +126,7 @@ export const SignUpPage: React.FC = () => {
               <label className="block text-xs font-mono font-bold uppercase tracking-wider text-deep-black mb-1.5">
                 Primary Role
               </label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
                   onClick={() => setRole("candidate")}
@@ -149,18 +149,10 @@ export const SignUpPage: React.FC = () => {
                 >
                   Interviewer
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setRole("coordinator")}
-                  className={`rounded-lg border-2 border-deep-black p-2.5 text-center text-xs font-mono font-bold transition-all ${
-                    role === "coordinator"
-                      ? "bg-hot-pink text-white shadow-[2px_2px_0px_#101010]"
-                      : "bg-warm-offwhite text-slate-gray hover:text-deep-black"
-                  }`}
-                >
-                  Coordinator
-                </button>
               </div>
+              <p className="mt-1 text-[10px] font-mono text-slate-gray">
+                Coordinator access requires institutional administrator provisioning.
+              </p>
             </div>
 
             <div>

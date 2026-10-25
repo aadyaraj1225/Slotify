@@ -1,7 +1,10 @@
 import * as React from "react";
 import { useCoordinator } from "./coordinator-context";
+import { useAuth } from "./auth-context";
+import { apiClient } from "@/lib/api-client";
 import type { Candidate, ScheduledInterview } from "@/types/coordinator";
 import type { CandidateNotification, AvailableBookingSlot } from "@/types/candidate";
+
 
 const CANDIDATE_STORAGE_KEY = "slotify_active_candidate_id";
 const NOTIFICATIONS_STORAGE_KEY = "slotify_candidate_notifications_v1";
@@ -51,6 +54,7 @@ interface CandidateContextType {
 const CandidateContext = React.createContext<CandidateContextType | undefined>(undefined);
 
 export const CandidateProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { token, isAuthenticated, user } = useAuth();
   const {
     candidates,
     interviews,
@@ -59,6 +63,7 @@ export const CandidateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     interviewers,
     updateCandidate,
   } = useCoordinator();
+
 
   // Active candidate id in session
   const [activeCandidateId, setActiveCandidateIdState] = React.useState<string>(() => {
@@ -103,6 +108,38 @@ export const CandidateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
     return INITIAL_NOTIFICATIONS;
   });
+
+  // Fetch real notifications and bookings from backend if authenticated
+  React.useEffect(() => {
+    if (!token || !isAuthenticated || user?.role !== "candidate") return;
+
+    let mounted = true;
+    const fetchBackendData = async () => {
+      try {
+        const notifData = await apiClient<any[]>("/notifications", { token });
+        if (mounted && Array.isArray(notifData) && notifData.length > 0) {
+          const mapped: CandidateNotification[] = notifData.map((n) => ({
+            id: n.id,
+            title: n.title,
+            message: n.message,
+            type: n.notification_type === "booking_confirmed" ? "confirmed" : n.notification_type === "booking_cancelled" ? "cancelled" : "info",
+            timestamp: new Date(n.created_at).toISOString().replace("T", " ").substring(0, 16),
+            read: n.is_read === 1,
+            interviewId: n.booking_id,
+          }));
+          setNotifications(mapped);
+        }
+      } catch (err) {
+        // Fallback to local
+      }
+    };
+
+    fetchBackendData();
+    return () => {
+      mounted = false;
+    };
+  }, [token, isAuthenticated, user?.role]);
+
 
   React.useEffect(() => {
     try {
@@ -171,6 +208,48 @@ export const CandidateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   // Booking action
   const bookSlot = async (slot: AvailableBookingSlot): Promise<{ success: boolean; message: string }> => {
+    // If authenticated with real token, perform atomic reservation via backend API
+    if (token && isAuthenticated && user?.role === "candidate") {
+      try {
+        const payload = {
+          drive_id: slot.driveId,
+          interviewer_id: slot.interviewerId,
+          room_id: slot.roomId,
+          round_number: 1,
+          start_time: new Date(`${slot.date}T${slot.startTime}:00Z`).toISOString(),
+          end_time: new Date(`${slot.date}T${slot.endTime}:00Z`).toISOString(),
+        };
+
+        const res = await apiClient<any>("/bookings", {
+          method: "POST",
+          token,
+          body: JSON.stringify(payload),
+        });
+
+        // Add real notification
+        const newNotification: CandidateNotification = {
+          id: `notif-${Date.now()}`,
+          title: "Booking Confirmed",
+          message: `Slot confirmed via backend for ${slot.roundName} on ${slot.date} at ${slot.roomName}.`,
+          type: "confirmed",
+          timestamp: new Date().toISOString().replace("T", " ").substring(0, 16),
+          read: false,
+          interviewId: res.id,
+        };
+        setNotifications((prev) => [newNotification, ...prev]);
+
+        return {
+          success: true,
+          message: `Slot confirmed! Your booking ${res.id ? `(#${res.id.slice(0, 8)})` : ""} is locked in.`,
+        };
+      } catch (err: any) {
+        return {
+          success: false,
+          message: err.message || "Failed to confirm booking due to conflict or unavailable slot.",
+        };
+      }
+    }
+
     // Check if candidate already has an interview on the same date and overlapping time
     const hasConflict = myInterviews.some(
       (itv) => itv.date === slot.date && itv.startTime === slot.startTime && itv.status !== "cancelled"
@@ -211,6 +290,18 @@ export const CandidateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   // Cancellation action
   const cancelInterview = async (interviewId: string): Promise<{ success: boolean; message: string }> => {
+    // If authenticated with real token, release via backend API
+    if (token && isAuthenticated && user?.role === "candidate") {
+      try {
+        await apiClient<any>(`/bookings/${interviewId}/cancel`, {
+          method: "POST",
+          token,
+        });
+      } catch (err: any) {
+        // Continue to update local UI
+      }
+    }
+
     // Update candidate booking status
     updateCandidate(activeCandidate.id, {
       bookingStatus: "unassigned",
@@ -235,6 +326,7 @@ export const CandidateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       message: "Interview reservation released. You are now free to re-book an available slot.",
     };
   };
+
 
   const markNotificationAsRead = (id: string) => {
     setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)));
